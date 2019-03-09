@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>多用户商城</title>
+		<script src="js/mui.js"></script>
+		<link href="css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" href="css/mescroll.min.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+		<script type="text/javascript" src="js/count.js"></script>
+		<link rel="stylesheet" href="css/mall.css" />
+
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav" style="background: #FFFFFF !important;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left gray-style"></a>
+			<h1 class="mui-title">多用户商城</h1>
+			<a  style="font-size: 15px; float: right;padding-top: 10px;width: 100px;text-align: right;" href="javascript:void(0);" onclick="isSeller()">商家管理</a>
+		</header>  
+
+		<div id="merchants" class="mescroll">
+
+		 	<div id="slider" class="mui-slider">
+				<div class="mui-slider-group mui-slider-loop">
+
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#">
+							<img src="img/shuijiao.1.jpg">
+						</a>
+					</div>
+
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="img/shuijiao.1.jpg">
+						</a>
+					</div>
+
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="img/shuijiao.1.jpg">
+						</a>
+					</div>
+
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="img/shuijiao.1.jpg">
+						</a>
+					</div>
+
+
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#">
+							<img src="img/shuijiao.1.jpg">
+						</a>
+					</div>
+				</div>
+		
+
+			</div> 
+
+
+
+		 	<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+				<div class="mui-scroll">
+					<a class="mui-control-item" v-for="category in categorys" v-bind:class="{'mui-active': sellerBs==category.text}"
+					 @tap="switchBs(category.text)">
+						{{category.text}}
+					</a>
+
+				</div>
+			</div> 
+
+
+		 	<div id="item1">
+				<ul class="mall-list mui-active merchants-list">
+					<li v-for="i in list">
+						<a>
+							<img :src="photoSrc+i.fmPhoto" style="width: 35%" />
+							<h1>{{i.sellerName}}</h1>
+							<div @click="toStore(i.user.id)">进入店铺</div>
+							<h2>行业：{{i.sellerBs}}</h2>
+							<h2>城市：{{i.sellerAddress}}</h2>
+						</a>
+					</li>
+
+				</ul>
+				<img src="img/zwsj.png" style="display: block;margin: 0 auto;width: 45%;margin-top: 30px;" v-if="list.length<=0"/>
+			</div> 
+			
+		</div>
+
+		
+
+		<script src="js/axios.js"></script>
+		<script src="js/config.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/mescroll.min.js"></script>
+		<script src="js/source/merchants.js"></script>
+
+		<script>
+			function isSeller(){
+
+				sendPost('/trail/getSellerInfo',{id:JSON.parse(localStorage.getItem('sys_userInfo')).id}).then(function(res){
+													if(res.data.seller){
+														if(res.data.seller.status ==1){
+															openWin('sjrz_yes.html');
+														}else if(res.data.seller.status ==0){
+															mui.toast("审核中,请耐心等待")
+														}
+				
+													}else{
+														
+															openWin('sjrz.html');
+				
+														
+				
+													}
+					})
+			}
+		/* 	
+			document.addEventListener('plusready', function() {
+
+
+			}); */
+		</script>
+	</body>
+
+</html>

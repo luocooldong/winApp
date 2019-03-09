@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>新增提现账户</title>
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/reset.css" />
+		<script type="text/javascript" src="../js/count.js"></script>
+		<link href="../css/mui.picker.css" rel="stylesheet" />
+		<link href="../css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/style.css" />
+		<script type="text/javascript" src="../js/jquery-2.1.4.js"></script>
+
+
+	</head>
+
+	<body class="p-page top-page color-page">
+	<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">新增提现账户</h1>
+	</header>
+	<form class="mui-input-group add-list">
+		 <div class="mui-input-row" id="showCityPicker3">
+        <label>账户类型：</label>
+        <div class="city" >111</div>
+        <span class="mui-icon mui-icon-arrowright"></span>
+    </div>
+    <div class="mui-input-row">
+        <label>姓名：</label>
+    <input  type="text" class="mui-input-clear" placeholder="请输入支付宝认证姓名">
+    </div>
+    <div class="mui-input-row">
+        <label>账号：</label>
+        <input type="number" class="mui-input-clear" placeholder="请输入支付宝认证账户">
+    </div>
+   
+
+	</form>
+	<div class="tx-word">
+		<h1>温馨提示</h1>
+		<p>1.请确保所填提现账户信息的真实性、正确性，以便快速准确的转入到您的账户里。</p>
+		<p>2.若因账户信息填写有误，导致转账失败、转入他人账户，本公司概不负责。</p>
+		<p>3.支行名称格式实力：中国邮政储蓄银行***市***支行***分理处。</p>
+		<p>4.客服服务时间9:00~18：00，客服联系电话<a href="tel：400-697-4599">400-697-4599</a></p>
+	</div>
+	<div  class="buy-btn">确认添加</div>
+	
+	
+	
+	<!--类型选择-->
+	<div class="mui-popup-backdrop mui-active" ></div><!--遮罩层-->
+	<ul class="bank-list">
+		<div class="bank-tit">
+			<h1>选择账户类型</h1>
+			<span class="mui-icon mui-icon-closeempty"></span>
+		</div>
+		<li class="on-bank"><img src="../img/ali_pay.png"/><h2>支付宝</h2><span>推荐</span></li>
+		<li><img src="../img/ali_pay.png"/><h2>华夏银行</h2></li>
+		<li><img src="../img/ali_pay.png"/><h2>建设银行</h2></li>
+		<li><img src="../img/ali_pay.png"/><h2>农业银行</h2></li>
+		<li><img src="../img/ali_pay.png"/><h2>中国银行</h2></li>
+	</ul>
+	
+			<script src="../js/mui.picker.js"></script>
+		<script src="../js/mui.poppicker.js"></script>
+		<script src="../js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		
+	</body>
+
+</html>

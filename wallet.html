@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>我的钱包</title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<script type="text/javascript" src="js/count.js"></script>
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+
+
+	</head>
+
+	<body class="wallet-bg top-page">
+		
+		<header id="header" class="mui-bar nav-transparent">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的钱包</h1>
+		</header>
+			<div id="wallet">
+		
+		<div class="wallet-wrap">
+			<img class="member-header" src="img/gray_sex_girl.png"/>
+			<h1>{{alco_value}}<span>个</span></h1>
+			<h2>今日TTI兑换商品价格<span>{{todayprice}}</span>元/个</h2>
+			<ul>
+				<li><a href="javascript:void(0);"  @click="alcoValueHistory()"><img src="img/wine_record.png"/>TTI记录</a></li>
+				<li><a href="javascript:void(0);" onclick = "openWin('sj-sell.html')"><img src="img/transfer_wine.png"/>出让TTI</a></li>
+			</ul>
+		</div>
+		<div class="wallet-address">
+			<p>0x{{wallet.id}}</p>
+			<div id='toastBtn'>复制钱包地址</div>
+		</div>
+		<div class="line"></div>
+		<div class="chart-box">
+			<h1>TTI兑换商品走势图（元/个）</h1>
+			<div id="lineChart" style="width: 100%;height:250px;"></div>
+			<ul class="chart-nav">
+				   <li v-bind:class="{currentChart:chart==0}" @click="switchChart(0)">
+				  近7日
+				</li>
+				<li v-bind:class="{currentChart:chart==1}" @click="switchChart(1)">
+				  近一月
+				</li>
+				<li v-bind:class="{currentChart:chart==2}" @click="switchChart(2)">
+				  近三月
+				</li>
+			</ul>
+		</div>
+		<div class="line"></div>
+		<div class="chart-text">近7日走势</div>
+		</div>
+				<script src="js/echarts.common.min.js"></script>
+		<script src="js/config.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/axios.js"></script>
+		<script src="js/source/wallet.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			//mui初始化
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+
+
+			document.getElementById("toastBtn").addEventListener('tap', function() {
+				mui.toast('复制成功');
+			});
+		</script>
+	
+	</body>
+
+</html>

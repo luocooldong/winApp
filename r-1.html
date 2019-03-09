@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>完善资料</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<script type="text/javascript" src="js/count.js"></script>
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+
+	</head>
+
+	<body>
+
+		<div class="r-wrap" id="vue">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1>用户注册</h1>
+			<h2>为了您的账户安全，请使用正确的资料进行注册。</h2>
+
+			<form>
+				<div class="mui-input-row">
+				<input id="register-userphone" pattern="\d*" maxlength="11" type="text" class="mui-input-clear text-input" placeholder="请输入常用手机号">
+				</div>
+				<div class="login-word" style="text-align: center;">
+					<input type="checkbox" name="checkbox" id="checkbox" value="" />
+					<h5>阅读并同意<a @click="openIt(1)">《用户服务协议》</a>和<a @click="openIt(2)">《隐私政策》</a></h5>
+				</div>
+
+			</form>
+			
+			<button onclick="register()" class="r-btn" style="line-height: inherit;">开启淘淘之旅</button>
+		
+
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/config.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/axios.js"></script>
+		<script>
+			
+			var vue = new Vue({
+				el: '#vue',
+				data: {
+					n:''
+				},
+				watch: {　　　　　
+				
+				},
+				mounted: function() {
+					 
+				},
+				methods: {
+					openIt:function(i){
+						if(i==1){
+							openWin('notice1.html')
+						}else{
+							openWin('notice2.html')
+						}
+					}
+					
+				},
+			});
+			function register() {
+				 if(check()){
+				 	localStorage.phone = $("#register-userphone").val();
+				 	openWin('r-2.html')
+				 }
+			}
+			
+			function check(){
+					var userphone = $("#register-userphone").val();
+				var checkbox = $("#checkbox").get(0).checked
+				if(!checkbox) {
+					mui.toast('请阅读用户协议');
+					return false;
+				}
+				//验证手机号
+				if(userphone.length == 0) {
+					mui.toast('手机号不能为空');
+					return false;
+				}
+				if(userphone.length != 11) {
+					mui.toast('请输入11位手机号码');
+					return false;
+				}
+				//var regphone = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+			/* 	if(!regphone.test(userphone)) {
+					mui.toast('请输入有效的手机号码！');
+					return false;
+				} */
+				return true;
+			}
+		</script>
+	</body>
+
+</html>

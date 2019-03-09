@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>账户设置</title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<script type="text/javascript" src="js/count.js"></script>
+		<link href="css/mui.picker.css" rel="stylesheet" />
+		<link href="css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+
+
+	</head>
+
+	<body class="p-page top-page color-page">
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">账户设置</h1>
+		</header>
+		<div id="setting">
+		<div class="member-center set-page">
+		<h1 class="line-tit"><a>当前账号<span>{{sys_userInfo.phone | phoneFilter}}</span></a></h1>
+	<!-- 	<h1 class="line-tit"><a href="javascript:void(0);">微信绑定<span class="mui-icon mui-icon-arrowright"></span><span>已绑定</span></a> </h1> -->
+		<div class="line"></div>
+		<h1 class="line-tit" onclick="openWin('wallet.html')"><a href="javascript:void(0);">提现账户<span class="mui-icon mui-icon-arrowright"></span></a> </h1>
+	<!-- 	<h1 class="line-tit"><a href="javascript:void(0);">登录密码<span class="mui-icon mui-icon-arrowright"></span></a> </h1> -->
+		<!-- <h1 class="line-tit"><a href="javascript:void(0);">支付密码<span class="mui-icon mui-icon-arrowright"></span><span>未设置</span></a> </h1> -->
+		<h1 class="line-tit"  onclick="openWin('add-address.html')"><a href="javascript:void(0);">收货地址<span class="mui-icon mui-icon-arrowright"></span></a> </h1>
+<!-- 		<h1 class="line-tit"><a href="javascript:void(0);">音效设置<span>1.5.2</span> </a></h1> -->
+<!-- 		<h1 class="line-tit"><a href="javascript:void(0);">禁止添加自己为酒友</a></h1> -->
+		<div class="line"></div>
+		<h1 class="line-tit" @click="clearCache()"><a href="javascript:void(0);">清除缓存<span>{{cache}}M</span></a></h1>
+		
+		</div>
+		
+		<a  class="r-btn" href="javascript:void(0);" onclick="logOut()">退出登录</a>
+		</div>
+		<script src="js/echarts.common.min.js"></script>
+		<script src="js/config.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/axios.js"></script>
+		<script src="js/source/setting.js"></script>
+		<script>
+			function logOut(){
+				localStorage.clear()
+				openWin("mine.html")
+			}
+		</script>
+	</body>
+
+</html>

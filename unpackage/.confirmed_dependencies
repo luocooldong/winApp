@@ -1,0 +1,10 @@
+{
+  "pullrefresh_main.html": {
+    "resources": [
+      "manor.html"
+    ],
+    "refer": [
+      "manor.html"
+    ]
+  }
+}

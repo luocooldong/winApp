@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>我的现金</title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<script type="text/javascript" src="js/count.js"></script>
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+		<style>
+				.r-wrap{padding-bottom: 30px;}
+			.r-wrap {
+				width: 100%;
+				position: fixed;
+				top: 20px;
+				bottom: 0px;
+			
+				overflow-y: scroll;
+				-webkit-overflow-scrolling: touch;
+				-ms-touch-action: pan-y cross-slide-y;
+				-ms-scroll-chaining: none;
+				-ms-scroll-limit: 0 50 0 50;
+			}
+		</style>
+
+	</head>
+
+	<body class=" top-page ">
+	<header id="header" class="mui-bar mui-bar-nav">		
+		<h1 class="mui-title">我的现金</h1>
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	</header>
+	<div id="vue" class="r-wrap">
+		<div class="mui-input-row">
+			<input id="name" type="text" class="mui-input-clear text-input" :placeholder="amountStr" v-model="amount">
+		</div>
+		<a class="r-btn" @click="getCash()" href="javascript:void(0);">提现</a>
+	</div>
+	<script src="js/axios.js"></script>
+		<script src="js/config.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/mescroll.min.js"></script>
+		<script src="js/mui.picker.js"></script>
+		<script src="js/mui.poppicker.js"></script>
+		<script>
+				mui.init({
+				beforeback: function() {
+					//获得父页面的webview
+					var list = plus.webview.currentWebview().opener();
+					//触发父页面的自定义事件(refresh),从而进行刷新
+					mui.fire(list, 'refresh');
+					//返回true,继续页面关闭逻辑
+			
+					return true;
+			
+			
+				}
+			});
+			var vue = new Vue({
+				el: '#vue',
+				data: {
+					amount:"",
+					amountStr:"",
+					sys_userInfo:Object,
+
+			
+				},
+				filters: {
+					date:function(value){
+						var d = new Date(value)
+						return d.getFullYear() +"-"+ (d.getMonth()+1) +"-"+ d.getDate() 
+					}
+				},
+				watch: {
+			
+				},
+				mounted: function() {
+					this.sys_userInfo = JSON.parse(localStorage.getItem('sys_userInfo'))
+					this.getUser()
+
+				},
+				methods: {
+					getUser:function(){
+							var that = this;
+						var params = {'id':that.sys_userInfo.id};
+						sendPost('/user/getUser',params).then(function(res){
+							
+							that.sys_userInfo = res.data.user
+								var c = res.data.user.account?res.data.user.account:0
+								that.amountStr = "可提现金额"+c+"元"
+							
+							
+						})
+					},
+					getCash:function(){
+						mui.mui.plusReady(function () {
+						    if(this.amount.length<=0){
+						    	mui.toast("输入提现金额")
+						    	return false;
+						    }
+						    if(this.amount>this.sys_userInfo.account){
+						    	mui.toast("超出最大提现金额")
+						    	return false;
+						    }
+							plus.nativeUI.showWaiting();
+						    var that = this
+						    var params = {'createBy.id':that.sys_userInfo.id,'amount':that.amount};
+						    sendPost('/user/getCash',params).then(function(res){
+						    plus.nativeUI.closeWaiting();
+						    	mui.alert(res.data.msg,'提示',function (e) {
+						    		if(res.data.success){
+						    			mui.back()
+						    		}
+						    	})
+						    		
+						    
+						    	
+						    })
+						})
+					
+						
+						
+					}
+					
+				}
+			});
+			
+			
+		</script>
+	</body>
+
+</html>

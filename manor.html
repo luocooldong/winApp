@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>圣酒庄园</title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<script type="text/javascript" src="js/count.js"></script>
+		<link rel="stylesheet" href="css/mescroll.min.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+		<script type="text/javascript" src="js/jquery.SuperSlide.2.1.1.js"></script>
+			
+		
+	</head>
+
+	<body class="nav-page top-page">
+
+
+			<header id="header" class="mui-bar mui-bar-nav">
+
+				<h1 class="mui-title">圣酒庄园</h1>
+				<!-- <a class="mui-btn mui-btn-blue mui-btn-link mui-pull-right header-word">参与规则</a> -->
+			</header>
+			<div id="manor" class="mescroll">
+			<div class="page-banner">
+				<img class="banner-bg" src="img/banner-6.png" />
+				<img class="word-img" src="img/img-3.png" />
+				<p>是酒链世界开启的一次酒链数次资产价值探索行为。目前处于探索阶段，本次兑换酒品种类受限，数量受限，每种酒品每天只能一瓶。未来开放更多种类、更多数量的酒品兑换。</p>
+				<span>*通过本软件参加的任何商业活动或者圣酒相关活动，均与苹果公司无关。</span>
+			</div>
+			
+		<!-- 	<ul class="exchange">
+				<li>
+					<a>
+						<img src="img/img-4.png" />
+						<h1>幸运兑</h1>
+						<h2>神秘奖品“现身”</h2>
+					</a>
+				</li>
+				<li>
+					<a>
+						<img src="img/img-5.png" />
+						<h1>开心兑</h1>
+						<h2>奖品任你兑</h2>
+					</a>
+				</li>
+			</ul> -->
+			<div class="line"></div>
+			<div class="title">为您推荐</div>
+		<!--	<ul  id="item1" class="data-list mall-list mui-control-content mui-active">
+				<li>
+					<a >
+						<img src="img/product.png"/>
+						<h1>1酒名</h1>
+						
+						<h2>所需圣酒：</h2>
+						<h3>5.00<del>￥198.50</del></h3>
+						<div>立即兑换</div>
+						<h5 style=" margin-top: .5rem;">进行中</h5>
+						<h5>参与人次28</h5>
+					</a>
+				</li>
+			</ul>-->
+			<ul class="data-list mall-list">
+				<li v-for="i in list">
+					<a href="javascript:void(0);" @click="toManorDetail(i)">
+						<img :src="photo_src+i.img" />
+						<h1>{{i.brief}}</h1>
+						<h2>规格：{{i.spec}}</h2>
+						<del>￥{{i.price}}</del>
+						<h2>所需圣酒：</h2>
+						<h3>{{i.alcoValue}}</h3>
+						<div>立即兑换</div>
+					</a>
+				</li>
+			</ul>
+
+
+		
+		</div>
+					<ul class=" down-nav">
+				<li>
+					<a href="javascript:void(0);" onclick="openWin('index.html')"> <img src="img/icon/nav1-1.png" />酒链世界</a>
+				</li>
+				<li class="current">
+					<a href="javascript:void(0);"> <img src="img/icon/nav2-2.png" />圣酒庄园</a>
+				</li>
+				<li>
+					<a href="javascript:void(0);" onclick="openWin('mall.html')"><img src="img/icon/nav3-1.png" />酒链商城</a>
+				</li>
+				<li>
+					<a href="javascript:void(0);" onclick="openWin('mine.html')"><img src="img/icon/nav4-1.png" />我的酒链</a>
+				</li>
+
+			</ul>
+		<script src="js/config.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/axios.js"></script>
+		<script src="js/source/manor.js"></script>
+		<script src="js/mescroll.min.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			$(function(){
+					var mescroll = new MeScroll("manor", {
+					down: {
+						callback: downCallback 
+					},
+					up: {
+						callback: upCallback,
+						auto:true
+					}
+				});
+				
+					//下拉刷新的回调
+			function downCallback() {
+				mescroll.endSuccess();
+		
+			}
+					//上拉加载更多
+			function upCallback(page) {
+					axios({
+					url: base_url + '/manor/manorList',
+					method: 'POST',
+					// 请求体重发送的数据
+					params: {
+						pg:page.num,
+						ps:page.size
+					},
+					timeout: 50000,
+					// 设置请求头
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					}
+				}).then(function(res) {
+				
+					setTimeout(function(){
+					if(res.status=="200"){
+						if(res.data.data&&res.data.data.length>0){
+							for(var i=0;i<res.data.data.length;i++){
+								manor.list.push(res.data.data[i])
+							}
+							mescroll.endSuccess(res.data.data.length);
+						}
+					}else{
+						mescroll.endErr();
+					}
+						
+					}, 800);
+					
+					
+				})			
+				
+			}
+				
+			});
+	</script>
+
+	</body>
+</html>
+
+

@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+		<meta name="HandheldFriendly" content="true"/>
+		<meta name="MobileOptimized" content="320"/>
+		<title>Hello H5+</title>
+		<script type="text/javascript" src="js/common.js"></script>
+		<script type="text/javascript">
+var shares=null;
+var sweixin=null;
+var buttons=[
+  {title:'我的好友',extra:{scene:'WXSceneSession'}},
+  {title:'朋友圈',extra:{scene:'WXSceneTimeline'}},
+  {title:'我的收藏',extra:{scene:'WXSceneFavorite'}}
+];
+// H5 plus事件处理
+function plusReady(){
+	updateSerivces();
+}
+if(window.plus){
+	plusReady();
+}else{
+	document.addEventListener('plusready', plusReady, false);
+}
+/**
+ * 更新分享服务
+ */
+function updateSerivces(){
+	plus.share.getServices(function(s){
+		shares={};
+		for(var i in s){
+			var t=s[i];
+			shares[t.id]=t;
+		}
+    sweixin=shares['weixin'];
+	}, function(e){
+		outSet('获取分享服务列表失败：'+e.message);
+	});
+}
+
+
+// 分享图片
+function shareImage(){
+  var msg={type:'image'};
+  if(!image_picture.realUrl){
+    plus.nativeUI.alert('请选择要分享的图片!');
+    return;
+  }
+  msg.pictures=[image_picture.realUrl];
+  sweixin?plus.nativeUI.actionSheet({title:'分享图片到微信',cancel:'取消',buttons:buttons}, function(e){
+  	(e.index>0)&&share(sweixin, msg, buttons[e.index-1]);
+  }):plus.nativeUI.alert('当前环境不支持微信分享操作!');
+}
+
+
+
+
+
+
+// 分享
+function share(srv, msg, button){
+	outSet('分享操作：');
+  if(!srv){
+    outLine('无效的分享服务！');
+    return;
+  }
+  button&&(msg.extra=button.extra);
+	// 发送分享
+	if(srv.authenticated){
+		outLine('---已授权---');
+		doShare(srv, msg);
+	}else{
+		outLine('---未授权---');
+		srv.authorize(function(){
+			doShare(srv, msg);
+		}, function(e){
+			outLine('认证授权失败：'+JSON.stringify(e));
+		});
+	}  
+}
+// 发送分享
+function doShare(srv, msg){
+	outLine(JSON.stringify(msg));
+	srv.send(msg, function(){
+		outLine('分享到"'+srv.description+'"成功！');
+	}, function(e){
+		outLine('分享到"'+srv.description+'"失败: '+JSON.stringify(e));
+	});
+}
+// 解除授权
+function cancelAuth(){
+	outSet('解除授权：');
+  if(sweixin){
+    if(sweixin.authenticated){
+    	outLine('取消"'+sweixin.description+'"');
+    }
+    sweixin.forbid();
+  }else{
+    outLine('当前环境不支持微信分享操作!');
+  }
+}
+
+
+
+// 使用Logo图片分享
+function imageLogoPicture(){
+	outSet('使用Logo分享图片：');
+	var url='img/add_put_forward.png';
+	plus.io.resolveLocalFileSystemURL(url, function(entry){
+		image_picture.src=entry.toLocalURL();
+		image_picture.realUrl=url;
+	}, function(e){
+		outLine('读取Logo文件错误：'+e.message);
+	});
+}
+		</script>
+
+	</head>
+	<body>
+		<header id="header">
+			<div class="nvbt iback" onclick="back()"></div>
+			<div class="nvtt">微信分享</div>
+		</header>
+	
+      
+			<p class="heading" onclick="openWin('index.html')">分享图片：</p>
+			<table style="width:100%;">
+				<tbody>
+					<tr>
+						
+						<td style="width:30%"><div class="button button-select" onclick="imageLogoPicture()">使用logo图</div></td>
+					</tr>
+				</tbody>
+			</table>
+			<img id="image_picture" class="sharepicture" src="img/add_put_forward.png"/>
+			<br/>
+			<div class="button" onclick="shareImage()">分享图片</div>
+   
+		<div id="output">
+
+		</div>
+		<script src="js/mui.js"></script>
+		<script src="js/config.js"></script>
+	</body>
+
+</html>

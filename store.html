@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>商家店铺</title>
+		<script src="  js/mui.js"></script>
+		<link href="  css/mui.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="  css/reset.css" />
+		<link rel="stylesheet" href="  css/style.css" />
+		<link rel="stylesheet" href="  css/mescroll.min.css" />
+		<script type="text/javascript" src="  js/jquery-2.1.4.js"></script>
+
+		<link rel="stylesheet" href="  css/mall.css" />
+		<script type="text/javascript" src="js/count.js"></script>
+		<style>
+		
+		</style>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-transparent" style="background-color: rgba(247, 247, 247, 0); color: #fff;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">商家店铺</h1>
+			
+		</header>
+		<div id="store" class="mescroll">
+
+		<div id="slider" class="mui-slider">
+			<div class="mui-slider-group mui-slider-loop">
+			
+								<div class="mui-slider-item mui-slider-item-duplicate">
+									<a href="#">
+										<img src="  img/shuijiao.jpg">
+									</a>
+								</div>
+			
+								<div class="mui-slider-item">
+									<a href="#">
+										<img src="  img/shuijiao.jpg">
+									</a>
+								</div>
+			
+								<div class="mui-slider-item">
+									<a href="#">
+										<img src="  img/shuijiao.jpg">
+									</a>
+								</div>
+			
+								<div class="mui-slider-item">
+									<a href="#">
+										<img src="  img/shuijiao.jpg">
+									</a>
+								</div>
+			
+			
+								<div class="mui-slider-item mui-slider-item-duplicate">
+									<a href="#">
+										<img src="  img/shuijiao.jpg">
+									</a>
+								</div>
+							</div>
+		</div>
+		 	<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div class="mui-scroll">
+						<a class="mui-control-item" v-for="category in categorys" v-bind:class="{'mui-active': sellerBs==category.text}"
+						 @tap="switchBs(category.text)">
+							{{category.text}}
+						</a>
+	
+					</div>
+				</div> 
+		<ul id="item1" class="data-list mall-list mui-control-content mui-active">
+			<li v-for="i in list">
+				<a>
+					<img :src="photoSrc+i.img" style="width: 35%" />
+					<h1>{{i.name}}</h1>
+					<h3 style="font-size: 14px;">{{i.payType==0?'TTI:':'￥'}}{{i.price}}</h3>
+					<div @click="toMallDetail(i)">立即购买</div>
+					<h2>可获得TTI：+{{i.magicAdd}}</h2>
+				</a>
+			</li>
+		</ul>
+		<img src="  img/zwsj.png" style="display: block;margin: 0 auto;width: 45%;margin-top: 30px;" v-if="list.length<=0"/>
+</div>
+		<script src="  js/axios.js"></script>
+		<script src="  js/config.js"></script>
+		<script src="  js/vue.js"></script>
+		<script src="  js/mescroll.min.js"></script>
+		<script src="js/source/store.js"></script>
+
+	</body>
+
+</html>

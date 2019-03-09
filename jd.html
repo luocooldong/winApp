@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>淘淘基地</title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<script type="text/javascript" src="js/count.js"></script>
+		<link href="css/mui.picker.css" rel="stylesheet" />
+		<link href="css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+		<!--<link  rel="stylesheet" href="css/mescroll.min.css" />-->
+		<script src="js/common.js"></script>
+		<style>
+		.none{
+			display: none;
+		}
+		.buy-btn1{    width: 100%;
+    text-align: center;
+    color: #FFFFFF;
+    background-image: -webkit-linear-gradient(0deg, #9b231e, #c5807d);
+    height: 2.75rem;
+    line-height: 2.75rem;
+    font-size: .85rem;
+    border-top: solid 1px #efeff4;
+    border: none;}
+		</style>
+
+	</head>
+
+	<body class="top-page ">
+	<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">淘淘基地</h1>
+	</header>
+<div id="jd" >	
+<img src="img/wxfx.png" style="width: 100%;"/>
+
+	<div class="buy-btn1" @click="openShare()" :disabled="showShare==1">立即加速原力</div>
+<!--选择分享平台-->
+	<div class="mui-popup-backdrop mui-active" v-bind:class="{none: showShare!=1}" @click="closeShare()"></div> 
+<div class="fx-link" v-bind:class="{none: showShare!=1}">
+	<h1>请选择分享平台</h1>
+	<ul>
+		<input hidden="hidden" id="web_href" class="share_input" type="url" value="http://www.dcloud.io/"  />
+				<input hidden="hidden" id="web_title" class="share_input" type="url" value="淘淘星球！！！！！！！！！！" />
+				<input hidden="hidden" id="web_content" class="share_input" type="url" value="淘淘星球！！！！！！！！！！"  />
+					<li onclick="shareWeb(0)">
+						<img src="img/fv1.png" /> 微信
+					</li>
+					<li onclick="shareWeb(1)">
+						<img src="img/fv2.png" /> 微信朋友圈
+					</li>
+					<div id="output" hidden="hidden">
+					</div>
+		<li>
+			<img src="img/fv3.png" @click="toShare(1)"/>
+			分享图1
+		</li>
+		<li>
+			<img src="img/fv4.png" @click="toShare(2)"/>
+			分享图2
+		</li>
+	</ul>
+	<h2 @click="closeShare()" disabled="showShare!=1">取消分享</h2>
+</div>
+</div>
+			<script src="js/mui.picker.js"></script>
+		<script src="js/mui.poppicker.js"></script>
+		<script src="js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/config.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/axios.js"></script>
+		<script src="js/source/jd.js"></script>
+		<script>
+			//$("#web_href").val(dl);
+			var shares = null;
+			var sweixin = null;
+			var buttons = [{
+					title: '我的好友',
+					extra: {
+						scene: 'WXSceneSession'
+					}
+				},
+				{
+					title: '朋友圈',
+					extra: {
+						scene: 'WXSceneTimeline'
+					}
+				},
+				{
+					title: '我的收藏',
+					extra: {
+						scene: 'WXSceneFavorite'
+					}
+				}
+			];
+			// H5 plus事件处理
+			function plusReady() {
+				updateSerivces();
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			/**
+			 * 更新分享服务
+			 */
+			function updateSerivces() {
+				plus.share.getServices(function(s) {
+					shares = {};
+					for(var i in s) {
+						var t = s[i];
+						shares[t.id] = t;
+					}
+					sweixin = shares['weixin'];
+				}, function(e) {
+					outSet('获取分享服务列表失败：' + e.message);
+				});
+			}
+
+			// 分享网页0:微信1朋友圈
+			function shareWeb(i) {
+				jd.closeShare()
+				var msg = {
+					type: 'web',
+					thumbs: ['_www/logo.png']
+				};
+				if(!web_href.value) {
+					plus.nativeUI.alert('请输入分享网页的链接地址!');
+					web_href.focus();
+					return;
+				}
+				msg.href = web_href.value;
+				if(!web_title.value) {
+					plus.nativeUI.alert('请输入分享网页的标题!');
+					web_title.focus();
+					return;
+				}
+				msg.title = web_title.value;
+				if(!web_content.value) {
+					plus.nativeUI.alert('请输入分享网页的描述!');
+					web_content.focus();
+					return;
+				}
+				msg.content = web_content.value;
+				share(sweixin, msg, buttons[i])
+
+			}
+
+			// 分享
+			function share(srv, msg, button) {
+				outSet('分享操作：');
+				if(!srv) {
+					outLine('无效的分享服务！');
+					return;
+				}
+				button && (msg.extra = button.extra);
+				// 发送分享
+				if(srv.authenticated) {
+					outLine('---已授权---');
+					doShare(srv, msg);
+				} else {
+					outLine('---未授权---');
+					srv.authorize(function() {
+						doShare(srv, msg);
+					}, function(e) {
+						outLine('认证授权失败：' + JSON.stringify(e));
+					});
+				}
+			}
+			// 发送分享
+			function doShare(srv, msg) {
+				outLine(JSON.stringify(msg));
+				srv.send(msg, function() {
+					outLine('分享到"' + srv.description + '"成功！');
+				}, function(e) {
+					outLine('分享到"' + srv.description + '"失败: ' + JSON.stringify(e));
+				});
+			}
+			// 解除授权
+			function cancelAuth() {
+				outSet('解除授权：');
+				if(sweixin) {
+					if(sweixin.authenticated) {
+						outLine('取消"' + sweixin.description + '"');
+					}
+					sweixin.forbid();
+				} else {
+					outLine('当前环境不支持微信分享操作!');
+				}
+			}
+			
+			
+		</script>
+		
+	</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>手机号注册</title>
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/reset.css" />
+		<script type="text/javascript" src="../js/count.js"></script>
+		<link rel="stylesheet" href="../css/style.css" />
+		<script type="text/javascript" src="../js/jquery-2.1.4.js"></script>
+
+
+	</head>
+
+	<body class=" top-page " >
+		
+		
+		<div class="login" id="login">
+			<img class="login-logo" src="../img/login_log.png" />
+			<img class="login-out" src="../img/login_out.png"/>
+			<h1>基于区块链技术的酒类财富分享平台</h1>
+		
+		</div>
+		
+
+		<div class="r-wrap">
+			<h1 style=" padding-top: 0;">欢迎您！</h1>
+			<h2>共创价值、共享财富、共生未来！</h2>
+			
+			<form>
+    			<input id="register-userphone" maxlength="11" type="number" class="mui-input-clear text-input" placeholder="请输入常用手机号">
+    			<div class="mui-input-row" style=" margin-top: .5rem;">
+    				<input id="register-password" autocomplete="off"  type="password" class="mui-input-password text-input" placeholder="请输入登录密码"/>
+    			</div>
+    			<div style="overflow: hidden;">
+    				<a style="color: #F0AD4E; display: block; float: right; text-decoration: underline; margin: .5rem 0 1.5rem 0;" href="">忘记密码</a>
+    			</div>
+				<a onclick="register()"  class="r-btn" style=" margin: 0rem auto 2rem auto; text-align: center;">开启酒链之旅</a>
+				<div class="login-word">
+				<input type="checkbox" name="" id="" value="" />
+				<h5>阅读并同意<a>《用户服务协议》</a>和<a>《隐私政策》</a></h5>
+				</div>
+
+
+			</form>
+			
+		</div>
+<script>
+	
+	function register(){
+		var userphone = $("#register-userphone").val();
+
+			
+			//验证手机号
+			if(userphone.length == 0) {
+				mui.toast('手机号不能为空');
+				return false;
+			}
+			if(userphone.length != 11) {
+				mui.toast('请输入11位手机号码');
+				return false;
+			}			
+			var regphone = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+			if(!regphone.test(userphone)) {
+				mui.toast('请输入有效的手机号码！');
+				return false;
+			}
+			
+	
+	}
+</script>
+	</body>
+
+</html>

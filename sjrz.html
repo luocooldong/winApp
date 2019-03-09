@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title></title>
+		<!-- mui-->
+		<script src="js/mui.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<!-- jq-->
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+		<!-- other-->
+		<script src="js/clipboard.js"></script>
+		<script src="js/count.js"></script>
+		<link href="css/mui.picker.css" rel="stylesheet" />
+		<link href="css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script src="fonts/iconfont.js"></script>
+	
+		<style>
+			.r-wrap{padding-bottom: 30px;}
+			.r-wrap {
+				width: 100%;
+				position: fixed;
+				top: 20px;
+				bottom: 0px;
+				
+				overflow-y: scroll;
+				-webkit-overflow-scrolling: touch;
+				-ms-touch-action: pan-y cross-slide-y;
+				-ms-scroll-chaining: none;
+				-ms-scroll-limit: 0 50 0 50;
+			}
+		</style>
+		
+	</head>
+	<body >
+		<header id="header" class="mui-bar mui-bar-nav" style="background: #FFFFFF !important;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left gray-style"></a>
+			<h1 class="mui-title">商家入驻</h1>
+		</header>
+		<div class="r-wrap" id="sjrz">
+				
+			
+				
+				<form style="margin-top: 20px;">
+					<div class="mui-input-row">
+					<input id="name"   type="text" class="mui-input-clear text-input" placeholder="商家名称" v-model="sellerName">
+					</div>
+					<div class="mui-input-row">
+					<input id="category"  type="text" class="mui-input-clear text-input" placeholder="商家行业" v-model="sellerBs" readonly="readonly">
+					<!-- <button id='showUserPicker' class="mui-btn mui-btn-block" type='button'>一级选择示例 ...</button>
+					<div id='userResult' class="ui-alert"></div> -->
+					</div>
+					<div class="mui-input-row">
+					<input id="address"  type="text" class="mui-input-clear text-input" placeholder="商家地址" v-model="sellerAddress">
+					</div>
+					<div class="mui-input-row">
+					<input id="cname"  type="text" class="mui-input-clear text-input" placeholder="联系姓名" v-model="contactName">
+					</div>
+					<div class="mui-input-row">
+					<input id="cphone" pattern="\d*" maxlength="11" type="text" class="mui-input-clear text-input" placeholder="联系电话" v-model="contactPhone">
+					</div>
+					<div class="mui-input-row">
+								<h2>店铺封面(限1张)</h2>
+					
+								<div style="width: 33%; float: left;position: relative;" v-for="(item, index) in photo_fm" v-if="photo_fm">
+									<img :src="item.localurl" data-preview-src="" data-preview-group="1" style="width: 80px;height: 80px;">
+								</div>
+								<div style="width: 33%; float: left;position: relative;" v-if="photo_fm.length<1">
+									<img src="img/add.png"  style="width: 50px;height: 50px;margin-top: 15px;margin-left: 10px;margin-bottom: 15px;" id="addFmPic"/>
+								</div>
+					</div>
+					<div class="mui-input-row">
+ 						<h2>上传营业执照与负责人身份证正反面图片(限3张)</h2>
+						<div style="width: 33%; float: left;position: relative;" v-for="(item, index) in photo_user" v-if="photo_user">
+							<img :src="item.localurl" data-preview-src="" data-preview-group="1" style="width: 80px;height: 80px;">
+						</div>
+						<div style="width: 33%; float: left;position: relative;" v-if="photo_user.length<3">
+							<img src="img/add.png"  style="width: 50px;height: 50px;margin-top: 15px;margin-left: 10px;margin-bottom: 15px;" id="addUserPic"/>
+						</div>
+					</div>
+			
+					<div class="mui-input-row">
+						<h2>上传商家店招图片(限3张)</h2>
+			
+						<div style="width: 33%; float: left;position: relative;" v-for="(item, index) in photo_shop" v-if="photo_shop">
+							<img :src="item.localurl" data-preview-src="" data-preview-group="1" style="width: 80px;height: 80px;">
+						</div>
+						<div style="width: 33%; float: left;position: relative;" v-if="photo_shop.length<3">
+							<img src="img/add.png"  style="width: 50px;height: 50px;margin-top: 15px;margin-left: 10px;margin-bottom: 15px;" id="addShopPic"/>
+						</div>
+					</div>
+					
+			<!-- 		
+	    			<div class="mui-input-row" style="margin-top: 15px;">
+	    			<input id="phone" pattern="\d*" maxlength="11" type="text" class="mui-input-clear text-input" placeholder="请输入手机号" v-model="phone">
+	    			</div> -->
+	    			
+				<!-- 	<div class="code-box">
+						<div class="mui-input-row line-input yzm-input ">
+	    					<input id="msgCode" type="number" class="mui-input-clear text-input yzm-input" placeholder="请输入短信验证码" v-model="msgCode">   			
+	    				</div>
+	    				<input v-if="sendAuthCode" id="btnSendCode" class="num-box" type="button" value="获取验证码"/>  
+	    				<input v-if="!sendAuthCode"  id="btnSendCode2"  class="num-box" type="button" :value="auth_time"/>	
+					</div> -->
+					
+					<a  class="r-btn" id="createId">提交申请</a>
+					<span style="text-align: center;font-size: 14px;color: #aaaaaa;"></span>
+	
+				</form>
+				
+			</div>
+		<script src="js/mui.picker.js"></script>
+		<script src="js/mui.poppicker.js"></script>
+		<script src="js/axios.js"></script>
+		<script src="js/config.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/mescroll.min.js"></script>
+		<script src="js/source/sjrz.js"></script>
+		<script type="text/javascript">
+			sendPost('/trail/getCategory',null).then(function(res){
+				//alert(JSON.stringify(res.data))
+					var _getParam = function(obj, param) {
+						return obj[param] || '';
+					};
+					var picker = new mui.PopPicker();
+					picker.setData(res.data.category);
+					var showUserPickerButton = document.getElementById('category');
+				
+					showUserPickerButton.addEventListener('tap', function(event) {
+						picker.show(function(items) {
+							sjrz.sellerBs = items[0].text;
+						});
+					}, false);
+				
+			})
+		
+			document.addEventListener('plusready', function() {
+				
+			 	 	document.getElementById('addUserPic').addEventListener('tap', function() {
+						sjrz.photo_type = 0
+						sjrz.chooseWay()
+					}); 
+					document.getElementById('addShopPic').addEventListener('tap', function() {
+						sjrz.photo_type = 1
+						sjrz.chooseWay()
+					});
+					 
+					 document.getElementById('addFmPic').addEventListener('tap', function() {
+					 	sjrz.photo_type = 2
+					 	sjrz.chooseWay()
+					 }); 
+					document.getElementById('createId').addEventListener('tap', function() {
+						sjrz.submitShq()
+					}); 
+						
+						/* document.getElementById('btnSendCode').addEventListener('tap', function() {
+							if(sjrz.sendMsg()){
+								//sendMessage()
+								sjrz.getAuthCode()
+							}
+							
+						}); */
+					
+
+			});
+			
+				//验证码
+				/* 		var InterValObj; //timer变量，控制时间
+						var count = 60; //间隔函数，1秒执行
+						var curCount; //当前剩余秒数
+						var code = ""; //验证码
+						var codeLength = 6; //验证码长度
+						function sendMessage() {
+							curCount = count;
+							//设置button效果，开始计时
+							$("#btnSendCode").attr("disabled", "true");
+							$("#btnSendCode").val(+curCount + "秒再获取");
+							InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+							
+						
+						}
+						//timer处理函数
+						function SetRemainTime() {
+			
+							if(curCount == 0) {
+								window.clearInterval(InterValObj); //停止计时器
+								$("#btnSendCode").removeAttr("disabled"); //启用按钮
+								$("#btnSendCode").val("获取验证码");
+			
+								code = ""; //清除验证码。如果不清除，过时间后，输入收到的验证码依然有效    
+							} else {
+								curCount--;
+								$("#btnSendCode").val(+curCount + "秒再获取");
+							}
+						} */
+		</script>
+
+	</body>
+</html>

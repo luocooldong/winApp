@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>关于我们</title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<script type="text/javascript" src="js/count.js"></script>
+
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+	
+	</head>
+
+	<body class="top-page ">
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">关于我们</h1>
+		</header>
+		<div id="acoutUs">
+			<div class="line"></div>
+			<ul class="about-code">
+				<li>
+					<img :src="photoSrc+aboutUs.imgGzh" />
+					<h1>微信公众号</h1>
+					<h2>微信搜索“淘淘星球”关注</h2>
+				</li>
+				<li>
+					<img :src="photoSrc+aboutUs.imgKf" />
+					<h1>客服专属群</h1>
+					<h2>微信扫码加群</h2>
+				</li>
+			</ul>
+			<div class="line"></div>
+			<ul class="us-info">
+				<li>
+					<p>邮箱</p><span>{{aboutUs.email}}</span><em>	<button style="border: none;" id='toastBtn' class="btn" :data-clipboard-text="aboutUs.email">复制分享内容</button></em>
+				</li>
+				<li>
+					<p>客服电话</p><em>{{aboutUs.phone}}</em>
+				</li>
+			</ul>
+			<div v-html='aboutUs.content' class="rich"></div>
+	
+		</div>
+		<script src="js/config.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/axios.js"></script>
+		<script src="js/source/aboutUs.js"></script>
+			<script src="js/clipboard.js"></script>
+		<script>
+			var clipboard = new ClipboardJS('#toastBtn');
+
+			clipboard.on('success', function(e) {
+				mui.toast("复制成功")
+				e.clearSelection();
+			});
+
+			clipboard.on('error', function(e) {
+					mui.toast("复制失败")
+			});
+		</script>
+
+	</body>
+
+</html>

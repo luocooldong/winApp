@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>邀请奖励</title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<script type="text/javascript" src="js/count.js"></script>
+		<link href="css/mui.picker.css" rel="stylesheet" />
+		<link href="css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+		<script src="js/common.js"></script>
+	<style>
+		.none{
+			display: none;
+		}
+		</style>
+
+	</head>
+
+	<body class="top-page color-page ">
+	<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">邀请奖励</h1>
+	</header>
+	<div id ="mr">
+	<div class="f-wrap">
+		<div class="fw-top">
+			<img class="t-img" src="img/f-img.png" />
+			<div class="link-hot" @click="openGz()"></div>
+			<p>我的邀请码：{{sys_userInfo.myCode}}</p>
+		</div>
+		<ul class="header-list">
+			<li @click="openShare()">
+				<div class="img-box">
+					<img :src="fans[0].wxUserInfo" v-if="fans[0]"/>
+					<span class="mui-icon mui-icon-plusempty"></span>
+				</div>
+				<div class="img-word">
+					<img src="img/wine_master.png" v-if="fans[0]"/>
+					<img src="img/g-zs.png" v-if="!fans[0]" class="gzs"/>
+					邀请好友
+				</div>
+			</li>
+			<li @click="openShare()">
+				<div class="img-box">
+					<img :src="ans[1].wxUserInfo" v-if="fans[1]"/>
+					<span class="mui-icon mui-icon-plusempty"></span>
+				</div>
+				<div class="img-word">
+					<img src="img/wine_master.png" v-if="fans[1]"/>
+					<img src="img/g-zs.png" v-if="!fans[1]" class="gzs"/>
+					邀请好友
+				</div>
+			</li>
+			<li @click="openShare()">
+				<div class="img-box">
+					<img :src="fans[2].wxUserInfo" v-if="fans[2]"/>
+					<span class="mui-icon mui-icon-plusempty"></span>
+				</div>
+				<div class="img-word">
+					<img src="img/wine_master.png" v-if="fans[2]"/>
+					<img src="img/g-zs.png" v-if="!fans[2]" class="gzs"/>
+					邀请好友
+				</div>
+			</li>
+			<li @click="openShare()">
+				<div class="img-box">
+					<img :src="fans[3].wxUserInfo" v-if="fans[3]"/>
+					<span class="mui-icon mui-icon-plusempty"></span>
+				</div>
+				<div class="img-word">
+					<img src="img/wine_master.png" v-if="fans[3]"/>
+					<img src="img/g-zs.png" v-if="!fans[3]" class="gzs"/>
+					邀请好友
+				</div>
+			</li>
+			<li @click="openShare()">
+				<div class="img-box">
+					<img :src="fans[4].wxUserInfo" v-if="fans[4]"/>
+					<span class="mui-icon mui-icon-plusempty"></span>
+				</div>
+				<div class="img-word">
+					<img src="img/wine_master.png" v-if="fans[4]"/>
+					<img src="img/g-zs.png" v-if="!fans[4]" class="gzs"/>
+					邀请好友
+				</div>
+			</li>
+			<li @click="openShare()">
+				<div class="img-box">
+					<img :src="fans[5].wxUserInfo" v-if="fans[5]"/>
+					<span class="mui-icon mui-icon-plusempty"></span>
+				</div>
+				<div class="img-word">
+					<img src="img/wine_master.png" v-if="fans[5]"/>
+					<img src="img/g-zs.png" v-if="!fans[5]" class="gzs"/>
+					邀请好友
+				</div>
+			</li>
+			<li @click="openShare()">
+				<div class="img-box">
+					<img :src="fans[6].wxUserInfo" v-if="fans[6]"/>
+					<span class="mui-icon mui-icon-plusempty"></span>
+				</div>
+				<div class="img-word">
+					<img src="img/wine_master.png" v-if="fans[6]"/>
+					<img src="img/g-zs.png" v-if="!fans[6]" class="gzs"/>
+					邀请好友
+				</div>
+			</li>
+			<li @click="openShare()">
+				<div class="img-box">
+					<img :src="fans[7].wxUserInfo" v-if="fans[7]"/>
+					<span class="mui-icon mui-icon-plusempty"></span>
+				</div>
+				<div class="img-word">
+					<img src="img/wine_master.png" v-if="fans[7]"/>
+					<img src="img/g-zs.png" v-if="!fans[7]" class="gzs"/>
+					邀请好友
+				</div>
+			</li>
+			<li @click="openShare()">
+				<div class="img-box">
+					<img :src="fans[8].wxUserInfo" v-if="fans[8]"/>
+					<span class="mui-icon mui-icon-plusempty"></span>
+				</div>
+				<div class="img-word">
+					<img src="img/wine_master.png" v-if="fans[8]"/>
+					<img src="img/g-zs.png" v-if="!fans[8]" class="gzs"/>
+					邀请好友
+				</div>
+			</li>
+		</ul>
+	</div>
+
+<!--邀请规则弹窗-->	
+	<div class="mui-popup-backdrop mui-active" v-if="gz==1"></div> <!--遮罩层-->
+	<div class="bank-list yq-dialog" v-if="gz==1"> 
+	 	<h1>邀请奖励规则</h1>
+
+	 	<p>1、合格粉丝就是邀请的朋友实名注册、下载APP、登陆和创建数字钱包，否则邀请的原力奖励将计入未生效之列，待朋友成为合格粉丝后才生效和参与分配；</p>
+
+		<p>2、邀请9名合格粉丝升级为淘淘星球的仙灵。</p>
+
+		<p>3、成为仙灵后，邀请的前200名合格粉丝得永生原力，在注册之日起的1-5天，邀请者+5原力，最高+25原力。</p>
+
+		<p>4、粉丝自行下载app注册时未填写邀请码，在注册之日起5天内补填邀请码，可在第二天登录挖矿后邀请者+5原力，超过5天后补填不加原力。</p>
+
+		<p>5、本规则只适用于成为仙灵后。</p>
+
+		<p>6、最终解释权归淘淘星球所有，并有权进行修订和调整。</p>
+
+	 	<a class="radius-btn payment-btn" @click="closeGz()">知道了</a>
+	</div>	
+
+
+<!--选择分享平台-->
+<div class="mui-popup-backdrop mui-active" v-bind:class="{none: showShare!=1}" @click="closeShare()"></div> 
+<div class="fx-link" v-bind:class="{none: showShare!=1}">
+	<h1>请选择分享平台</h1>
+	<ul>
+		<input hidden="hidden" id="web_href" class="share_input" type="url" value="http://www.dcloud.io/"  />
+				<input hidden="hidden" id="web_title" class="share_input" type="url" value="淘淘星球！！！！！！！！！！" />
+				<input hidden="hidden" id="web_content" class="share_input" type="url" value="淘淘星球！！！！！！！！！！"  />
+		<li onclick="shareWeb(0)">
+			<img src="img/fv1.png" />
+			微信
+		</li>
+		<li onclick="shareWeb(1)">
+			<img src="img/fv2.png" />
+			微信朋友圈
+		</li>
+		<li @click="toShare(1)">
+			<img src="img/fv3.png" />
+			分享图1
+		</li>
+		<li @click="toShare(2)">
+			<img src="img/fv4.png" />
+			分享图2
+		</li>
+	</ul>
+	<h2 @click="closeShare()">取消分享</h2>
+</div>
+		<div id="output" hidden="hidden">
+					</div>
+</div>
+			<script src="js/mui.picker.js"></script>
+		<script src="js/mui.poppicker.js"></script>
+		<script src="js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/config.js"></script>
+				<script src="js/vue.js"></script>
+		<script src="js/axios.js"></script>
+		<script src="js/source/masterReword.js"></script>
+		<script>
+				var shareUrl = "http://mmmdzj.cn/mobileLogin/regist.html?code="+mr.sys_userInfo.myCode
+			
+			$("#web_href").val(shareUrl);
+			var shares = null;
+			var sweixin = null;
+			var buttons = [{
+					title: '我的好友',
+					extra: {
+						scene: 'WXSceneSession'
+					}
+				},
+				{
+					title: '朋友圈',
+					extra: {
+						scene: 'WXSceneTimeline'
+					}
+				},
+				{
+					title: '我的收藏',
+					extra: {
+						scene: 'WXSceneFavorite'
+					}
+				}
+			];
+			// H5 plus事件处理
+			function plusReady() {
+				updateSerivces();
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			/**
+			 * 更新分享服务
+			 */
+			function updateSerivces() {
+				plus.share.getServices(function(s) {
+					shares = {};
+					for(var i in s) {
+						var t = s[i];
+						shares[t.id] = t;
+					}
+					sweixin = shares['weixin'];
+				}, function(e) {
+					outSet('获取分享服务列表失败：' + e.message);
+				});
+			}
+
+			// 分享网页0:微信1朋友圈
+			function shareWeb(i) {
+				mr.closeShare()
+				var msg = {
+					type: 'web',
+					thumbs: ['_www/logo.png']
+				};
+				if(!web_href.value) {
+					plus.nativeUI.alert('请输入分享网页的链接地址!');
+					web_href.focus();
+					return;
+				}
+				msg.href = web_href.value;
+				if(!web_title.value) {
+					plus.nativeUI.alert('请输入分享网页的标题!');
+					web_title.focus();
+					return;
+				}
+				msg.title = web_title.value;
+				if(!web_content.value) {
+					plus.nativeUI.alert('请输入分享网页的描述!');
+					web_content.focus();
+					return;
+				}
+				msg.content = web_content.value;
+				share(sweixin, msg, buttons[i])
+
+			}
+
+			// 分享
+			function share(srv, msg, button) {
+				outSet('分享操作：');
+				if(!srv) {
+					outLine('无效的分享服务！');
+					return;
+				}
+				button && (msg.extra = button.extra);
+				// 发送分享
+				if(srv.authenticated) {
+					outLine('---已授权---');
+					doShare(srv, msg);
+				} else {
+					outLine('---未授权---');
+					srv.authorize(function() {
+						doShare(srv, msg);
+					}, function(e) {
+						outLine('认证授权失败：' + JSON.stringify(e));
+					});
+				}
+			}
+			// 发送分享
+			function doShare(srv, msg) {
+				outLine(JSON.stringify(msg));
+				srv.send(msg, function() {
+					outLine('分享到"' + srv.description + '"成功！');
+				}, function(e) {
+					outLine('分享到"' + srv.description + '"失败: ' + JSON.stringify(e));
+				});
+			}
+			// 解除授权
+			function cancelAuth() {
+				outSet('解除授权：');
+				if(sweixin) {
+					if(sweixin.authenticated) {
+						outLine('取消"' + sweixin.description + '"');
+					}
+					sweixin.forbid();
+				} else {
+					outLine('当前环境不支持微信分享操作!');
+				}
+			}
+			
+			mui.plusReady(function(){
+				$(".mui-icon-plusempty").bind("click",function(){
+					mr.openShare()
+				})
+			})
+			
+		</script>
+	</body>
+
+</html>

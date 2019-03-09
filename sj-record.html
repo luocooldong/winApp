@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>日常</title>
+	
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<script type="text/javascript" src="js/count.js"></script>
+			<link rel="stylesheet" href="css/mescroll.min.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+
+	</head>
+
+	<body class="p-page top-page color-page">
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">日常</h1>
+			<a id="menu" href="#topPopover" style="color: #F0AD4E;" class="mui-icon mui-icon-bars mui-pull-right"></a>
+		</header>
+		<div id="record" class="mescroll">
+		<!--右上角弹出菜单-->
+		<div id="topPopover" class="mui-popover">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view" id="record-class">
+						<li class="mui-table-view-cell"><a href="#">Item2</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item3</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item4</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item5</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+		
+		<ul class="record-list">
+			<li v-for="i in list">
+				<h1>{{i.channel}}</h1>
+				<h2>{{i.createDate}}</h2>
+				<span>{{i.alcoValue>0?'+'+i.alcoValue:i.alcoValue}}</span>
+			</li>
+	
+		</ul>
+		</div>
+				<script src="js/config.js"></script>
+			<script src="js/vue.js"></script>
+			<script src="js/axios.js"></script>
+				<script src="js/mescroll.min.js"></script>
+			<script src="js/source/s-record.js"></script>
+	</body>
+
+</html>

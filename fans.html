@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>我的粉丝</title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<script type="text/javascript" src="js/count.js"></script>
+		<link href="css/mui.picker.css" rel="stylesheet" />
+		<link href="css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/mescroll.min.css" />
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+
+	</head>
+
+	<body class="top-page ">
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的粉丝</h1>
+		</header>
+		<div class="mescroll" id="fans">
+			<!--<div class="line"></div>-->
+			<div class="pay-wrap">
+				<h1>我的粉丝介绍</h1>
+			</div>
+			<div class="js-word">
+				<p>合格粉丝：就是邀请的朋友实名注册、下载APP、登录和创建数字钱包，否则邀请的原力奖励将计入未生效之列，待朋友成为合格粉丝后才生效和参与TTI分配；</p>
+
+				<p>仙灵：邀请9名合格粉丝升级为淘淘星球的仙灵。</p>
+
+				<p>仙灵奖励：成为仙灵后，邀请的前200名合格粉丝得永生原力，在注册之日起的1-5天登录，邀请者+5原力，最高+25原力。</p>
+
+				<p> 辅导推广奖励：帮助粉丝成为仙灵得永生原力，每帮助1名+100原力，最高获得900原力。</p>
+
+			</div>
+			<div class="line"></div>
+			<div class="pay-wrap fs-line">
+				<h1>我的粉丝 <span>（粉丝总数：<i>{{fans.length}}</i>  合格总数：<em>{{hgfs}}</em>）</span></h1>
+			</div>
+			<ul class="f-list">
+				<li>
+					<span>姓名</span><span>联系方式</span><span>是否合格</span><!--<span>朋友数量</span>-->
+				</li>
+				<li v-for="i in fans">
+					<span>{{i.name}}</span><span>{{i.phone}}</span><span>{{i.wallet>0?'是':'否'}}</span><!--<span>20</span>-->
+				</li>
+				<div class="">
+					<img src="img/manor_product_empty.png" />
+					<p>暂无数据</p>
+				</div>
+
+			</ul>
+		</div>
+		<script src="js/mui.picker.js"></script>
+		<script src="js/mui.poppicker.js"></script>
+		<script src="js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/config.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/axios.js"></script>
+		<script src="js/source/fans.js"></script>
+
+	</body>
+
+</html>

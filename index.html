@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>首页</title>
+
+    <link href="css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/reset.css" />
+    <script type="text/javascript" src="js/count.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/common.js"></script>
+    <script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="js/jquery.SuperSlide.2.1.1.js"></script>
+
+    <style>
+      .none {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body class="nav-page">
+
+    <div id="index" class="mescroll">
+      <div class="top-rolling">
+        <span><img src="img/icon/icon-1.png" />公告：</span>
+        <div class="txtMarquee">
+          <div class="bd">
+            <ul class="infoList">
+              <li v-for="n in notice" @click="show(n)">{{ n.content }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="top-center" style="height: 30rem">
+        
+        <div class="bg-video">
+            <!-- <video class="bg-video__content" autoplay muted loop>
+                <source src="img/video-1.mp4" type="video/mp4">
+                <source src="img/video.webm" type="video/webm">
+                Your browser is not supported!
+            </video> -->
+
+            <img
+                src="img/1.gif"
+            />
+
+        </div>
+        <ul class="wine-number">
+				
+          <li v-if="login">
+            <a href="javascript:void(0);" @click="alcoValueHistory()"
+              ><img src="img/water.png" /><span>TTI：{{ alco_value }}</span></a
+            >
+          </li>
+          <!-- 	<li v-if="login">
+						<a href="javascript:void(0);" @click="madePowerHistory()"><img src="img/yb.png" /><span>元宝：{{alco_red}}</span></a>
+					</li> -->
+          <li v-if="login">
+            <a href="javascript:void(0);" @click="madePowerHistory()"
+              ><img src="img/wine_master.png" style="width: 1rem;height: 0.8rem;"/><span>原力：{{ made_power }}</span
+              ></a
+            >
+          </li>
+
+          <li @click="toLogin()" v-if="!login">
+            <a href="javascript:void(0);"
+              ><img src="img/water.png" /><span>查看TTI</span></a
+            >
+          </li>
+          <!-- 			<li @click="toLogin()" v-if="!login">
+						<a href="javascript:void(0);"><img src="img/water.png" /><span>查看元宝</span></a>
+					</li> -->
+          <li @click="toLogin()" v-if="!login">
+            <a href="javascript:void(0);"
+              ><img src="img/wine_master.png" style="width: 1rem;height: 0.8rem;"/><span>查看原力</span></a
+            >
+          </li>
+        </ul>
+					<a v-if="login" style="color: #fff;position: absolute;right: .8rem;top: .5rem;" @click="dealPoolAll()">一键收取</a>
+        <!-- 	<div class="all-wine">
+					<img src="" />
+					<p @click="clearLocal()">全民品酒</p>
+				</div> -->
+        <ul class="top-btn">
+          <li>
+            <a
+              href="javascript:void(0);"
+              onclick="isOpenWin('childPage-1.html')"
+              >加速原力</a
+            >
+          </li>
+          <li>
+            <a href="javascript:void(0);" onclick="isOpenWin('jd.html')"
+              >淘淘基地</a
+            >
+          </li>
+          <li>
+            <a
+              href="javascript:void(0);"
+              onclick="isOpenWin('childPage-3.html')"
+              >推荐有奖</a
+            >
+          </li>
+          <li>
+            <a href="javascript:void(0);" @click="openShare()">邀请好友</a>
+          </li>
+        </ul>
+        <span id="beforeWater"></span>
+
+        <div class="wine-water  wine-water1" v-if="!login" @click="toLogin()">
+          <img src="img/main_water.png" />
+          <p>登录后领取</p>
+        </div>
+
+        <img src="" id="imgAnimate" style="display: none;" />
+      </div>
+
+      <div class="top-scroll">
+        <div class="dt-img"><img src="img/img-2.png" /></div>
+        <div class="txtScroll-top">
+          <div class="bd">
+            <ul class="infoList">
+              <li>
+                恭喜<span class="name">花花</span>购物获得<span class="number"
+                  >99</span
+                >原力<span class="date">15小时前</span>
+              </li>
+              <li>
+                恭喜<span class="name">乐乐</span>购物获得<span class="number"
+                  >99</span
+                >原力<span class="date">15小时前</span>
+              </li>
+              <li>
+                恭喜<span class="name">果果</span>购物获得<span class="number"
+                  >99</span
+                >原力<span class="date">15小时前</span>
+              </li>
+              <li>
+                恭喜<span class="name">子子</span>购物获得<span class="number"
+                  >99</span
+                >原力<span class="date">15小时前</span>
+              </li>
+              <li>
+                恭喜<span class="name">狸狸</span>购物获得<span class="number"
+                  >99</span
+                >原力<span class="date">15小时前</span>
+              </li>
+              <li>
+                恭喜<span class="name">小孩</span>购物获得<span class="number"
+                  >99</span
+                >原力<span class="date">15小时前</span>
+              </li>
+              <li>
+                恭喜<span class="name">大叔</span>购物获得<span class="number"
+                  >99</span
+                >原力<span class="date">15小时前</span>
+              </li>
+              <li>
+                恭喜<span class="name">御姐</span>购物获得<span class="number"
+                  >99</span
+                >原力<span class="date">15小时前</span>
+              </li>
+              <li>
+                恭喜<span class="name">德玛西亚</span>购物获得<span
+                  class="number"
+                  >99</span
+                >原力<span class="date">15小时前</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div id="slider" class="mui-slider" style="display: none;">
+        <div class="mui-slider-group mui-slider-loop">
+          <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+          <div class="mui-slider-item mui-slider-item-duplicate">
+            <a href="#"> <img src="img/banner-1.png" /> </a>
+          </div>
+          <!-- 第一张 -->
+          <div class="mui-slider-item">
+            <a href="#"> <img src="img/banner-3.png" /> </a>
+          </div>
+          <!-- 第二张 -->
+          <div class="mui-slider-item">
+            <a href="#"> <img src="img/banner-2.png" /> </a>
+          </div>
+          <!-- 第三张 -->
+          <div class="mui-slider-item">
+            <a href="#"> <img src="img/banner-4.png" /> </a>
+          </div>
+          <!-- 第四张 -->
+          <div class="mui-slider-item">
+            <a href="#"> <img src="img/banner-5.png" /> </a>
+          </div>
+          <!-- 第五张 -->
+          <div class="mui-slider-item">
+            <a href="#"> <img src="img/banner-1.png" /> </a>
+          </div>
+          <!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+          <div class="mui-slider-item mui-slider-item-duplicate">
+            <a href="#"> <img src="img/banner-3.png" /> </a>
+          </div>
+        </div>
+        <div class="mui-slider-indicator">
+          <div class="mui-indicator mui-active"></div>
+          <div class="mui-indicator"></div>
+          <div class="mui-indicator"></div>
+          <div class="mui-indicator"></div>
+          <div class="mui-indicator"></div>
+        </div>
+      </div>
+
+      <div class="chart-box" style="display: none;">
+        <h1>今日TTI价值：{{ todayprice }}（元/每个）</h1>
+        <div id="lineChart" style="width: 100%;height:250px;"></div>
+        <ul class="chart-nav">
+          <li v-bind:class="{currentChart:chart==0}" @click="switchChart(0)">
+            近7日
+          </li>
+          <li v-bind:class="{currentChart:chart==1}" @click="switchChart(1)">
+            近一月
+          </li>
+          <li v-bind:class="{currentChart:chart==2}" @click="switchChart(2)">
+            近三月
+          </li>
+        </ul>
+      </div>
+      <div class="line"></div>
+      <div class="info-list">
+        <div class="info-tit">
+          <h1>TTI市场<span>（每日交易时间：09:00~22:00）</span></h1>
+          <!-- 	<a  class="link-style rule">交易规则</a> -->
+        </div>
+
+        <div
+          id="segmentedControl"
+          class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary"
+        >
+          <a class="mui-control-item  mui-active" href="#item1">出让TTI</a>
+          <a class="mui-control-item" href="#item2">交易完成</a>
+        </div>
+
+        <div>
+          <div id="item1" class="mui-control-content mui-active">
+            <ul class="tit-name">
+              <li>时间</li>
+              <li>数量</li>
+              <li>单价</li>
+              <li>状态</li>
+            </ul>
+            <ul class="mui-table-view">
+              <!--20个-->
+              <li class="mui-table-view-cell" v-for="i in market20">
+                <span>{{ i.createDate | dateTime }}</span
+                ><span>{{ i.alcoCount }}个</span><span>{{ i.alcoPrice }}元</span
+                ><span class="gr-dialog" @click="buyDialog(i)">立即购买</span>
+              </li>
+            </ul>
+            <a
+              class="data-more"
+              href="javascript:void(0);"
+              onclick="openWin('market-more.html')"
+              >查看更多数据</a
+            >
+          </div>
+          <div id="item2" class="mui-control-content">
+            <ul class="tit-name">
+              <li>购入时间</li>
+              <li>数量</li>
+              <li>单价</li>
+              <li>完成时间</li>
+            </ul>
+            <ul class="mui-table-view">
+              <!--20个-->
+              <li class="mui-table-view-cell" v-for="i in market201">
+                <span>{{ i.sellDates}}</span
+                ><span>{{ i.alcoCount }}个</span><span>{{ i.alcoPrice }}元</span
+                ><span>{{ i.updateDate | dateTime }}</span>
+              </li>
+            </ul>
+            <a class="data-more">查看更多数据</a>
+          </div>
+        </div>
+      </div>
+      <div class="mui-popup-backdrop mui-active" style="display: none;"></div>
+      <div class="dialog-wrap" style=" display: none;">
+        <h1>购入</h1>
+        <h2>打款账户：****提交后可查看</h2>
+        <h2>联系人电话：****提交后可查看</h2>
+        <h2>购入TTI单价：￥{{ i.alcoPrice }}</h2>
+        <h2>购入TTI数量：{{ i.alcoCount }}个</h2>
+        <h2>合计应付金额：￥{{ i.alcoCount * i.alcoPrice }}</h2>
+        <img src="img/line.png" />
+        <p>
+          <span>风险提示：</span
+          >TTI是淘淘世界的数字资产，TTI交易属于个人行为，淘淘星球仅提供信息发布及展示；TTI价格有涨有跌，市场有风险，交易需谨慎！
+        </p>
+        <div class="btn-group">
+          <a href="javascript:void(0);" class="close-btn" @click="closeBuy()"
+            >放弃</a
+          >
+          <a class="tj-btn" @click="submitMarket()">提交订单</a>
+        </div>
+      </div>
+
+      <div class="wine-word" style=" display: none;">
+        <div class="wine-img"><img src="img/img-6.png" /></div>
+        <h1>
+          点击输入藏酒口令：<span
+            ><img src="img/water.png" />TTI<em>+{{ poolValue }}</em></span
+          >
+        </h1>
+        <div class="text-wrap">
+          <ul>
+            <li v-for="i in currentWord" class="currentWord">{{ i }}</li>
+          </ul>
+        </div>
+        <ul class="word-wrap">
+          <li @click="addKeyWord($event,index)" v-for="(i,index) in words">
+            {{ i }}
+          </li>
+        </ul>
+      </div>
+
+      <img
+        class="top-water bottle-box"
+        src="img/water.png"
+        style="display: none;"
+      />
+      <!-- <img
+        class="bottle  bottle-box"
+        style="display: none;"
+        src="img/wine_jars.png"
+      /> -->
+
+      <div class="verify-dialog" style=" display: none;">
+        <h1>短信验证</h1>
+        <h2>
+          应付金额：<span>￥{{ i.alcoCount * i.alcoPrice }}</span>
+        </h2>
+        <p>
+          短信验证码将发送至{{
+            sys_userInfo.phone
+          }}，请输入图片验证码后，再获取短信验证码。
+        </p>
+        <form>
+          <div class="code-box">
+            <div class="mui-input-row line-input yzm-input">
+              <input
+                id="img-code"
+                type="number"
+                class="mui-input-clear text-input yzm-input"
+                placeholder="请输入图片验证码"
+              />
+            </div>
+            <div class="ewm-box"><img src="img/ewm.png" /></div>
+          </div>
+          <div class="code-box">
+            <div class="mui-input-row line-input yzm-input ">
+              <input
+                id="phone-code"
+                type="number"
+                class="mui-input-clear text-input yzm-input"
+                placeholder="请输入短信验证码"
+              />
+            </div>
+            <input
+              id="btnSendCode"
+              class="num-box"
+              type="button"
+              value="获取验证码"
+              onClick="sendMessage()"
+            />
+          </div>
+          <a class="r-btn" @click="submitMarket()">确定</a>
+        </form>
+      </div>
+      <!--选择分享平台-->
+      <div
+        class="mui-popup-backdrop mui-active"
+        v-bind:class="{none: showShare!=1 }"
+      ></div>
+      <div class="fx-link" v-bind:class="{none: showShare!=1}">
+        <h1>请选择分享平台</h1>
+        <ul>
+          <input
+            hidden="hidden"
+            id="web_href"
+            class="share_input"
+            type="url"
+            value=""
+          />
+          <input
+            hidden="hidden"
+            id="web_title"
+            class="share_input"
+            type="url"
+            value="淘淘星球！"
+          />
+          <input
+            hidden="hidden"
+            id="web_content"
+            class="share_input"
+            type="url"
+            value="淘淘星球！"
+          />
+          <li onclick="shareWeb(0)"><img src="img/fv1.png" /> 微信</li>
+          <li onclick="shareWeb(1)"><img src="img/fv2.png" /> 微信朋友圈</li>
+          <div id="output" hidden="hidden"></div>
+          <li @click="toSharei(1)"><img src="img/fv3.png" /> 分享图1</li>
+          <li @click="toSharei(2)"><img src="img/fv4.png" /> 分享图2</li>
+        </ul>
+        <h2 @click="closeShare()" disabled="showShare!=1">取消分享</h2>
+      </div>
+		</div>
+		
+    <ul class="down-nav">
+      <li class="current">
+        <a href="javascript:void(0);">
+          <img src="img/icon/nav1-2.png" />淘淘星球</a
+        >
+      </li>
+      <li>
+        <a href="javascript:void(0);" onclick="openWin('findPower.html')">
+          <img src="img/icon/nav2-1.png" />发现原力</a
+        >
+      </li>
+      <li>
+        <a href="javascript:void(0);" onclick="openWin('mall.html')"
+          ><img src="img/icon/nav3-1.png" />淘淘商城</a
+        >
+      </li>
+      <li>
+        <a href="javascript:void(0);" onclick="openWin('mine.html')"
+          ><img src="img/icon/nav4-1.png" />我的淘淘</a
+        >
+      </li>
+    </ul>
+
+    <script src="js/mui.min.js"></script>
+    <script src="js/echarts.common.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/axios.js"></script>
+    <script src="js/mescroll.min.js"></script>
+    <script src="js/source/index.js"></script>
+    <script>
+		
+			
+				var shareUrl = "http://mmmdzj.cn/mobileLogin/regist.html?code="+index.sys_userInfo.myCode
+				
+   /*   axios({
+        url: base_url + '/property/shareInfo',
+        method: 'POST',
+        // 请求体重发送的数据
+        params: {},
+        timeout: 50000,
+        // 设置请求头
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).then(function(res) { */
+				 $('#web_href').val(shareUrl);
+		
+       // $('#web_href').val(res.data.hrefApk);
+    /*  }); */
+
+      var shares = null;
+      var sweixin = null;
+      var buttons = [
+        {
+          title: '我的好友',
+          extra: {
+            scene: 'WXSceneSession'
+          }
+        },
+        {
+          title: '朋友圈',
+          extra: {
+            scene: 'WXSceneTimeline'
+          }
+        },
+        {
+          title: '我的收藏',
+          extra: {
+            scene: 'WXSceneFavorite'
+          }
+        }
+      ];
+      // H5 plus事件处理
+      function plusReady() {
+        updateSerivces();
+        //关闭非当前webview
+
+        var all = plus.webview.all();
+        var current = plus.webview.currentWebview();
+        for (var i = 0, len = all.length; i < len; i++) {
+          if (all[i] != current) {
+            all[i].close(this, false, 2000, false);
+          }
+        }
+      }
+      if (window.plus) {
+        plusReady();
+      } else {
+        document.addEventListener('plusready', plusReady, false);
+      }
+      /**
+       * 更新分享服务
+       */
+      function updateSerivces() {
+        plus.share.getServices(
+          function(s) {
+            shares = {};
+            for (var i in s) {
+              var t = s[i];
+              shares[t.id] = t;
+            }
+            sweixin = shares['weixin'];
+          },
+          function(e) {
+            outSet('获取分享服务列表失败：' + e.message);
+          }
+        );
+      }
+
+      // 分享网页0:微信1朋友圈
+      function shareWeb(i) {
+        index.closeShare();
+        var msg = {
+          type: 'web',
+          thumbs: ['_www/logo.png']
+        };
+        if (!web_href.value) {
+          plus.nativeUI.alert('请输入分享网页的链接地址!');
+          web_href.focus();
+          return;
+        }
+        msg.href = web_href.value;
+        if (!web_title.value) {
+          plus.nativeUI.alert('请输入分享网页的标题!');
+          web_title.focus();
+          return;
+        }
+        msg.title = web_title.value;
+        if (!web_content.value) {
+          plus.nativeUI.alert('请输入分享网页的描述!');
+          web_content.focus();
+          return;
+        }
+        msg.content = web_content.value;
+        share(sweixin, msg, buttons[i]);
+      }
+
+      // 分享
+      function share(srv, msg, button) {
+        outSet('分享操作：');
+        if (!srv) {
+          outLine('无效的分享服务！');
+          return;
+        }
+        button && (msg.extra = button.extra);
+        // 发送分享
+        if (srv.authenticated) {
+          outLine('---已授权---');
+          doShare(srv, msg);
+        } else {
+          outLine('---未授权---');
+          srv.authorize(
+            function() {
+              doShare(srv, msg);
+            },
+            function(e) {
+              outLine('认证授权失败：' + JSON.stringify(e));
+            }
+          );
+        }
+      }
+      // 发送分享
+      function doShare(srv, msg) {
+        outLine(JSON.stringify(msg));
+        srv.send(
+          msg,
+          function() {
+            outLine('分享到"' + srv.description + '"成功！');
+          },
+          function(e) {
+            outLine(
+              '分享到"' + srv.description + '"失败: ' + JSON.stringify(e)
+            );
+          }
+        );
+      }
+      // 解除授权
+      function cancelAuth() {
+        outSet('解除授权：');
+        if (sweixin) {
+          if (sweixin.authenticated) {
+            outLine('取消"' + sweixin.description + '"');
+          }
+          sweixin.forbid();
+        } else {
+          outLine('当前环境不支持微信分享操作!');
+        }
+      }
+
+      var gallery = mui('.mui-slider');
+      gallery.slider({
+        interval: 2000 //自动轮播周期，若为0则不自动播放，默认为0；
+      });
+
+      jQuery('.txtScroll-top').slide({
+        titCell: '.hd ul',
+        mainCell: '.bd ul',
+        autoPage: true,
+        effect: 'top',
+        autoPlay: true,
+        vis: 1
+      });
+
+      mui.init({
+        swipeBack: true //启用右滑关闭功能
+      });
+
+      $(function() {
+			
+					
+        //点击立即购买 弹出弹窗
+
+        $('.mui-popup-backdrop').click(function() {
+          $('.mui-popup-backdrop ').css('display', 'none');
+          $('.dialog-wrap ').css('display', 'none');
+          $('.wine-word ').css('display', 'none');
+          //$('.verify-dialog ').css('display', 'none');
+        });
+        //点击弹出TTI令
+
+     /*   $('.tj-btn').click(function() {
+          $('.dialog-wrap ').css('display', 'none');
+          $('.mui-popup-backdrop ').css('display', 'block');
+         // $('.verify-dialog ').css('display', 'block');
+        }); */
+      });
+
+      //验证码
+      var InterValObj; //timer变量，控制时间
+      var count = 60; //间隔函数，1秒执行
+      var curCount; //当前剩余秒数
+      var code = ''; //验证码
+      var codeLength = 6; //验证码长度
+      function sendMessage() {
+        curCount = count;
+        var dealType; //验证方式
+        var uid = $('#uid').val(); //用户uid
+        if ($('#phone').attr('checked') == true) {
+          dealType = 'phone';
+        } else {
+          dealType = 'email';
+        }
+        //产生验证码
+        for (var i = 0; i < codeLength; i++) {
+          code += parseInt(Math.random() * 9).toString();
+        }
+        //设置button效果，开始计时
+        $('#btnSendCode').attr('disabled', 'true');
+        $('#btnSendCode').val(+curCount + '秒再获取');
+        InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+        //向后台发送处理数据
+        $.ajax({
+          type: 'POST', //用POST方式传输
+          dataType: 'text', //数据格式:JSON
+          url: '', //目标地址
+          data: 'dealType=' + dealType + '&uid=' + uid + '&code=' + code,
+          error: function(XMLHttpRequest, textStatus, errorThrown) {},
+          success: function(msg) {}
+        });
+      }
+      //timer处理函数
+      function SetRemainTime() {
+        if (curCount == 0) {
+          window.clearInterval(InterValObj); //停止计时器
+          $('#btnSendCode').removeAttr('disabled'); //启用按钮
+          $('#btnSendCode').val('获取验证码');
+
+          code = ''; //清除验证码。如果不清除，过时间后，输入收到的验证码依然有效
+        } else {
+          curCount--;
+          $('#btnSendCode').val(+curCount + '秒再获取');
+        }
+      }
+
+      function isOpenWin(html) {
+        if (index.sys_userInfo && index.sys_userInfo.id) {
+          openWin(html);
+        } else {
+          var btnArray = ['取消', '立即登录'];
+          var tip = '当前账号未登录,请登录';
+          //提示去登录
+          mui.confirm(tip, '', btnArray, function(e) {
+            if (e.index == 1) {
+              localStorage.last = 0;
+              openWin('login.html');
+            } else {
+            }
+          });
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>购入订单</title>
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/reset.css" />
+		<script type="text/javascript" src="../js/count.js"></script>
+		<link rel="stylesheet" href="../css/style.css" />
+		<script type="text/javascript" src="../js/jquery-2.1.4.js"></script>
+
+
+	</head>
+
+	<body class="nav-page top-page color-page dw-page">
+	<header id="header" class="mui-bar mui-bar-nav">		
+		<h1 class="mui-title">购入订单</h1>
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<button class="mui-btn  mui-btn-link mui-pull-right gray-word" style=" color: #ffa128;">出让订单</button>
+	</header>
+	<ul class="order-nav">
+		<li  class="on-link">交易中</li>
+		<li>已打款</li>
+		<li>已完成</li>
+		<li>申诉中</li>
+	</ul>
+	<div class="line"></div>
+	<div class="sj-list">
+	<div class="info-tit">
+		<a href="" class="order-a">
+			<h6 style=" margin-left: .75rem;">卖家：周邀</h6>
+		</a>
+		<a class="phone"  href="tel:13828172679">
+			<img src="../img/tel_img.png" />
+			18287123735
+		</a>
+	</div>
+	<div class="order-wrap">
+	<a  href="" class="link-wrap">
+	<div class="sj-order">
+		<h1>50<span>滴</span></h1>
+		<h2>卖家收款支付宝：18287123735（*姚）</h2>
+		<ul>
+			<li>圣酒单价：29.96</li>
+			<li>合计金额：￥1998.00</li>
+		</ul>
+	</div>
+	<div class="combined">
+		<p>订单号：130999</p>
+		<h6>剩余<em id="countTimer"></em>系统关闭订单</h6>
+	</div>
+	</a>
+
+	</div>
+	<div class="order-btn">
+		<a class="state" href="">交易中</a>
+		<a class="timing"  id="payforBtn">我已付款</a>
+		<span id="cancelBtn" style=" border:1px solid #ffa128; color: #ffa128;">放弃购买</span>
+	</div>
+	</div>
+		<script type="text/javascript" charset="utf-8">
+			//mui初始化
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+
+
+
+//支付弹窗
+
+document.getElementById("payforBtn").addEventListener('tap', function() {
+				var btnArray = ['取消', '确认'];
+				mui.confirm('为避免给您带来不必要的纠纷，请确认是否已打款至卖家指定支付宝账户', '提示', btnArray, function(e) {
+					if (e.index == 1) {
+						alert("确认")
+					} else {
+					alert("取消")
+					}
+				})
+});
+
+
+//取消弹窗
+
+document.getElementById("cancelBtn").addEventListener('tap', function() {
+				var btnArray = ['取消', '确认'];
+				mui.confirm('今日放弃购买次数还有3次，确认要放弃次订单吗', '提示', btnArray, function(e) {
+					if (e.index == 1) {
+						alert("确认")
+					} else {
+					alert("取消")
+					}
+				})
+});
+
+
+		
+function checktime(i)
+{  
+    if(i<10){  
+        i="0"+i;
+    }  
+    else{i=i;}  
+    return i;  
+}  
+function freshTime(){  
+    var endtime=new Date('2018/10/30 23:59:59');  
+    var nowtime=new Date();  
+    var timer=parseInt(endtime.getTime()-nowtime.getTime());//这是毫秒，如果再/1000就是秒  
+    // 获取剩下的日、小时、分钟、秒钟  
+    // 一天有多少毫秒，一小时有多少毫秒，一分钟有多少毫秒，一秒钟有多少毫秒  
+    var dm=24*60*60*1000;  
+    var d=parseInt(timer/dm);  
+    var hm=60*60*1000;  
+    var h=parseInt((timer/hm)%24);  
+    var mm=60*1000;  
+    var m=parseInt((timer/mm)%60);  
+    var s=parseInt((timer/1000)%60);  
+    m=checktime(m);  
+    s=checktime(s);
+    document.getElementById('countTimer').innerHTML="<i>"+h+"</i>"+":"+"<i>"+m+"</i>"+":"+"<i>"+s+"</i>";
+    if (timer<0) {  
+         document.getElementById('countTimer').innerHTML="报价时间已结束！";  
+    }  
+}   
+   freshTime();  
+   var sh;  
+   sh=setInterval('freshTime()',1000)
+   
+   
+   
+   
+   
+   
+   
+   	
+        laydate({
+
+            elem: '#J-xl',
+             min: laydate.now(+1),
+
+        });
+
+
+
+		</script>
+	</body>
+
+
+
+</html>

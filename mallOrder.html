@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>我的订单</title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<script type="text/javascript" src="js/count.js"></script>
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+
+	</head>
+
+	<body class="nav-page top-page color-page dw-page">
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的订单</h1>
+
+		</header>
+		<div id="mallOrder">
+			<ul class="order-nav">
+				<li v-bind:class="{'on-link':status=='0'}" @click="switchStatus(0)">待付款</li>
+				<li v-bind:class="{'on-link':status=='1'}" @click="switchStatus(1)">待收货</li>
+				<li v-bind:class="{'on-link':status=='2'}" @click="switchStatus(2)">已完成</li>
+			</ul>
+			<div class="line"></div>
+			<div v-for="i in list" v-if="i.status=='0'">
+				<div class="info-tit">
+					<a class="order-a">
+						<img class="order-logo" src="img/round_logo.png" />
+						<h6>淘淘商城</h6>
+						<span class="mui-icon mui-icon-arrowright"></span>
+					</a>
+					<div class="phone" id='confirmBtn' @click="concatUs()">
+						<img src="img/tel_img.png" /> 联系客服
+					</div>
+				</div>
+
+				<div class="order-wrap">
+					<a href="javascript:void(0);" class="link-wrap">
+						<ul class="mall-list order-list">
+							<li>
+								<img :src="photo_src+i.img" />
+								<h1>{{i.brief}}</h1>
+								<h4>规格：{{i.spec?i.spec:i.spec2}}</h4>
+								<h4>数量：{{i.count}}</h4>
+							</li>
+
+						</ul>
+						<div class="combined">
+							<p v-if="i.alcoValueAdd">酿力：+{{i.alcoValueAdd*i.count}}</p>
+							<p v-if="i.alcoValue2">圣酒：{{i.alcoValue2*i.count}}</p>
+							<span v-if="i.alcoValueAdd">合计：<em>￥{{i.count*i.price+i.postage}}</em><i>{{i.postage==0?'(包邮)':i.postage}}</i></span>
+							<span v-if="i.alcoValue2">邮费：<em>￥{{i.postage2}}</em></span>
+
+						</div>
+					</a>
+				</div>
+				<div class="order-btn">
+					<a class="state">待付款</a>
+					<a class="timing" href="javascript:void(0);" @click="pay(i)">付款<em id="countTimer"></em></a>
+					<span @click="deleteOrder(i)">取消</span>
+				</div>
+			</div>
+
+			<div v-for="i in list" v-if="i.status=='1'">
+				<div class="info-tit">
+					<a class="order-a">
+						<img class="order-logo" src="img/round_logo.png" />
+						<h6>淘淘商城</h6>
+						<span class="mui-icon mui-icon-arrowright"></span>
+					</a>
+					<div class="phone" id='confirmBtn' @click="concatUs()">
+						<img src="img/tel_img.png" /> 联系客服
+					</div>
+				</div>
+
+				<div class="order-wrap">
+					<a href="javascript:void(0);" class="link-wrap">
+						<ul class="mall-list order-list">
+							<li>
+								<img :src="photo_src+i.img" />
+								<h1>{{i.brief}}</h1>
+								<h4>规格：{{i.spec?i.spec:i.spec2}}</h4>
+								<h4>数量：{{i.count}}</h4>
+							</li>
+
+						</ul>
+						<div class="order-btn">
+							<a class="state">待收货</a>
+							<a class="timing" href="javascript:void(0);" @click="down(i)">确认收货</a>
+						</div>
+					</a>
+				</div>
+
+			</div>
+
+			<div v-for="i in list" v-if="i.status=='2'">
+				<div class="info-tit">
+					<a class="order-a">
+						<img class="order-logo" src="img/round_logo.png" />
+						<h6>淘淘商城</h6>
+						<span class="mui-icon mui-icon-arrowright"></span>
+					</a>
+					<div class="phone" id='confirmBtn' @click="concatUs()">
+						<img src="img/tel_img.png" /> 联系客服
+					</div>
+				</div>
+
+				<div class="order-wrap">
+					<a href="javascript:void(0);" class="link-wrap">
+						<ul class="mall-list order-list">
+							<li>
+								<img :src="photo_src+i.img" />
+								<h1>{{i.brief}}</h1>
+								<h4>规格：{{i.spec?i.spec:i.spec2}}</h4>
+								<h4>数量：{{i.count}}</h4>
+							</li>
+
+						</ul>
+						<div class="order-btn">
+							<a class="state">已完成</a>
+						</div>
+					</a>
+				</div>
+
+			</div>
+
+		</div>
+		<script src="js/config.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/axios.js"></script>
+
+		<script src="js/source/mallOrder.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			//mui初始化
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+
+			$("#confirmBtn").bind('tap', function(e) {
+				var btnArray = ['取消', '确定'];
+				var html = '<div class="mui-popup-text">客服服务时间：9:00-17:30</div>' + ' <div class="mui-popup-text">客服联系电话</div>'
+				mui.confirm('400-888-8888', html, btnArray, function(e) {
+					if(e.index == 1) {
+						alert("确定")
+					} else {
+						alert("取消")
+					}
+				})
+			});
+
+			function checktime(i) {
+				if(i < 10) {
+					i = "0" + i;
+				} else {
+					i = i;
+				}
+				return i;
+			}
+var channel=null;
+// 1. 获取支付通道
+function plusReady(){
+    // 获取支付通道
+    plus.payment.getChannels(function(channels){
+	
+        channel=channels[0];
+    },function(e){
+        alert("获取支付通道失败："+e.message);
+    });
+}
+document.addEventListener('plusready',plusReady,false);
+
+var ALIPAYSERVER=base_url + "/ali/pay";
+//var ALIPAYSERVER='http://demo.dcloud.net.cn/helloh5/payment/alipay.php?total=';
+
+		</script>
+<!-- 		<textarea id="ttt" style="height: 1000px;"></textarea> -->
+	</body>
+
+</html>

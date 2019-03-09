@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>我的等级</title>
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/reset.css" />
+		<script type="text/javascript" src="../js/count.js"></script>
+		<link rel="stylesheet" href="../css/style.css" />
+		<script type="text/javascript" src="../js/jquery-2.1.4.js"></script>
+
+
+	</head>
+
+	<body class=" top-page  ">
+	<header id="header" class="mui-bar mui-bar-nav">		
+		<h1 class="mui-title">我的等级</h1>
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<button class="mui-btn  mui-btn-link mui-pull-right gray-word">等级制度</button>
+	</header>
+	<div class="vip-wrap vip-1">
+		<div class="viptop">
+			<img src="../img/v-icon1.png"/>
+			<h1>用户等级：酿酒师</h1>
+			<div id="demo1" class="mui-text-center">
+					<p class="mui-progressbar mui-progressbar-warning" data-progress="20" ><span></span> </p>
+					<i></i><i></i><i></i><i></i><i></i>
+					<em class="on-vip">酿酒师</em><em>大师</em><em>宗师</em><em>酒魔</em><em>酒王</em>
+					
+			</div>
+			<h5>在邀请9名粉丝，升到大师</h5>
+		</div>
+		
+	</div>
+	<div class="vip-tit">
+		我的粉丝荣誉（0个）
+	</div>
+	<div class="line"></div>
+	<div class="vip-tit">
+	荣誉资质
+	</div>
+	<ul class="icon-list">
+		<li>
+			<img src="../img/ali_pay.png"/>
+			<p>酒杯</p>
+			<span>6</span>
+		</li>
+		<li>
+			<img src="../img/ali_pay.png"/>
+			<p>酒壶</p>
+			<span>6</span>
+		</li>
+		<li>
+			<img src="../img/ali_pay.png"/>
+			<p>酒坛</p>
+			<span>0</span>
+		</li>
+		<li>
+			<img src="../img/ali_pay.png"/>
+			<p>酒窖</p>
+			<span>0</span>
+		</li>
+		<li>
+			<img src="../img/ali_pay.png"/>
+			<p>酒庄</p>
+			<span>2</span>
+		</li>
+	</ul>
+	<div class="line"></div>
+	<div class="vip-tit">
+	专属权益
+	</div>
+	<ul class="equity">
+		<li>
+			<img src="../img/eq1-2.png"/>
+			<h1>圣酒保障</h1>
+			<h2>荣誉等级越高，自己领取圣酒的数量越多</h2>
+			<span><img src="../img/vip1-2.png"/></span>
+		</li>
+		<li>
+			<img src="../img/eq1-1.png"/>
+			<h1>大师特权</h1>
+			<h2>成为大师后，有一次仅用1滴圣酒兑换酒品的特权</h2>
+			<span><img src="../img/vip2-1.png"/></span>
+		</li>
+		<li>
+			<img src="../img/eq1-1.png"/>
+			<h1>表决权</h1>
+			<h2>酒链世界共识规则制度和修订的投票表决权</h2>
+			<span><img src="../img/vip3-1.png"/></span>
+		</li>
+		<li>
+			<img src="../img/eq1-1.png"/>
+			<h1>记录权</h1>
+			<h2>酒链世界区块链数据节点的记录权</h2>
+			<span><img src="../img/vip4-1.png"/></span>
+		</li>
+		<li>
+			<img src="../img/eq1-1.png"/>
+			<h1>发起权</h1>
+			<h2>酒链世界共识规则修订的发起权</h2>
+			<span><img src="../img/vip5-1.png"/></span>
+		</li>
+		<li>
+			<img src="../img/eq1-1.png"/>
+			<h1>特殊贡献奖</h1>
+			<h2>酒链世界的特殊贡献奖</h2>
+			<span><img src="../img/vip3-1.png"/></span>
+		</li>
+		<li>
+			<img src="../img/eq1-1.png"/>
+			<h1>杰出贡献奖</h1>
+			<h2>酒链世界的杰出贡献奖</h2>
+			<span><img src="../img/vip4-1.png"/></span>
+		</li>
+		<li>
+			<img src="../img/eq1-1.png"/>
+			<h1>最高荣誉奖</h1>
+			<h2>酒链世界的最高荣誉奖</h2>
+			<span><img src="../img/vip5-1.png"/></span>
+		</li>
+	</ul>
+	<script>
+					//示例1
+			var progressbar1 = mui('#demo1');
+			mui(progressbar1).progressbar().setProgress(10)
+			progressbar1.on('tap', 'a', function() {
+				mui(progressbar1).progressbar().setProgress(this.getAttribute('data-progress'));
+			});
+			/**
+			 * 通过随机数模拟业务进度，真实业务中需根据实际进度修改
+			 * @param {Object} container
+			 * @param {Object} progress
+			 */
+			function simulateLoading(container, progress) {
+				if (typeof container === 'number') {
+					progress = container;
+					container = 'body';
+				}
+				setTimeout(function() {
+					progress += Math.random() * 20;
+					mui(container).progressbar().setProgress(progress);
+					if (progress < 100) {
+						simulateLoading(container, progress);
+					} else {
+						mui(container).progressbar().hide();
+					}
+				}, Math.random() * 200 + 200);
+			}
+
+	</script>
+	</body>
+
+</html>

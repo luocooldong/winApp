@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>TTI记录</title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<script type="text/javascript" src="js/count.js"></script>
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+
+	</head>
+
+	<body class="top-page ">
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-icon mui-icon-left-nav mui-pull-left" onclick="openWin('index.html')"></a>
+			<h1 class="mui-title">TTI记录</h1>
+		</header>
+		<div id="wineHistory">
+			<div class="wine-bg">
+				<h3>可用TTI</h3>
+				<h4>{{alcoValue}}</h4>
+				<div>
+					<h5>冻结TTI</h5>
+					<h6>{{freezValue?freezValue:'0.00'}}</h6>
+				</div>
+			</div>
+			<ul class=" wine-history-list" style="display: block;">
+		<!-- 		<li>
+					<a href="javascript:void(0);">
+						<img src="img/luck_exchange.png" />
+						<h1>幸运兑</h1>
+					</a>
+				</li>
+				<li>
+					<a href="javascript:void(0);" onclick="openWin('manor.html')">
+						<img src="img/happy_exchange_icon.png" />
+						<h1>开心兑</h1>
+					</a>
+				</li> -->
+				<li>
+					<a href="javascript:void(0);" @click="toSell()">
+						<img src="img/gift_winemaster.png" />
+						<h1 style="line-height: 4.25rem;">出让TTI</h1>
+					</a>
+				</li>
+			<!-- </ul>
+			<div class="line"></div>
+			<div class="wine-history">
+
+				<h1 class="line-tit"><a>TTI记录</a> </h1>
+				<h1 class="line-tit"><a href="javascript:void(0);" onclick="openWin('sj-record.html')">日常<span class="mui-icon mui-icon-arrowright"></span><span>查看</span></a> </h1>
+				<h1 class="line-tit"><a href="">谢师酒<span class="mui-icon mui-icon-arrowright"></span><span>查看</span></a> </h1>
+				<h1 class="line-tit"><a href="">交易<span class="mui-icon mui-icon-arrowright"></span><span>查看</span></a> </h1>
+				<h1 class="line-tit"><a href="">兑换<span class="mui-icon mui-icon-arrowright"></span><span>查看</span></a> </h1>
+				<h1 class="line-tit"><a href="">品酒<span class="mui-icon mui-icon-arrowright"></span><span>查看</span></a> </h1>
+				<h1 class="line-tit"><a href="">其他<span class="mui-icon mui-icon-arrowright"></span><span>查看</span></a> </h1>
+			</div> -->
+			<div class="line"></div>
+			<div class="history-word">
+				<h1>TTI简介</h1>
+				<p>TTI是依托于区块链技术，基于淘淘达人在淘淘星球活动数据产生的奖励，形成的数字资产，可以用于淘淘上的消费、兑换等。</p>
+				<p>淘淘总量为1.2亿，其中80%挖矿、10%市场开发、10%技术开发维护。每3年淘淘量减少一半，随着时间的推移获取难度越来越大，前期参与更有优势。</p>
+				<p>淘淘星球集结了数字通证、大数据、互联网、区块链、四大板块。未来个人价值会得到最大化的体现：社交信用度、娱乐时常、购物金额、通讯信息、旅游频次、健康信息、教育程度等等。</p>
+				<p>未来将搭建淘淘星球基础设施，让居民入住，提供淘淘奖励。引进合作企业为淘淘星球居民提供各方面服务。引进数据需求方，让数据信息交换可以公平公正进行。</p>
+				
+				
+			</div>
+		</div>
+			<script src="js/config.js"></script>
+			<script src="js/vue.js"></script>
+			<script src="js/axios.js"></script>
+			<script src="js/source/wine-history.js"></script>
+
+	</body>
+
+</html>

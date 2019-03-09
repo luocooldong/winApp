@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>日常</title>
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/reset.css" />
+		<script type="text/javascript" src="../js/count.js"></script>
+		<link rel="stylesheet" href="../css/style.css" />
+		<script type="text/javascript" src="../js/jquery-2.1.4.js"></script>
+
+	</head>
+
+	<body class="p-page top-page color-page">
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">日常</h1>
+			<a id="menu" href="#topPopover" style="color: #F0AD4E;" class="mui-icon mui-icon-bars mui-pull-right"></a>
+		</header>
+		<!--右上角弹出菜单-->
+		<div id="topPopover" class="mui-popover">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view" id="record-class">
+						<li class="mui-table-view-cell">
+							<a href="#">cItem1</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item2</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item3</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item4</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item5</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item6</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item7</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item8</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item9</a>
+						</li>
+						<li class="mui-table-view-cell"><a href="#">Item10</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+		
+		<ul class="record-list">
+			<li>
+				<h1>日常收取</h1>
+				<h2>10-10  15:30</h2>
+				<span>+0.02010</span>
+			</li>
+			<li>
+				<h1>日常收取</h1>
+				<h2>10-10  15:30</h2>
+				<span>+0.02010</span>
+			</li>
+			<li>
+				<h1>日常收取</h1>
+				<h2>10-10  15:30</h2>
+				<span>+0.02010</span>
+			</li>
+			<li>
+				<h1>日常收取</h1>
+				<h2>10-10  15:30</h2>
+				<span>+0.02010</span>
+			</li>
+		</ul>
+		
+		<script>
+			
+
+			mui.init();
+			
+			mui.plusReady(function () {
+//				var view = plus.nativeObj.View.getViewById("title");
+//				
+//				var bitmap = new plus.nativeObj.Bitmap("back");
+//				bitmap.loadBase64Data("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAb1BMVEUAAAAAev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8Aev8AAACubimgAAAAI3RSTlMAGfUTGfQTGPMSGPIYGhgaGBsXGxcbFxwXHBccFhwWHRYdHWufDPQAAAABYktHRACIBR1IAAAAB3RJTUUH4QETEBwooeTlkQAAAJVJREFUSMft1EkSgkAQRNFGUXFWHBDBibr/HTUwD5B/48Ig1y+io7u6MqUhf5hsNEY+j5hMgZ/FJ8Xc9ovos3T96utjbfqN/Nb0O/m96Uv5g+mP8ifTn+Ur01/ka9Nf5RvTt/I309/lH6Z/yr9Mn+Q71/MT8B34K/E58Enzv8R/K98HvnF8p3lr8F7izce7lbf3kJ/lDQp9HdBhgg3PAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE3LTAxLTE5VDE2OjI4OjQwKzA4OjAwpTDFwQAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxNy0wMS0xOVQxNjoyODo0MCswODowMNRtfX0AAAAASUVORK5CYII=");
+//				view.drawBitmap(bitmap, {}, {
+//					top: "10px",
+//					left: "10px",
+//					width: "24px",
+//					height: "24px"
+//				});
+//				
+//				view.setTouchEventRect({top:"0px",left:"0px",width:"44px",height:"100%"});
+			});
+			
+			mui('.mui-scroll-wrapper').scroll();
+			mui('body').on('shown', '.mui-popover', function(e) {
+				//console.log('shown', e.detail.id);//detail为当前popover元素
+			});
+			mui('body').on('hidden', '.mui-popover', function(e) {
+				//console.log('hidden', e.detail.id);//detail为当前popover元素
+			});
+		</script>
+	</body>
+
+</html>

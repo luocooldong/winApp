@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title></title>
+		<link href="css/mescroll.min.css" rel="stylesheet" />
+
+		<!-- mui-->
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<!-- jq-->
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+		<!-- other-->
+		<script src="js/clipboard.min.js"></script>
+
+		<script src="fonts/iconfont.js"></script>
+		<script src="js/common.js"></script>
+		<script src="js/count.js"></script>
+
+		<link rel="stylesheet" href="css/reset.css" />
+		<link rel="stylesheet" href="css/before.css" />
+
+		<style>
+			body{
+				background: #f0f0f0;
+			}
+	.br{
+		
+	}
+.mescroll{
+			position: fixed;
+			top: 10px;
+			bottom: 0;
+			height: auto; /*如设置bottom:50px,则需height:auto才能生效*/
+		}
+.backDiv{padding: 12px;}
+.backDiv .headImg{display: block;margin: 10px auto;width: 50px;height: 50px;}
+.backDiv .sellerName{text-align: center;line-height: 30px;margin-bottom: 20px;}
+.backDiv .sellerName img{height: 30px;vertical-align:bottom;}
+
+.backDiv .fl{width:100%;text-align: center;display: inline-block;line-height: 40px;}
+.mui-grid-9{background: #ffffff !important;border: none !important;}
+.mui-grid-9 li{border: none !important;}
+a img{width: 50%;}
+		</style>
+	</head>
+	<body>
+
+		<header class="mui-bar mui-bar-nav" style="background: #FFFFFF !important;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #000000;"></a>
+			<h1 class="mui-title">商家管理</h1>
+		</header>
+
+		<div class="mui-content mescroll" id="sjrzYes">
+			<div class="mui-card backDiv">
+				<img class="headImg" src="img/user_ok.png" />
+				<div class="sellerName">商家_{{seller.sellerName}}<img src="img/yrz.png" /></div>
+				<span class="fl">提现费率：{{seller.rate}}%</span>
+			</div>
+			<div class="mui-card">
+				<div class="mui-card-content">
+					<div class="mui-card-content-inner">
+						<ul class="mui-table-view mui-grid-view mui-grid-9">
+							<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" id="fbspId"><a>
+									<img src="img/ddgl.png">
+									<div class="mui-media-body">发布商品</div>
+								</a></li>
+							<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3" onclick="openWin('order.html')"><a>
+									<img src="img/ddgl.png">
+									<div class="mui-media-body">订单管理</div>
+								</a></li>
+							<!-- <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a>
+									<img src="img/ddgl.png">
+									<div class="mui-media-body">扫码收款</div>
+								</a></li>
+							<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a>
+									<img src="img/ddgl.png">
+									<div class="mui-media-body">收款码</div>
+								</a></li>
+							<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a>
+									<img src="img/ddgl.png">
+									<div class="mui-media-body">提现申请</div>
+								</a></li>
+							<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a>
+									<img src="img/ddgl.png">
+									<div class="mui-media-body">提现记录</div>
+								</a></li>
+							<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+									<img src="img/ddgl.png">
+									<div class="mui-media-body">商家帮助</div>
+								</a></li> -->
+
+						</ul>
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+
+
+
+
+
+		<script src="js/axios.js"></script>
+		<script src="js/config.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/mescroll.min.js"></script>
+		<script src="js/source/sjrz_yes.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				beforeback: function() {
+					//获得父页面的webview
+					var list = plus.webview.currentWebview().opener();
+					//触发父页面的自定义事件(refresh),从而进行刷新
+					mui.fire(list, 'refresh');
+					//返回true,继续页面关闭逻辑
+
+					return true;
+
+
+				}
+			});
+
+
+			var mescroll = new MeScroll("sjrzYes", {
+				down: {
+					callback: downCallback
+				},
+				up: {
+					callback: upCallback
+
+				}
+			});
+
+			//下拉刷新的回调
+			function downCallback() {
+				$(".downwarp-content").html('')
+				return false;
+
+			}
+
+
+			function upCallback(page) {
+				$(".upwarp-tip").html('')
+				$(".mescroll-rotate").css("width", "0").css("height", "0")
+				return false;
+			}
+			
+				document.addEventListener('plusready', function() {
+					document.getElementById('fbspId').addEventListener('tap', function() {
+						openWin('fbsp.html');
+					}); 
+				});
+			
+			
+		</script>
+
+	</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>完善钱包资料</title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<script type="text/javascript" src="js/count.js"></script>
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+		<style>
+			body{padding-bottom: 0.625rem;}
+		</style>
+
+	</head>
+
+	<body >
+
+		<div class="r-wrap" id="r4">
+			<a href=""><span class="mui-action-back mui-icon mui-icon-arrowleft"></span></a>
+			<h1>完善钱包资料</h1>
+			<h2>当前账户绑定手机{{sys_userInfo.phone|phoneFilter}}（{{sys_userInfo.name|nameFilter}}）</h2>
+			
+			<form>
+				<div class="mui-input-row">
+    				<input id="pay-username" type="text" class="mui-input-clear text-input" placeholder="输入支付宝真实姓名" v-model="aliName">
+    			</div>
+    			<div class="mui-input-row">
+    			<input id="pay-account" type="text" class="mui-input-clear text-input" placeholder="输入支付宝收款账号" v-model="aliAccount">
+    			</div>
+    			<div class="code-box">
+					<div class="mui-input-row line-input yzm-input">
+    					<input  type="number" class="mui-input-clear text-input yzm-input" placeholder="请输入图片验证码" v-model="imgCode">   				
+    				</div>
+    				<div class="ewm-box"><img id="imgCodeController" src="" @click="getImgCode()"/></div>
+    			</div>
+				<div class="code-box">
+					<div class="mui-input-row line-input yzm-input ">
+    					<input id="phone-code" type="number" class="mui-input-clear text-input yzm-input" placeholder="请输入短信验证码" v-model="msgCode">   			
+    				</div>
+    				<input id="btnSendCode" class="num-box" type="button" value="获取验证码" onClick="sendMessage()" />  	
+				</div>
+				
+				<div v-if="img.length<=0"  style="padding: 1.8rem;border: 1px solid lightgray;margin-top: 0.625rem;">
+	
+					<img  src="img/add.png" style="width: 20%;display: block;margin: 0 auto;" @click="chooseWay()" />
+					<p   style="width: 100%;text-align: center;color: lightgray;" @click="chooseWay()" >请您上传身份证正面照片</p> 
+				</div>
+				
+				<div v-if="img.length>0"  style="margin-top: 0.625rem;">
+					<img style="max-height: 10rem;width: 100%; display: block;margin: 0 auto;"  :src="img[0].localurl" data-preview-src="" data-preview-group="1" @click="chooseWay()" />
+			
+				</div>
+				
+				<a  class="r-btn" id="createId">提交</a>
+
+
+			</form>
+			
+		</div>
+<script src="js/config.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/axios.js"></script>
+		<script src="js/source/r-4.js"></script>		
+<script>
+document.getElementById("btnSendCode").addEventListener('tap', function() {
+		mui.toast('验证码已发送');
+});
+
+var u = JSON.parse(localStorage.getItem('sys_userInfo'))
+u.isPayed = 0
+localStorage.setItem('sys_userInfo',JSON.stringify(u))
+
+
+/*	function addwallet(){
+		var username = $("#pay-username").val(),			
+			useraccount = $("#pay-account").val(),
+			imgcode = $("#img-code").val(),
+			phonecode = $("#phone-code").val();
+			
+			
+			//验证支付宝真实姓名
+			if(username.length == 0) {
+				mui.toast('姓名不能为空');
+				return false;
+			}			
+			var regname = /^[\u4e00-\u9fa5]{2,4}$/;
+			if(!regname.test(username)) {
+				mui.toast('请输入真实姓名！');
+				return false;
+			}
+			
+			//验证支付宝账号
+			if(useraccount.length == 0) {
+				mui.toast('支付宝账号不能为空');
+				return false;
+			}
+
+
+//			验证图片验证码		
+//			调后台方法检查，这里写死为22222222
+
+			if(imgcode.length == 0) {
+				mui.toast('请输入图片验证码');
+				return false;
+			}
+			if(imgcode != '22') {
+				mui.toast('图片验证码错误');
+				return false;
+			}
+			
+//			验证短信验证码		
+//			调后台方法检查注册码，这里写死为22222222
+
+			if(phonecode.length == 0) {
+				mui.toast('请输入短信验证码');
+				return false;
+			}
+			if(phonecode != '11') {
+				mui.toast('短信验证码错误');
+				return false;
+			}
+
+			r4.perfectWallet()
+	}*/
+	
+			
+
+
+
+//验证码
+			var InterValObj; //timer变量，控制时间
+			var count = 60; //间隔函数，1秒执行
+			var curCount; //当前剩余秒数
+			var code = ""; //验证码
+			var codeLength = 6; //验证码长度
+			function sendMessage() {
+				curCount = count;
+				var dealType; //验证方式
+				var uid = $("#uid").val(); //用户uid
+				if($("#phone").attr("checked") == true) {
+					dealType = "phone";
+				} else {
+					dealType = "email";
+				}
+				//产生验证码
+				for(var i = 0; i < codeLength; i++) {
+					code += parseInt(Math.random() * 9).toString();
+				}
+				//设置button效果，开始计时
+				$("#btnSendCode").attr("disabled", "true");
+				$("#btnSendCode").val(+curCount + "秒再获取");
+				InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+				r4.sendMsg()
+			}
+			//timer处理函数
+			function SetRemainTime() {
+
+				if(curCount == 0) {
+					window.clearInterval(InterValObj); //停止计时器
+					$("#btnSendCode").removeAttr("disabled"); //启用按钮
+					$("#btnSendCode").val("获取验证码");
+
+					code = ""; //清除验证码。如果不清除，过时间后，输入收到的验证码依然有效    
+				} else {
+					curCount--;
+					$("#btnSendCode").val(+curCount + "秒再获取");
+				}
+			}
+</script>
+	</body>
+
+</html>

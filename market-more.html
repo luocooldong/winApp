@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>TTI市场</title>
+		<script src="js/mui.min.js"></script>
+			<link rel="stylesheet" href="css/mescroll.min.css" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<script type="text/javascript" src="js/count.js"></script>
+	
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+
+
+	</head>
+
+	<body class="top-page ">
+	<header id="header" class="mui-bar mui-bar-nav">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 class="mui-title">TTI市场</h1>
+		<button class="mui-btn  mui-btn-link mui-pull-right gray-word" onclick="openWin('jygz.html')">交易规则</button>
+	</header>
+<div id="marketMore" class="mescroll">
+			<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
+				<a class="mui-control-item  mui-active" href="#item1">出让TTI</a>
+				<a class="mui-control-item" href="#item2">交易完成</a>
+			</div>
+
+			<div>
+				<div id="item1" class="mui-control-content mui-active wine-more">
+					<ul class="tit-name">
+						<li class="curent-tit">时间 <span class="up" style="opacity: .4;"></span><span class="down"></span></li>
+						<li>数量<span class="up"></span><span class="down"></span></li>
+						<li>单价<span class="up"></span><span class="down"></span></li>
+						<li>状态</li>
+					</ul>
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell" v-for="i in list0"><span>{{i.createDate | dateTime}}</span><span>{{i.alcoCount}}个</span><span>{{i.alcoPrice}}元</span><span class="gr-dialog" @click="buyDialog(i)">立即购买</span></li>
+						
+					</ul>
+			
+				</div>
+				<div id="item2" class="mui-control-content wine-more">
+					<ul class="tit-name">
+						<li>购入时间</li>
+						<li>数量</li>
+						<li>单价</li>
+						<li>完成时间</li>
+					</ul>
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell"  v-for="i in list1"><span>{{i.sellDate | dateTime}}</span><span>{{i.alcoCount}}个</span><span>{{i.alcoPrice}}元</span><span>{{i.updateDate | dateTime}}</span></li>
+					</ul>
+
+				</div>
+
+			</div>
+		<div class="mui-popup-backdrop mui-active" style="display: none;"></div>
+		<div class="dialog-wrap" style=" display: none;">
+			<h1>购入</h1>
+			<h2>打款账户：****提交后可查看</h2>
+			<h2>联系人电话：****提交后可查看</h2>
+		     <h2>购入TTI单价：￥{{ i.alcoPrice }}</h2>
+		<h2>购入TTI数量：{{ i.alcoCount }}个</h2>
+		<h2>合计应付金额：￥{{ i.alcoCount * i.alcoPrice }}</h2>
+			<img src="img/line.png"/>
+			<p><span>风险提示：</span>TTI是淘淘世界的数字资产，TTI交易属于个人行为，淘淘世界仅提供信息发布及展示；TTI价格有涨有跌，市场有风险，交易需谨慎！</p>
+			<div class="btn-group">
+				<a  href="javascript:void(0);" class="close-btn" href="">放弃</a>
+				<a class="tj-btn" @click="submitMarket()">提交订单</a>
+			</div>
+		</div>
+		
+		<div class="verify-dialog" style=" display: none;">
+			<h1>短信验证</h1>
+			<h2>应付金额：<span>￥23181.03</span></h2>
+			<p>短信验证码将发送至18287123735，请输入图片验证码后，再获取短信验证码。</p>
+			<form>
+				
+    			<div class="code-box">
+					<div class="mui-input-row line-input yzm-input">
+    					<input id="img-code" type="number" class="mui-input-clear text-input yzm-input" placeholder="请输入图片验证码">   				
+    				</div>
+    				<div class="ewm-box"><img src="img/ewm.png"/></div>
+    			</div>
+				<div class="code-box">
+					<div class="mui-input-row line-input yzm-input ">
+    					<input id="phone-code" type="number" class="mui-input-clear text-input yzm-input" placeholder="请输入短信验证码">   			
+    				</div>
+    				<input id="btnSendCode" class="num-box" type="button" value="获取验证码" onClick="sendMessage()" />  	
+				</div>
+				<a  class="r-btn">确定</a>
+
+
+			</form>
+		</div>
+</div>
+	<script src="js/config.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/axios.js"></script>
+		<script src="js/mescroll.min.js"></script>
+		<script src="js/source/market-more.js"></script>
+	<script>			
+			$(function(){
+				$(".gr-dialog").click(function(){
+					$(".mui-popup-backdrop ").css("display","block");
+					$(".dialog-wrap ").css("display","block");
+				})
+				$(".close-btn").click(function(){
+					$(".mui-popup-backdrop ").css("display","none");
+					$(".dialog-wrap ").css("display","none");
+				});
+				//点击立即购买 弹出弹窗
+				
+
+		/* 		$(".mui-popup-backdrop").click(function(){
+					$(".mui-popup-backdrop ").css("display","none");
+					$(".dialog-wrap ").css("display","none");
+					$(".verify-dialog ").css("display","none");
+
+				}); */
+				//点击弹出TTI令
+				
+			/* 	$(".tj-btn").click(function(){
+					$(".dialog-wrap ").css("display","none");
+					$(".mui-popup-backdrop ").css("display","block");
+					$(".verify-dialog ").css("display","block");
+				}) */
+			})
+			
+			
+			
+
+//验证码
+var InterValObj; //timer变量，控制时间
+var count = 60; //间隔函数，1秒执行
+var curCount; //当前剩余秒数
+var code = ""; //验证码
+var codeLength = 6; //验证码长度
+function sendMessage() {
+curCount = count;
+var dealType; //验证方式
+var uid=$("#uid").val();//用户uid
+if ($("#phone").attr("checked") == true) {
+	dealType = "phone";
+}
+else {
+	dealType = "email";
+}
+//产生验证码
+for (var i = 0; i < codeLength; i++) {
+	code += parseInt(Math.random() * 9).toString();
+}
+//设置button效果，开始计时
+	$("#btnSendCode").attr("disabled", "true");
+	$("#btnSendCode").val( + curCount + "秒再获取");
+	InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+//向后台发送处理数据
+	$.ajax({
+		type: "POST", //用POST方式传输
+		dataType: "text", //数据格式:JSON
+		url: '', //目标地址
+		data: "dealType=" + dealType +"&uid=" + uid + "&code=" + code,
+		error: function (XMLHttpRequest, textStatus, errorThrown) { },
+		success: function (msg){ }
+	});
+}
+//timer处理函数
+function SetRemainTime() {
+
+	if (curCount == 0) {                
+		window.clearInterval(InterValObj);//停止计时器
+		$("#btnSendCode").removeAttr("disabled");//启用按钮
+		$("#btnSendCode").val("获取验证码");
+			
+		code = ""; //清除验证码。如果不清除，过时间后，输入收到的验证码依然有效    
+	}
+	else {
+		curCount--;
+		$("#btnSendCode").val( + curCount + "秒再获取");
+	}
+}
+		</script>		
+	</body>
+
+</html>

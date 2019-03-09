@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>完善钱包资料</title>
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/reset.css" />
+		<script type="text/javascript" src="../js/count.js"></script>
+		<link rel="stylesheet" href="../css/style.css" />
+		<script type="text/javascript" src="../js/jquery-2.1.4.js"></script>
+
+
+	</head>
+
+	<body >
+
+		<div class="r-wrap">
+			<a href=""><span class="mui-icon mui-icon-arrowleft"></span></a>
+			<h1>完善钱包资料</h1>
+			<h2>当前账户绑定手机1828****806（*李骏）</h2>
+			
+			<form>
+				<div class="mui-input-row">
+    				<input id="pay-username" type="text" class="mui-input-clear text-input" placeholder="输入支付宝真实姓名">
+    			</div>
+    			<div class="mui-input-row">
+    			<input id="pay-account" type="text" class="mui-input-clear text-input" placeholder="输入支付宝收款账号">
+    			</div>
+    			<div class="code-box">
+					<div class="mui-input-row line-input yzm-input">
+    					<input id="img-code" type="number" class="mui-input-clear text-input yzm-input" placeholder="请输入图片验证码">   				
+    				</div>
+    				<div class="ewm-box"><img src="../img/ewm.png"/></div>
+    			</div>
+				<div class="code-box">
+					<div class="mui-input-row line-input yzm-input ">
+    					<input id="phone-code" type="number" class="mui-input-clear text-input yzm-input" placeholder="请输入短信验证码">   			
+    				</div>
+    				<input id="btnSendCode" class="num-box" type="button" value="获取验证码" onClick="sendMessage()" />  	
+				</div>
+				<a onclick="addwallet()" class="r-btn">创建</a>
+
+
+			</form>
+			
+		</div>
+<script>
+document.getElementById("btnSendCode").addEventListener('tap', function() {
+				mui.toast('验证码已发送');
+			});
+	function addwallet(){
+		var username = $("#pay-username").val(),			
+			useraccount = $("#pay-account").val(),
+			imgcode = $("#img-code").val(),
+			phonecode = $("#phone-code").val();
+			
+			
+			//验证支付宝真实姓名
+			if(username.length == 0) {
+				mui.toast('姓名不能为空');
+				return false;
+			}			
+			var regname = /^[\u4e00-\u9fa5]{2,4}$/;
+			if(!regname.test(username)) {
+				mui.toast('请输入真实姓名！');
+				return false;
+			}
+			
+			//验证支付宝账号
+			if(useraccount.length == 0) {
+				mui.toast('支付宝账号不能为空');
+				return false;
+			}
+
+
+//			验证图片验证码		
+//			调后台方法检查，这里写死为22222222
+
+			if(imgcode.length == 0) {
+				mui.toast('请输入图片验证码');
+				return false;
+			}
+			if(imgcode != '22222222') {
+				mui.toast('图片验证码错误');
+				return false;
+			}
+			
+//			验证短信验证码		
+//			调后台方法检查注册码，这里写死为22222222
+
+			if(phonecode.length == 0) {
+				mui.toast('请输入短信验证码');
+				return false;
+			}
+			if(phonecode != '11111111') {
+				mui.toast('短信验证码错误');
+				return false;
+			}
+
+
+	}
+	
+			
+
+
+
+
+//验证码
+var InterValObj; //timer变量，控制时间
+var count = 60; //间隔函数，1秒执行
+var curCount; //当前剩余秒数
+var code = ""; //验证码
+var codeLength = 6; //验证码长度
+function sendMessage() {
+curCount = count;
+var dealType; //验证方式
+var uid=$("#uid").val();//用户uid
+if ($("#phone").attr("checked") == true) {
+	dealType = "phone";
+}
+else {
+	dealType = "email";
+}
+//产生验证码
+for (var i = 0; i < codeLength; i++) {
+	code += parseInt(Math.random() * 9).toString();
+}
+//设置button效果，开始计时
+	$("#btnSendCode").attr("disabled", "true");
+	$("#btnSendCode").val( + curCount + "秒再获取");
+	InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+//向后台发送处理数据
+	$.ajax({
+		type: "POST", //用POST方式传输
+		dataType: "text", //数据格式:JSON
+		url: '', //目标地址
+		data: "dealType=" + dealType +"&uid=" + uid + "&code=" + code,
+		error: function (XMLHttpRequest, textStatus, errorThrown) { },
+		success: function (msg){ }
+	});
+}
+//timer处理函数
+function SetRemainTime() {
+
+	if (curCount == 0) {                
+		window.clearInterval(InterValObj);//停止计时器
+		$("#btnSendCode").removeAttr("disabled");//启用按钮
+		$("#btnSendCode").val("获取验证码");
+			
+		code = ""; //清除验证码。如果不清除，过时间后，输入收到的验证码依然有效    
+	}
+	else {
+		curCount--;
+		$("#btnSendCode").val( + curCount + "秒再获取");
+	}
+}
+	
+</script>
+	</body>
+
+</html>

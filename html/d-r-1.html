@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>完善资料</title>
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/reset.css" />
+		<script type="text/javascript" src="../js/count.js"></script>
+		<link rel="stylesheet" href="../css/style.css" />
+		<script type="text/javascript" src="../js/jquery-2.1.4.js"></script>
+
+
+	</head>
+
+	<body >
+
+		<div class="r-wrap">
+			<a href=""><span class="mui-icon mui-icon-arrowleft"></span></a>
+			<h1>完善资料</h1>
+			<h2>为了您的账户安全，使用之前请先完善个人资料。</h2>
+			
+			<form>
+    			<input id="register-userphone" maxlength="11" type="number" class="mui-input-clear text-input" placeholder="请输入常用手机号">
+    		
+				<a onclick="register()"  class="r-btn">开启酒链之旅</a>
+				<div class="login-word">
+				<input type="checkbox" name="" id="" value="" />
+				<h5>阅读并同意<a>《用户服务协议》</a>和<a>《隐私政策》</a></h5>
+				</div>
+
+
+			</form>
+			
+		</div>
+<script>
+	
+	function register(){
+		var userphone = $("#register-userphone").val();
+
+			
+			//验证手机号
+			if(userphone.length == 0) {
+				mui.toast('手机号不能为空');
+				return false;
+			}
+			if(userphone.length != 11) {
+				mui.toast('请输入11位手机号码');
+				return false;
+			}			
+			var regphone = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+			if(!regphone.test(userphone)) {
+				mui.toast('请输入有效的手机号码！');
+				return false;
+			}
+			
+	
+	}
+</script>
+	</body>
+
+</html>

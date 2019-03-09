@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>商品详情</title>
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/reset.css" />
+		<script type="text/javascript" src="../js/count.js"></script>
+		<link rel="stylesheet" href="../css/style.css" />
+		<script type="text/javascript" src="../js/jquery-2.1.4.js"></script>
+
+	</head>
+
+	<body class="p-page top-page" id="top-vertices">
+	<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<ul class="info-nav" id="info-nav">
+				<li class="current"><a class="tag" href="#top-vertices">商品</a></li>
+				<li><a class="tag" href="#product-info">详情</a></li>
+			</ul>
+	</header>
+	<div id="slider"  class="mui-slider">
+			<div class="mui-slider-group mui-slider-loop">
+				<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+				<div class="mui-slider-item mui-slider-item-duplicate">
+					<a href="#">
+						<img src="../img/p-1.png">
+					</a>
+				</div>
+				<!-- 第一张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img src="../img/p-1.png">
+					</a>
+				</div>
+				<!-- 第二张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img src="../img/p-1.png">
+					</a>
+				</div>
+				<!-- 第三张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img src="../img/p-1.png">
+					</a>
+				</div>
+				<!-- 第四张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img src="../img/p-1.png">
+					</a>
+				</div>
+				<!-- 第五张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img src="../img/p-1.png">
+					</a>
+				</div>
+				<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+				<div class="mui-slider-item mui-slider-item-duplicate">
+					<a href="#">
+						<img src="../img/p-1.png">
+					</a>
+				</div>
+			</div>
+			<div class="mui-slider-indicator">
+				<div class="mui-indicator mui-active"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+
+			</div>
+
+		</div>
+		<div class="p-name">
+			<h1>五粮液</h1>
+			<h2>规格：500ml*1瓶</h2>
+			<h3>3.00滴<del>￥198.00</del></h3>
+			<ul>
+				<li>总量：99999瓶</li>
+				<li>已兑换：1203</li>
+				<li>邮费：￥18.00</li>
+			</ul>
+		</div>
+		<div class="line"></div>
+		<div id="info-btn" class="info-item">
+				<img style="width: 1.5rem; display: inline-block; float: left; margin-top: .4rem; margin-right: .5rem;" src="../img/privilege_icon.png"/>
+				<p style="color: #000;">特权商品<i style="color: #666; margin-left: .5rem;">成为大师后可使用</i></p>
+				<span class="mui-icon mui-icon-arrowright"></span>
+
+		</div>
+		<div class="line"></div>
+		<div class="info-describe">
+			<h1>商品描述</h1>
+			<p>产品名称：五粮液股份  礼宾级佳品</p>
+			<p>配料：水、高粱、大米、糯米、小麦、玉米</p>
+			<p>净含量：500ml</p>
+			<p>酒精度：52%vol</p>
+			<p>香型：浓香型</p>
+			<p>包装：礼盒装</p>
+			<p>箱规：1*6</p>
+			<p>产品标准号与质量等级：GB/T1078.1(优级)</p>
+			<p>食品生产许可证号：SC6565656565656252</p>
+			<p>生产日期及批号：见酒瓶或瓶盖</p>
+			<p>产地：四川省宜宾市</p>
+			<p>制造商：宜宾五粮液股份有限公司</p>
+			<p>地址：四川省宜宾市岷江西路150号</p>
+			<p>贮存条件：干燥、通风、阴凉和清洁处保存，宜10℃-25℃</p>
+		</div>
+		<div class="refresh">
+			<span class="mui-icon mui-icon-arrowthindown"></span>释放查看更多详情
+		</div>
+		<div class="product-img" id="product-info">
+			<img src="../img/cp-1.png"/>
+			<img src="../img/cp-2.png"/>
+			<img src="../img/cp-3.png"/>
+		</div>
+		<div id="buy-button" class="buy-btn">立即兑换</div>
+		
+		
+		<div class="mui-popup-backdrop mui-active" style="display: none;"></div>
+		<div class="info-item ts-tit" style="display: none;">
+			<h1>特权商品说明</h1>
+			<h2>兑换条件</h2>
+			<p>用户等级达到“大师”后，在圣酒庄园中，可用1滴圣酒兑换特权商品，邮费需自理（特别偏远地区需联系客服）。</p>
+			<h2>如何成为大师</h2>
+			<p>邀请9名有效用户（实名注册并登陆藏酒才算有效用户）成为自己的粉丝，即自动升级为大师。</p>
+			<h2>特别说明</h2>
+			<p>此特权只有等级是大师及更高等级的酿酒师享有，且只能使用一次，不使用永久享有该特权。</p>
+			<div id="complete" class="radius-btn ">完成</div>
+		</div>
+		
+		
+		<div class="p-data" style="display: none;">
+			<div class="p-img">
+				<img src="../img/product.png"/>
+				<h1>10.00滴</h1>
+				<h2>规格：500ml*1瓶</h2>
+			</div>
+			<ul>
+				<li>
+					<span>购买数量：</span>
+					<div class="mui-numbox" data-numbox-step='1' data-numbox-min='1' data-numbox-max='999'>
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" />
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+				</li>
+				<li>
+					<span>可兑换：924</span>
+				</li>
+				<div id="determine" class="buy-btn">确定</div>
+			</ul>
+		</div>
+		
+		
+<script>
+//锚标签滑动效果
+$(".tag").click(function () {
+    $("html, body").animate({scrollTop: $($(this).attr("href")).offset().top -20+ "px"}, 500);
+    return false;
+});
+
+			$(function(){
+				$("#info-btn").click(function(){
+					$(".mui-popup-backdrop").css("display","block");
+					$(".ts-tit").css("display","block");
+				});
+				$("#complete").click(function(){
+					$(".ts-tit").css("display","none");
+					$(".mui-popup-backdrop").css("display","none");
+				});
+				$(".mui-popup-backdrop").click(function(){
+					$(".mui-popup-backdrop").css("display","none");
+					$(".ts-tit").css("display","none");
+					$(".p-data").css("display","none");
+				});
+				//点击酿力弹出提示框
+				
+				
+				
+				
+				$("#buy-button").click(function(){
+					$(".mui-popup-backdrop ").css("display","block");
+					$(".p-data ").css("display","block");
+				})
+				
+				$("#determine").click(function(){
+					$(".mui-popup-backdrop ").css("display","none");
+					$(".p-data").css("display","none");
+				});
+				
+
+				
+				
+			})
+
+</script>
+
+	</body>
+
+</html>

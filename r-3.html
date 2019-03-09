@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>创建数字钱包</title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<script type="text/javascript" src="js/count.js"></script>
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+
+	</head>
+
+	<body>
+
+		<div class="login r-wrap" id="login">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" onclick="openWin('mine.html')"></a>
+
+			<h1>创建数字钱包</h1>
+			<p>首次创建需支付宝授权并绑定支付宝的真实姓名和账号，所绑定的支付宝信息仅用于淘淘星球市场交易中买卖双方进行线下打收款、信息校验、数字资产安全等固有账户，且不可更改，请绑定时务必确保所绑定支付宝信息的真实性，以免给您造成不可挽回的损失。创建后，将一次性支付1元资源使用费。</p>
+
+			<span id="loginByAli">
+			<a href="javascript:void(0)"><img src="img/ali_pay.png"/>
+			支付宝授权</a>
+		</span>
+
+			<div class="login-word" style=" margin-top:3.5rem;">
+				<input type="checkbox" name="checkbox" id="checkbox" value="" />
+				<h5>阅读并同意<a>《用户服务协议》</a>和<a>《免责申明》</a></h5>
+			</div>
+
+		</div>
+				<script src="js/vue.js"></script>
+		<script src="js/axios.js"></script>
+		<script src="js/config.js"></script>
+		<script>
+			mui.plusReady(function() {
+
+				document.getElementById("loginByAli").addEventListener('tap', function() {
+					if(!$("#checkbox").get(0).checked) {
+						mui.toast("请阅读并同意用户协议")
+						return false;
+					}
+					pay("alipay")
+				//var url = "alipays://platformapi/startapp?appId=20000067&url=https%3A%2F%2Fopenauth.alipay.com%2Foauth2%2FappToAppAuth.htm%3Fapp_id%3D2019011362892434%26scope%3Dauth_user%26redirect_uri%3Dhttp%253A%252F%252F106.12.215.93%252Falcochain%252Fali%252Foauth_notify_url";
+					//openWin("r4.html")
+			
+				})
+				
+				var channel=null;
+				// 1. 获取支付通道
+				function plusReady(){
+				    // 获取支付通道
+				    plus.payment.getChannels(function(channels){
+				        channel=channels[0];
+				    },function(e){
+				        alert("获取支付通道失败："+e.message);
+				    });
+				}
+				plusReady()
+				//document.addEventListener('plusready',plusReady,false);
+				var ALIPAYSERVER=base_url + "/ali/payRegist";
+				
+				function pay(id){
+					//alert(JSON.parse(localStorage.getItem("sys_userInfo")).id)
+					var PAYSERVER='';
+					if(id=='alipay'){
+						PAYSERVER=ALIPAYSERVER +"?id="+JSON.parse(localStorage.getItem("sys_userInfo")).id;
+					}else{
+						plus.nativeUI.alert("不支持此支付通道！",null,"购买商品");
+						return;
+					}
+								
+					var xhr=new XMLHttpRequest();
+					var _this = this
+					xhr.onreadystatechange=function(){
+						switch(xhr.readyState){
+							case 4:
+							if(xhr.status==200){
+	/* openWin('r-4.html') */
+							  	plus.payment.request(channel,xhr.responseText,function(result){
+									plus.nativeUI.alert("支付成功！",function(){
+										var u = JSON.parse(localStorage.getItem('sys_userInfo'))
+										u.isPayed = 1
+										localStorage.setItem('sys_userInfo',JSON.stringify(u))
+										openWin('r-4.html')
+									});
+								},function(error){
+								
+									
+									
+									plus.nativeUI.alert("支付失败：" + error.code);
+								}); 
+							}else{
+								alert("获取订单信息失败！");
+							}
+							break;
+							default:
+							break;
+						}
+					}
+					xhr.open('GET',PAYSERVER);
+								
+					xhr.send(); 
+				}
+
+			})
+		</script>
+
+	</body>
+
+</html>

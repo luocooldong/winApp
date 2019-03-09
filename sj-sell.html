@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>TTI出让</title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<script type="text/javascript" src="js/count.js"></script>
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+
+
+	</head>
+
+	<body class=" top-page  ">
+	<header id="header" class="mui-bar mui-bar-nav">		
+		<h1 class="mui-title">TTI出让</h1>
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<!-- 	<button class="mui-btn  mui-btn-link mui-pull-right gray-word">交易规则</button> -->
+	</header>
+	<div id="sjSell">
+	<div class="line"></div>
+	<div class="account-wrap">
+
+	<div class="my-account" v-if="wallet.id">
+		<h1>收款账户：<img src="img/ali_pay.png"/>{{wallet.aliName |nameFilter}}（{{wallet.aliAccount}}）</h1>
+		<h2>提示：收款账户为您钱包绑定的账户！</h2>
+	</div>
+	<div class="money-account">
+		<h1>出让TTI单价：</h1>
+		<div class="input-box">
+			<span>￥<font style="font-size: 1rem;">{{todayprice}}元/个</font></span>
+		<!-- 	<input type="number" :placeholder="market_min_price_str" v-model="sellPrice"/>
+			<h2>今日TTI兑换商品价：{{todayprice}}元/个</h2> -->
+		</div>
+	</div>
+	<div class="money-account">
+		<h1>出让TTI数量：</h1>
+		<div class="input-box">
+			<input style="width: 95%;" type="number" placeholder="不得低于1个" v-model="sellCount"/>
+			<h2>最多出让：{{parseInt(alcoValue)*market_max_value.value}}个，<span @click="allSell()">全部出让</span></h2>
+		</div>
+	</div>
+			
+	</div>
+	<a  class="radius-btn payment-btn" @click="submitSell()">提交</a>
+	</div>
+	<p class="tit-account">说明：出让账户必须是有效实名注册用户，否则将无法送出；出让的限额由账户”可用TTI“确定，出让信息提交后，会确定是否超限；服务费2~5%；限可用TTI50%的数量。</p>
+		
+		
+		
+				<script src="js/config.js"></script>
+			<script src="js/vue.js"></script>
+			<script src="js/axios.js"></script>
+			<script src="js/source/sj-sell.js"></script>
+
+	</body>
+
+</html>

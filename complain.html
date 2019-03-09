@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>申诉</title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<script type="text/javascript" src="js/count.js"></script>
+
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+		<style>
+		.r-wrap{padding-bottom: 30px;}
+		.r-wrap {
+			width: 100%;
+			position: fixed;
+			top: 20px;
+			bottom: 0px;
+		
+			overflow-y: scroll;
+			-webkit-overflow-scrolling: touch;
+			-ms-touch-action: pan-y cross-slide-y;
+			-ms-scroll-chaining: none;
+			-ms-scroll-limit: 0 50 0 50;
+		}
+		h2{text-align: left;}
+	</style>
+	</head>
+
+	<body class="top-page ">
+		<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">申诉</h1>
+		</header>
+		<div id="vue" class="r-wrap">
+			<p>订单号：{{order.id}}</p>
+			<p>卖家：{{order.sellerName}}</p>
+			<p>交易量：{{order.alcoCount}}个</p>
+			<p>交易单价：{{order.alcoPrice}}元/个</p>
+			<form style="margin-top: 20px;">
+				<div class="mui-input-row">
+					<input id="name" type="text" class="mui-input-clear text-input" placeholder="联系人姓名" v-model="name">
+				</div>
+				
+				<div class="mui-input-row">
+					<input id="name" type="text" class="mui-input-clear text-input" placeholder="联系人电话" v-model="phone">
+				</div>
+				
+					<div class="mui-input-row" style="margin-top:30px;">
+					<textarea placeholder="申诉理由(50字以内简单描述)" maxlength="50" style="height: 100px;" v-model="content"></textarea>
+				</div>
+				
+				<a class="r-btn" @click="addComplain()" href="javascript:void(0);">提交申诉</a>
+			</form>	
+		
+		</div>
+		<script src="js/config.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/axios.js"></script>
+
+			<script src="js/clipboard.js"></script>
+		<script>
+	var vue = new Vue({
+			el: '#vue',
+			data: {
+				sys_userInfo: Object,
+				name:"",
+				phone:"",
+				content:"",
+				order:Object
+			
+			},
+			mounted: function() {
+				this.sys_userInfo = JSON.parse(localStorage.getItem("sys_userInfo"))
+				this.order = JSON.parse(localStorage.getItem("complain")) 
+			},
+			methods: {
+				addComplain:function(){
+			/* 		if(this.order==null){
+						mui.toast("请重新选择订单")
+						return;
+					}
+					if(this.name.length<=0){
+						mui.toast("联系姓名")
+						return;
+					}
+					if(this.phone.length<=0){
+						mui.toast("联系电话")
+						return;
+					}
+					if(this.content.length<=0){
+						mui.toast("申诉描述")
+						return;
+					} */
+					
+					var that = this
+					
+					var params = {
+						'name':that.name,
+						'user.id': that.sys_userInfo.id,
+						'concat':that.phone,
+						'content':that.content,
+						'oId':that.order.id
+					}
+
+					sendPost("/property/addComplain",params).then(function(res){
+						mui.toast("提交成功")
+						mui.back()
+					})
+				}
+			},
+		});
+		</script>
+
+	</body>
+
+</html>

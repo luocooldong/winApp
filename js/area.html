@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+			<script src="jquery-2.1.4.js"></script>
+		<script src="city.data-3.js"></script>
+	
+	</head>
+	<body>
+		<div id="ttt"></div>
+		<script>
+			for(var i=0;i<cityData3.length;i++){
+				//console.log(cityData3[i].value+","+cityData3[i].children.length)
+				var c = cityData3[i].children
+				var id = cityData3[i].value
+				var text = cityData3[i].text
+				
+				var a = "insert into alco_agency_city(id,parent_id,name,parent_ids) values("+cityData3[i].value+","+0+",'"+cityData3[i].text+"','0,'"+");"
+				$("#ttt").append("<p>"+a+"</p>")
+				for(var j=0;j<c.length;j++){
+					var b = "insert into alco_agency_city(id,parent_id,name,parent_ids) values("+c[j].value+","+id+",'"+c[j].text+"',"+"'0,"+id+"');"
+				$("#ttt").append("<p>"+b+"</p>")
+				}
+			}
+		</script>
+	</body>
+</html>

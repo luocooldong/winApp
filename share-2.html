@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>邀请奖励</title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<script type="text/javascript" src="js/count.js"></script>
+		<link href="css/mui.picker.css" rel="stylesheet" />
+		<link href="css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+		<script src="js/html2canvas.min.js"></script>
+		<script src="js/common.js"></script>
+<script src="js/jquery.qrcode.min.js"></script>
+<style>
+	canvas{border-radius: 0.625rem;border:5px solid #fff}
+</style>
+	</head>
+
+	<body class="top-page fx-page " style=" background: url(img/share2.png) no-repeat bottom center; background-size: 100% 100%;background-attachment: fixed;">
+		<header id="header" class="mui-bar mui-bar-transparent">
+			<a class="mui-action-back  mui-icon mui-icon-closeempty mui-pull-right" style="color: #afadac;font-size: 2rem;"></a>
+		</header>
+		<div id="qrcode" style="position: fixed;top: 43%;left:7.25rem"></div>
+		<div id="share2" > 
+			
+<!-- 		<p style="color: #000;">我是{{sys_userInfo.name}}，正在参与酒链世界</p> -->
+		<!-- <img style=" top: 45%; left: 7rem;" class="my-code" src="" /> -->
+	<!-- 	<div id="qrcode"></div> -->
+		<ul style=" background: rgba(0,0,0,0);">
+			<li><img id="wx" class="hide" src="img/wechat.png" /></li>
+			<li><img id="pyq" class="hide" src="img/wechat_friend.png" /></li>
+			<li><img id="btnSave" class="hide" src="img/down_load_pic.png" /></li>
+		</ul> 
+</div>
+		<div id="output" hidden="hidden">
+
+		</div>
+		<script src="js/mui.picker.js"></script>
+		<script src="js/mui.poppicker.js"></script>
+		<script src="js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/config.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/axios.js"></script> 
+			<script>
+				var user = JSON.parse(localStorage.getItem("sys_userInfo"))
+				var shareUrl = "http://mmmdzj.cn/mobileLogin/regist.html?code="+user.myCode
+			//jQuery('#qrcode').qrcode(shareUrl);
+				jQuery('#qrcode').qrcode({
+				render        : "canvas",
+				text     : shareUrl,
+				width : 100,
+				height : 100
+			});
+			/* axios({
+					url: base_url + '/property/shareInfo',
+					method: 'POST',
+					// 请求体重发送的数据
+					params: {
+				
+					},
+					timeout: 50000,
+					// 设置请求头
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded'
+					}
+				}).then(function(res) { */
+					 $('#web_href').val(shareUrl);
+					//$(".my-code").attr("src",photo_src+res.data.imgApk)
+				/* }) */
+			var shares = null;
+			var sweixin = null;
+			var buttons = [{
+					title: '我的好友',
+					extra: {
+						scene: 'WXSceneSession'
+					}
+				},
+				{
+					title: '朋友圈',
+					extra: {
+						scene: 'WXSceneTimeline'
+					}
+				},
+				{
+					title: '我的收藏',
+					extra: {
+						scene: 'WXSceneFavorite'
+					}
+				}
+			];
+			// H5 plus事件处理
+			function plusReady() {
+				updateSerivces();
+			}
+			if(window.plus) {
+				plusReady();
+			} else {
+				document.addEventListener('plusready', plusReady, false);
+			}
+			/**
+			 * 更新分享服务
+			 */
+			function updateSerivces() {
+				plus.share.getServices(function(s) {
+					shares = {};
+					for(var i in s) {
+						var t = s[i];
+						shares[t.id] = t;
+					}
+					sweixin = shares['weixin'];
+				}, function(e) {
+					outSet('获取分享服务列表失败：' + e.message);
+				});
+			}
+
+			// 分享图片
+			function shareImage(url,i) {
+
+				var msg = {
+					type: 'image'
+				};
+				if(!url) {
+					plus.nativeUI.alert('请选择要分享的图片!');
+					return;
+				}
+				msg.pictures = [url];
+				sweixin ? share(sweixin, msg, buttons[share2.i]): plus.nativeUI.alert('当前环境不支持微信分享操作!');
+			}
+			// 分享
+			function share(srv, msg, button) {
+				outSet('分享操作：');
+				if(!srv) {
+					outLine('无效的分享服务！');
+					return;
+				}
+				button && (msg.extra = button.extra);
+				// 发送分享
+				if(srv.authenticated) {
+					outLine('---已授权---');
+					doShare(srv, msg);
+				} else {
+					outLine('---未授权---');
+					srv.authorize(function() {
+						doShare(srv, msg);
+					}, function(e) {
+						outLine('认证授权失败：' + JSON.stringify(e));
+					});
+				}
+			}
+			// 发送分享
+			function doShare(srv, msg) {
+				outLine(JSON.stringify(msg));
+				srv.send(msg, function() {
+					outLine('分享到"' + srv.description + '"成功！');
+				}, function(e) {
+					outLine('分享到"' + srv.description + '"失败: ' + JSON.stringify(e));
+				});
+			}
+			// 解除授权
+			function cancelAuth() {
+				outSet('解除授权：');
+				if(sweixin) {
+					if(sweixin.authenticated) {
+						outLine('取消"' + sweixin.description + '"');
+					}
+					sweixin.forbid();
+				} else {
+					outLine('当前环境不支持微信分享操作!');
+				}
+			}
+
+	
+			var save = function(successCB, errorCB, fileName, imgID, overwrite, format, quality, clip) {
+				errorCB = errorCB || function() {};
+				fileName = fileName || Date.parse(new Date());
+				imgID = imgID || String(Date.parse(new Date()));
+				overwrite = overwrite || true;
+				format = format || 'png';
+				quality = quality || 50;
+				clip = clip || {
+					top: '0px',
+					left: '0px',
+					width: '100%',
+					height: '100%'
+				};
+
+				var self = plus.webview.currentWebview();
+				var bitmap = new plus.nativeObj.Bitmap(imgID);
+
+				//绘制截图
+				self.draw(bitmap, function() {
+					// 保存Bitmap图片
+					bitmap.save('_doc/' + fileName + '.' + format, {
+						overwrite: overwrite,
+						format: format,
+						quality: quality,
+						clip: clip
+					}, function(i) {
+						//保存到系统相册
+						plus.gallery.save(i.target, function(d) {
+							//销毁Bitmap图片
+							bitmap.clear();
+							successCB({
+								success: 'success',
+								details: d
+							});
+						}, function(e) {
+							//销毁Bitmap图片
+							bitmap.clear();
+							errorCB({
+								error: '图片保存至相册失败',
+								details: e
+							});
+						});
+					}, function(e) {
+						bitmap.clear();
+						errorCB({
+							error: '图片保存失败',
+							details: e
+						});
+					});
+
+				}, function(e) {
+					errorCB({
+						error: '截屏绘制失败',
+						details: e
+					});
+				});
+			}
+			
+			
+						var save2 = function(successCB, errorCB, fileName, imgID, overwrite, format, quality, clip) {
+				errorCB = errorCB || function() {};
+				fileName = fileName || Date.parse(new Date());
+				imgID = imgID || String(Date.parse(new Date()));
+				overwrite = overwrite || true;
+				format = format || 'png';
+				quality = quality || 50;
+				clip = clip || {
+					top: '0px',
+					left: '0px',
+					width: '100%',
+					height: '100%'
+				};
+
+				var self = plus.webview.currentWebview();
+				var bitmap = new plus.nativeObj.Bitmap(imgID);
+
+				//绘制截图
+				self.draw(bitmap, function() {
+					// 保存Bitmap图片
+					bitmap.save('_doc/' + fileName + '.' + format, {
+						overwrite: overwrite,
+						format: format,
+						quality: quality,
+						clip: clip
+					}, function(i) {
+						shareImage(i.target)
+						//保存到系统相册
+				/*		plus.gallery.save(i.target, function(d) {
+							//销毁Bitmap图片
+							bitmap.clear();
+							successCB({
+								success: 'success',
+								details: d
+							});
+						}, function(e) {
+							//销毁Bitmap图片
+							bitmap.clear();
+							errorCB({
+								error: '图片保存至相册失败',
+								details: e
+							});
+						});*/
+					}, function(e) {
+						bitmap.clear();
+						errorCB({
+							error: '图片保存失败',
+							details: e
+						});
+					});
+
+				}, function(e) {
+					errorCB({
+						error: '截屏绘制失败',
+						details: e
+					});
+				});
+			}
+
+			var share2 = new Vue({
+				el: '#share2',
+				data: {
+					sys_userInfo: Object,
+					i:0
+				},
+				mounted: function() {
+					this.sys_userInfo = JSON.parse(localStorage.getItem("sys_userInfo"))
+				},
+				methods: {
+
+				},
+			});
+			//图片转换
+			mui.plusReady(function() {
+				$('#btnSave').click(function(event) {
+					$(".hide").hide()
+					save()
+					mui.toast('已保存至相册')
+					$(".hide").show()
+				});
+
+				$('#wx').click(function(event) {
+					$(".hide").hide()
+					share2.i = 0
+					save2();
+					$(".hide").show()
+				});
+				
+					$('#pyq').click(function(event) {
+					$(".hide").hide()
+					share2.i = 1
+					save2();
+					$(".hide").show()
+				});
+			})
+		</script>
+
+
+		</script>
+	</body>
+
+</html>

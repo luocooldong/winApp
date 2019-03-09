@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<title>OAuth Example</title>
+	<script type="text/javascript">
+var auths=null;
+// 监听plusready事件  
+document.addEventListener( "plusready", function(){
+	// 扩展API加载完毕，现在可以正常调用扩展API
+	plus.oauth.getServices( function(services){
+		auths = services;
+	}, function(e){
+		alert( "获取分享服务列表失败："+e.message+" - "+e.code );
+	} );
+}, false );
+// 登录操作
+function authLogin(){
+	var s = auths[0];
+	if ( !s.authResult ) {
+		s.login( function(e){
+			alert( "登录认证成功！" );
+		}, function(e){
+			alert( "登录认证失败！" );
+		}, {appid:"wx0411fa6a39d61297"  // 微信应用的appid
+			,scope:"snsapi_userinfo"}   // 授权获取用户信息
+		);
+	}
+}
+	</script>
+	</head>
+	<body>
+		请求登录授权认证操作（配置参数）
+		<button onclick="authLogin()">Login</button>
+	</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>淘淘商城</title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/reset.css" />
+    <script type="text/javascript" src="js/count.js"></script>
+    <link rel="stylesheet" href="css/mescroll.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src="js/jquery.SuperSlide.2.1.1.js"></script>
+    <style>
+      .mall li em {
+        width: 3.5rem;
+      }
+			
+    </style>
+  </head>
+
+  <body class="nav-page top-page">
+		
+		   <header id="header" class="mui-bar mui-bar-nav">
+				<div class="mui-input-row mui-search" style="width: 80%;margin: 0 auto;">
+				<input id="sk" type="search" class="mui-input" placeholder="输入商品描述" style="background: white;" onchange="changeSearchKey(this)">
+			</div>
+		  <!-- <div class="seach-link">
+		   <span class="mui-icon mui-icon-search"></span> 
+		  </div> -->
+		</header>
+		<div id="mall" class="mescroll" style="padding-bottom: 5rem;">
+ 
+    <div >
+      <ul class="mall-link">
+        <li class="current">
+          <a href="javascript:void(0);" @click="changeCategory('',$event)"
+            >全部</a
+          >
+        </li>
+        <li v-for="c in category">
+          <a href="javascript:void(0);" @click="changeCategory(c.id,$event)">{{
+            c.name
+          }}</a>
+        </li>
+      </ul>
+
+      <div id="slider" class="mui-slider">
+        <div class="mui-slider-group mui-slider-loop">
+          <!-- 第一张 -->
+          <div class="mui-slider-item">
+            <a href="#"> <img src="img/banner-3.png" /> </a>
+          </div>
+        </div>
+      </div>
+      <div class="line"></div>
+      <ul class="mall">
+        <li v-for="i in list">
+          <a href="javascript:void(0);" @click="toMallDetail(i)">
+            <img :src="photo_src+i.img" />
+            <p>{{ i.spec }}</p>
+            <h1>{{ i.brief }}</h1>
+            <em>{{ i.price }}</em> <span>+{{ i.alcoValueAdd }}原力</span>
+          </a>
+        </li>
+        <!--	<li>
+					<a href="">
+						<img src="img/mall.png" />
+						<p>规格：整箱装 750ml*6瓶</p>
+						<h1>奥享庄园 美乐葡萄酒</h1>
+						<em>￥1788.00</em> <span>+596 酿力</span>
+					</a>
+				</li>
+				<li>
+					<a href="">
+						<img src="img/mall.png" />
+						<p>规格：整箱装 750ml*6瓶</p>
+						<h1>奥享庄园 美乐葡萄酒</h1>
+						<em>￥1788.00</em> <span>+596 酿力</span>
+					</a>
+				</li>-->
+      </ul>
+    </div>
+ 
+	</div>	
+	
+	   <ul class=" down-nav">
+	  <li>
+	    <a href="javascript:void(0);" onclick="openWin('index.html')">
+	      <img src="img/icon/nav1-1.png" />淘淘星球</a
+	    >
+	  </li>
+	  <li>
+	    <a href="javascript:void(0);" onclick="openWin('findPower.html')">
+	      <img src="img/icon/nav2-1.png" />发现原力</a
+	    >
+	  </li>
+	  <li class="current">
+	    <a href="javascript:void(0);" onclick="openWin('mall.html')"
+	      ><img src="img/icon/nav3-2.png" />淘淘商城</a
+	    >
+	  </li>
+	  <li>
+	    <a href="javascript:void(0);" onclick="openWin('mine.html')"
+	      ><img src="img/icon/nav4-1.png" />我的淘淘</a
+	    >
+	  </li>
+	</ul>
+    <script src="js/config.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/axios.js"></script>
+    <script src="js/mescroll.min.js"></script>
+    <script src="js/source/mall.js"></script>
+
+    <script>
+var initScrollTop;
+
+$(function(){
+	$("#sk").focus(function(){
+	initScrollTop = document.body.scrollTop;
+	});
+//失去焦点，即收起键盘时
+$("#sk").blur(function(){
+$(window).scrollTop(initScrollTop);//让页面回到初始的滚动距离
+});
+})
+
+			
+			function changeSearchKey(e){
+				mall.searchKey = $(e).val()
+			}
+      document.addEventListener('plusready', function() {
+        //关闭非当前webview
+
+        var all = plus.webview.all();
+        var current = plus.webview.currentWebview();
+        for (var i = 0, len = all.length; i < len; i++) {
+          if (all[i] != current) {
+            all[i].close(this, false, 2000, false);
+          }
+        }
+      });
+      //			var gallery = mui('.mui-slider');
+      //			gallery.slider({
+      //				interval: 2000 //自动轮播周期，若为0则不自动播放，默认为0；
+      //			});
+
+      /*$(function() {
+				var mescroll = new MeScroll("mall", {
+					down: {
+						callback: downCallback
+					},
+					up: {
+						callback: upCallback,
+						auto: true
+					}
+				});
+
+				//下拉刷新的回调
+				function downCallback() {
+					mescroll.endSuccess();
+
+				}
+				//上拉加载更多
+				function upCallback(page) {
+					axios({
+						url: base_url + '/mall/mallList',
+						method: 'POST',
+						// 请求体重发送的数据
+						params: {
+							pg: page.num,
+							ps: page.size,
+							"category.id":mall.categoryId
+						},
+						timeout: 50000,
+						// 设置请求头
+						headers: {
+							'Content-Type': 'application/x-www-form-urlencoded'
+						}
+					}).then(function(res) {
+						console.log(res)
+						setTimeout(function() {
+							if(res.status=="200"){
+								if(res.data.data&&res.data.data.length>0){
+									for(var i=0;i<res.data.data.length;i++){
+										mall.list.push(res.data.data[i])
+									}
+									mescroll.endSuccess(res.data.data.length);
+								}
+							}else{
+								mescroll.endErr();
+							}
+							mescroll.endErr();
+						}, 800);
+
+					})
+
+				}
+			});*/
+    </script>
+  </body>
+</html>

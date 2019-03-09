@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>订单详情</title>
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../css/reset.css" />
+		<script type="text/javascript" src="../js/count.js"></script>
+		<link rel="stylesheet" href="../css/style.css" />
+		<script type="text/javascript" src="../js/jquery-2.1.4.js"></script>
+
+
+	</head>
+
+	<body class="top-page dw-page p-page color-page">
+	<header id="header" class="mui-bar mui-bar-nav">		
+		<h1 class="mui-title">订单详情</h1>
+		<a class="mui-icon mui-icon-gear mui-pull-right"></a>
+	</header>
+	<div class="show-banner order-top">
+		<img src="../img/wallet_img.png"/>
+		<h5>等待付款</h5>
+		<h6>剩余23小时自动关闭</h6>
+	</div>
+	<div class="address">
+		<h1>收货人：XXX</h1>
+		<span>18287123735</span>
+		<p>地址：云南省昆明市北京路财智心景1216</p>
+	</div>
+	<div class="line"></div>
+	<div class="info-tit">
+		<a href="" class="order-a">
+			<img class="order-logo" src="../img/round_logo.png" />
+			<h6>酒链商城</h6>
+		<span class="mui-icon mui-icon-arrowright"></span>
+		</a>
+		<div class="phone" id='confirmBtn'>
+			<img src="../img/tel_img.png" />
+			联系客服
+		</div>
+	</div>
+	<div class="order-wrap">
+	<a  href="" class="link-wrap">
+	<ul class="mall-list order-list">	
+		<li>
+				<img src="../img/product.png"/>
+				<h1>茅台集团白金酒业42度记台1915 450ml 贵族浓香型白酒 6瓶整箱</h1>
+				<h4>规格：【6瓶/箱】</h4>
+				<h4>数量：100</h4>
+		</li>
+		
+		<li>
+				<img src="../img/product.png"/>
+				<h1>茅台集团白金酒业42度记台1915 450ml 贵族浓香型白酒 6瓶整箱</h1>
+				<h4>规格：【6瓶/箱】</h4>
+				<h4>数量：100</h4>
+		</li>
+	</ul>
+	<div class="combined">
+		<p>酿力：+800</p>
+	</div>
+	</a>
+	</div>
+	<ul class="order-info">
+		<li>订单编号：<span>201805621211</span></li>
+		<li>下单时时间：<span>2018-01-01 17:17:30</span></li>
+		<li>订单金额：<span><em>￥2400.00</em>(包邮)</span></li>
+	</ul>
+	<ul class="show-btn">
+		<li><a href="">取消</a></li>
+		<li><a href="">付款</a></li>
+	</ul>
+		<script type="text/javascript" charset="utf-8">
+			//mui初始化
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+
+
+
+			
+			
+			$("#confirmBtn").bind('tap', function(e) {
+				var btnArray = ['取消', '确定'];
+				var html ='<div class="mui-popup-text">客服服务时间：9:00-17:30</div>'+' <div class="mui-popup-text">客服联系电话</div>'
+				mui.confirm( '400-888-8888',html, btnArray, function(e) {
+					if(e.index == 1) {
+						alert("确定")
+					} else {
+						alert("取消")
+					}
+				})
+			});
+
+
+
+
+		</script>
+	</body>
+
+	</body>
+
+
+
+</html>

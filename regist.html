@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>完善资料</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<script type="text/javascript" src="js/count.js"></script>
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+	</head>
+
+	<body>
+
+		<div class="r-wrap" id="r2">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1>用户注册</h1>
+			<h2>为了您的账户安全，请使用正确的资料进行注册。</h2>
+
+			<form>
+				<div class="mui-input-row">
+					<input id="register-userphone" maxlength="11" type="number" class="mui-input-clear text-input" v-model="phone" />
+				</div>
+				<div class="mui-input-row">
+					<input autocomplete="off" type="number" class="mui-input-clear text-input" placeholder="请输入邀请码" v-model="invitedCode"/>
+				</div>
+				<div class="mui-input-row">
+					<input id="register-username" type="text" class="mui-input-clear text-input" placeholder="请输入真实姓名" v-model="name"/>
+				</div>
+				<div class="mui-input-row">
+					<input id="register-usercard" type="number" class="mui-input-clear text-input" placeholder="请输入身份证号码" v-model="idCard"/>
+				</div>
+				<div class="mui-input-row">
+					<input id="register-password" autocomplete="off" type="password" class="mui-input-password text-input" placeholder="请设置登录密码" v-model="password"/>
+				</div>
+				<span>密码必须大于等于4位，只能使用字母、数字以及标点符号 </span>
+				<div class="code-box">
+					<div class="mui-input-row yzm-input">
+						<input id="register-code" autocomplete="off" type="number" class="mui-input-clear text-input " placeholder="请输入短信验证码" v-model="msgCode"/>
+					</div>
+					<input id="btnSendCode" class="num-box" type="button" value="获取验证码" onClick="sendMessage()" />
+				</div>
+
+				<a class="r-btn" onclick="register()">开启淘淘之旅</a>
+
+			</form>
+
+		</div>
+			<script src="js/mui.min.js"></script>
+		<script src="js/config.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/axios.js"></script>
+		<script src="js/source/r-2.js"></script>
+		<script>
+			document.getElementById("btnSendCode").addEventListener('tap', function() {
+				mui.toast('验证码已发送');
+			});
+
+			function register() {
+				var userphone = $("#register-userphone").val(),
+					username = $("#register-username").val(),
+					usercard = $("#register-usercard").val(),
+					password = $("#register-password").val(),
+					code = $("#register-code").val();
+
+				//验证手机号
+				if(userphone.length == 0) {
+					mui.toast('手机号不能为空');
+					return false;
+				}
+				if(userphone.length != 11) {
+					mui.toast('请输入11位手机号码');
+					return false;
+				}
+				//var regphone = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+			/* 	if(!regphone.test(userphone)) {
+					mui.toast('请输入有效的手机号码！');
+					return false;
+				} */
+
+				//验证真实姓名
+				if(username.length == 0) {
+					mui.toast('姓名不能为空');
+					return false;
+				}
+				var regname = /^[\u4e00-\u9fa5]{2,4}$/;
+				if(!regname.test(username)) {
+					mui.toast('请输入真实姓名！');
+					return false;
+				}
+
+				//验证身份证号
+				if(usercard.length == 0) {
+					mui.toast('身份证号不能为空');
+					return false;
+				}
+				if(usercard.length != 18) {
+					mui.toast('请输入18位身份证号码');
+					return false;
+				}
+				var regcard = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+				if(!regcard.test(usercard)) {
+					mui.toast('请输入有效的身份证号码！');
+					return false;
+				}
+
+				//验证设置登录密码
+				if(password.length == 0) {
+					mui.toast('登录密码不能为空');
+					return false;
+				}
+				if(password.length <= 4) {
+					mui.toast('登录密码需大于4位');
+					return false;
+				}
+				var regpassword = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{5,20}$/;
+				if(!regpassword.test(password)) {
+					mui.toast('请按要求设置密码！');
+					return false;
+				}
+
+				//			验证短信验证码		
+				//			检查注册码是否正确
+				//			调后台方法检查注册码，这里写死为11111111
+
+				
+				r2.regist()
+
+			}
+
+			//验证码
+			var InterValObj; //timer变量，控制时间
+			var count = 60; //间隔函数，1秒执行
+			var curCount; //当前剩余秒数
+			var code = ""; //验证码
+			var codeLength = 6; //验证码长度
+			function sendMessage() {
+				curCount = count;
+				var dealType; //验证方式
+				var uid = $("#uid").val(); //用户uid
+				if($("#phone").attr("checked") == true) {
+					dealType = "phone";
+				} else {
+					dealType = "email";
+				}
+				//产生验证码
+				for(var i = 0; i < codeLength; i++) {
+					code += parseInt(Math.random() * 9).toString();
+				}
+				//设置button效果，开始计时
+				$("#btnSendCode").attr("disabled", "true");
+				$("#btnSendCode").val(+curCount + "秒再获取");
+				InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+				r2.sendMsg()
+			}
+			//timer处理函数
+			function SetRemainTime() {
+
+				if(curCount == 0) {
+					window.clearInterval(InterValObj); //停止计时器
+					$("#btnSendCode").removeAttr("disabled"); //启用按钮
+					$("#btnSendCode").val("获取验证码");
+
+					code = ""; //清除验证码。如果不清除，过时间后，输入收到的验证码依然有效    
+				} else {
+					curCount--;
+					$("#btnSendCode").val(+curCount + "秒再获取");
+				}
+			}
+		</script>
+	</body>
+
+</html>

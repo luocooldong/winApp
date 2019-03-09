@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>我的现金</title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<script type="text/javascript" src="js/count.js"></script>
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+
+
+	</head>
+
+	<body class=" top-page ">
+	<header id="header" class="mui-bar mui-bar-nav">		
+		<h1 class="mui-title">我的现金</h1>
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	</header>
+	<div id="vue">
+	<div class="wine-bg my-cash">
+		<h3>账户余额：</h3>
+		<h4>￥{{sys_userInfo.account?sys_userInfo.account:0}}</h4>
+		<div>
+			<h5>预期收益：</h5>
+			<h6>￥0.00</h6>
+		</div>
+		<i onclick="openWin('getCash.html')">提现<span class="mui-icon mui-icon-arrowright"></span></i>
+	</div>
+	<div class="line"></div>
+	<div class="pay-wrap">
+		<h1>来源说明</h1>
+		
+	</div>
+	<p class="cash-word">
+			<b>推荐奖励：</b>推荐朋友买商品，获得朋友买商品成交订单实付金额*8%的现金奖励。注：奖励到账时间以确认收货为准，名额不限，多推多得。
+	</p>
+	<div class="line"></div>
+	</div>
+	 <div class="pay-wrap">
+		<h1>收支明细</h1>
+		
+	</div>
+	<ul class="record-list">
+			<li>
+				<h1>收支明细</h1>
+				<h2>10-10  15:30</h2>
+				<span>+0.02010</span>
+			</li>
+			<li>
+				<h1>收支明细</h1>
+				<h2>10-10  15:30</h2>
+				<span>+0.02010</span>
+			</li>
+			<li>
+				<h1>收支明细</h1>
+				<h2>10-10  15:30</h2>
+				<span>+0.02010</span>
+			</li>
+			<li>
+				<h1>收支明细</h1>
+				<h2>10-10  15:30</h2>
+				<span>+0.02010</span>
+			</li>
+		</ul>	
+	<script src="js/axios.js"></script>
+		<script src="js/config.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/mescroll.min.js"></script>
+		<script src="js/mui.picker.js"></script>
+		<script src="js/mui.poppicker.js"></script>
+		<script>
+			window.addEventListener('refresh', function(e) { //执行刷新
+				vue.sys_userInfo = JSON.parse(localStorage.getItem('sys_userInfo'))
+				vue.getUser()
+			});
+			var vue = new Vue({
+				el: '#vue',
+				data: {
+					
+					sys_userInfo:Object,
+
+			
+				},
+				filters: {
+					date:function(value){
+						var d = new Date(value)
+						return d.getFullYear() +"-"+ (d.getMonth()+1) +"-"+ d.getDate() 
+					}
+				},
+				watch: {
+			
+				},
+				mounted: function() {
+					this.sys_userInfo = JSON.parse(localStorage.getItem('sys_userInfo'))
+					this.getUser()
+				},
+				methods: {
+					getUser:function(){
+					
+						var that = this;
+						var params = {'id':that.sys_userInfo.id};
+						sendPost('/user/getUser',params).then(function(res){
+						
+							that.sys_userInfo = res.data.user
+						})
+					}
+					
+				}
+			});
+			
+			
+		</script>
+	</body>
+
+</html>

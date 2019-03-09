@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>推荐有奖</title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/reset.css" />
+		<script type="text/javascript" src="js/count.js"></script>
+		<link href="css/mui.picker.css" rel="stylesheet" />
+		<link href="css/mui.poppicker.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+
+<style>
+	
+	
+</style>
+	</head>
+
+	<body class="top-page " style="padding-bottom:3rem">
+	<header id="header" class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">推荐有奖</h1>
+	</header>
+	<div id="vue">
+	<div class="tab-nav">
+				<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
+			<!-- 		<a class="mui-control-item mui-active" href="#item1">
+				推荐买酒
+			</a> -->
+					<a class="mui-control-item mui-active" href="#item2">
+				广告合作
+			</a>
+					<a class="mui-control-item" href="#item3">
+				企业合作
+			</a>
+				</div>
+	</div>
+	<div  id="item1" class="data-list  mui-control-content ">
+		1
+	</div>
+	<div style=" height: auto;"  id="item2" class="data-list  mui-control-content mui-active">
+		<div class="form-wrap">
+			<h1>申请合作</h1>
+			<h2>APPLY FOR COOPERATION</h2>
+			<h3>合作类型</h3>
+		</div>
+		
+		<ul class="xz-input">
+			<li><span><img src="img/user_account_choice.png"/></span>广告代理商</li>
+			<li><span></span>广告主</li>
+		</ul>
+		<div class="form-wrap">
+
+			<h3>合作/推荐信息</h3>
+		</div>
+		<form>
+			<div class="input-group ">
+				<label>*</label><input type="text" id="name1"  placeholder="请输入您的姓名"/>
+			</div>
+			<div class="input-group">
+				<label>*</label><input type="tel" id="phone1"  placeholder="请输入您的电话"/>
+			</div>
+			<div class="input-group">
+				<label>*</label><input type="tel" id="tphone1"  placeholder="请输入您的推荐人电话"/>
+			</div>
+			<div class="input-group">
+				<label>*</label><input type="text" id="adphone1"  placeholder="广告商联系电话"/>
+			</div>
+			<div class="input-group">
+				<label>*</label><textarea id="content1" placeholder="请简要描述您与广告商的沟通情况和合作意向"></textarea>
+			</div>
+		</form>
+		<a  style=" margin-top: 3rem; margin-bottom: 2rem;" class="radius-btn payment-btn" onclick="fakeSubmit()">提交资料</a>
+				
+	</div>
+	<div  id="item3" class="data-list  mui-control-content ">
+		<div class="form-wrap">
+					<h1>企业合作申请</h1>
+					<h2>APPLY FOR COOPERATION</h2>
+					<h3>合作类型:企业合作</h3>
+				</div>
+				
+				<ul class="xz-input">
+					<li><span><img src="img/user_account_choice.png"/></span>代理合作</li>
+					<li><span></span>战略合作</li>
+				</ul>
+				<div class="form-wrap">
+		
+					<h3>合作企业/推荐信息</h3>
+				</div>
+				<form>
+					<div class="input-group ">
+						<label>*</label><input type="text" id="name2"  placeholder="请输入法人姓名"/>
+					</div>
+					<div class="input-group">
+						<label>*</label><input type="tel" id="phone2"  placeholder="请输入法人电话"/>
+					</div>
+					<div class="input-group">
+						<label>*</label><input type="tel" id="tphone2" placeholder="请输入您的推荐人电话"/>
+					</div>
+					<div class="input-group">
+						<label>*</label><input type="text"  id="adphone2" placeholder="广告商联系电话"/>
+					</div>
+			
+				</form>
+				<a  style=" margin-top: 3rem; margin-bottom: 2rem;" class="radius-btn payment-btn" onclick="fakeSubmit2()">提交资料</a>
+	</div>
+	
+	
+	</div>
+			<script src="js/config.js"></script>
+			<script src="js/vue.js"></script>
+			<script src="js/axios.js"></script>
+
+			<script src="js/mui.picker.js"></script>
+		<script src="js/mui.poppicker.js"></script>
+		<script src="js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			function fakeSubmit(){
+				if($("#name1").val().length<=0||$("#phone1").val().length<=0||$("#tphone1").val().length<=0||$("#adphone1").val().length<=0||$("#content1").val().length<=0){
+					mui.toast("请您完善表单.")
+				}else{
+					var params = {"name":$("#name1").val(),"phone":$("#phone1").val(),"tphone":$("#tphone1").val(),"adphone":$("#adphone1").val(),"content":$("#content1").val(),"type":0}
+					sendPost('/property/addAd',params).then(function(res){
+						if(res.status=='200'){
+							mui.toast('保存成功')
+							mui.back()
+						}else{
+							plus.nativeUI.closeWaiting()
+							mui.toast('网络异常')
+						}
+					})
+					mui.toast("提交成功请您耐心等待.")
+					mui.back()
+				}
+				
+			}
+			
+			function fakeSubmit2(){
+				
+				if($("#name2").val().length<=0||$("#phone2").val().length<=0||$("#tphone2").val().length<=0||$("#adphone2").val().length<=0){
+					mui.toast("请您完善表单.")
+				}else{
+					var params = {"name":$("#name2").val(),"phone":$("#phone2").val(),"tphone":$("#tphone2").val(),"adphone":$("#adphone2").val(),"type":1}
+
+					sendPost('/property/addAd',params).then(function(res){
+						if(res.status=='200'){
+							mui.toast('保存成功')
+							mui.back()
+						}else{
+					
+							mui.toast('网络异常')
+						}
+					})
+					mui.toast("提交成功请您耐心等待.")
+					mui.back()
+				}
+			}
+			
+	
+		</script>
+	</body>
+
+</html>
