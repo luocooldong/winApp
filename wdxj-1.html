@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
@@ -11,10 +10,7 @@
 		<script type="text/javascript" src="js/count.js"></script>
 		<link rel="stylesheet" href="css/style.css" />
 		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
-
-
 	</head>
-
 	<body class=" top-page ">
 	<header id="header" class="mui-bar mui-bar-nav">		
 		<h1 class="mui-title">我的现金</h1>
@@ -33,16 +29,14 @@
 	<div class="line"></div>
 	<div class="pay-wrap">
 		<h1>来源说明</h1>
-		
 	</div>
 	<p class="cash-word">
-			<b>推荐奖励：</b>推荐朋友买商品，获得朋友买商品成交订单实付金额*8%的现金奖励。注：奖励到账时间以确认收货为准，名额不限，多推多得。
+		<b>推荐奖励：</b>推荐朋友买商品，获得朋友买商品成交订单实付金额*8%的现金奖励。注：奖励到账时间以确认收货为准，名额不限，多推多得。
 	</p>
 	<div class="line"></div>
 	</div>
 	 <div class="pay-wrap">
 		<h1>收支明细</h1>
-		
 	</div>
 	<ul class="record-list">
 			<li>
@@ -80,10 +74,7 @@
 			var vue = new Vue({
 				el: '#vue',
 				data: {
-					
 					sys_userInfo:Object,
-
-			
 				},
 				filters: {
 					date:function(value){
@@ -92,7 +83,6 @@
 					}
 				},
 				watch: {
-			
 				},
 				mounted: function() {
 					this.sys_userInfo = JSON.parse(localStorage.getItem('sys_userInfo'))
@@ -100,20 +90,14 @@
 				},
 				methods: {
 					getUser:function(){
-					
 						var that = this;
 						var params = {'id':that.sys_userInfo.id};
 						sendPost('/user/getUser',params).then(function(res){
-						
 							that.sys_userInfo = res.data.user
 						})
 					}
-					
 				}
 			});
-			
-			
 		</script>
 	</body>
-
 </html>

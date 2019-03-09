@@ -4,11 +4,11 @@ const photo_src = "http://106.12.215.93"; */
 /* const base_url = "http://192.168.1.18:8080/alcochain";
 const photo_src = "http://192.168.1.18:8080"; */
 const version = "1q1q2w1q3";
-const base_url = "http://47.107.254.247/alcochain2";
-const photo_src = "http://47.107.254.247"; 
+// const base_url = "http://47.107.254.247/alcochain2";
+// const photo_src = "http://47.107.254.247"; 
+const base_url = "http://47.107.254.247:8080//alcochain2";
+const photo_src = "http://47.107.254.247:8080/"; 
 const page_size = 10;
-
-
 
 function openWin(html) {
 	mui.openWindow({

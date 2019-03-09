@@ -3,21 +3,18 @@ var acoutUs = new Vue({
 	data: {
 	photoSrc:photo_src,
 	aboutUs:Object
-		
 	},
 	mounted: function() {
  			this.getAountUs()
 	},
 	methods: {
 		getAountUs: function() {
-	
 			var _this = this
 			axios({
 				url: base_url + '/property/aboutUs',
 				method: 'POST',
 				// 请求体重发送的数据
 				params: {
-					
 				},
 				timeout: 50000,
 				// 设置请求头

@@ -97,7 +97,6 @@
 	width: 2rem;
 	height: 3rem;
 	position: absolute;
-
 }
 
 .wine-water img {
@@ -703,11 +702,9 @@
 
 
 /*庄园*/
-
 .mui-bar-nav {
 	box-shadow: none;
 	background: #b02123;
-	border-bottom: solid 1px #e6e6e6;
 }
 
 #header .header-word {
@@ -944,7 +941,6 @@
 
 
 /*webkit内核*/
-
 .mall-link::-webkit-scrollbar {
 	width: 0px;
 	height: 0px;
@@ -1466,7 +1462,7 @@
 	line-height: 2.25rem;
 }
 .wine-history .line-tit:first-child{ border-bottom: solid 1px #f6f6f6;}
-.history-word{ width: 100%; padding: .75rem .75rem;}
+.history-word{ width: 100%; padding: .75rem .75rem; padding-bottom: 75px;}
 .history-word h1{font-size: .75rem; margin-bottom: 1rem;color: #000000;}
 .history-word p{ color: #000000; line-height: 1.2rem;font-size: .65rem;}
 
@@ -1977,9 +1973,8 @@
 #record-class .mui-table-view-cell .mui-active{ background: transparent;}
 
 
-
 /*圣酒出让*/
-.account-wrap{ width:100%; padding-left: .75rem; margin-bottom: 1rem;}
+.account-wrap{ width:100%; padding: 0 .75rem;  margin-bottom: 1rem;}
 .my-account{ border-bottom: solid 1px #ddd;  padding: 1.5rem 0;}
 .my-account h1{font-size: .75rem; color: #1E1103; margin-bottom: .6rem;}
 .my-account img{ width: 1.75rem;}
@@ -1987,15 +1982,10 @@
 .money-account h1{font-size: .75rem; color: #1E1103; margin-bottom: .8rem;}
 .money-account{ padding: 1.1rem 0 .5rem 0;}
 .input-box span{ display: inline-block;font-size: 1.6rem; line-height: 2rem; vertical-align: bottom;}
-.input-box input{ display: inline-block; width: 16rem; border: none; border-bottom: solid 1px #a8a8a8; border-radius: 0; height: 2rem; padding: 0; margin: 0; line-height: 2rem;font-size: .8rem;}
+.input-box input{ display: inline-block; width: 16rem; border: none;  border-radius: 0; height: 2rem; padding: 0; margin: 0; line-height: 2rem;font-size: .8rem;}
 .input-box h2{font-size: .75rem; color: #bbb; text-align: left;line-height: 1rem; margin-top: .5rem;}
 .input-box h2 span{font-size: .75rem; color: #F0AD4E; line-height: 1rem;}
 .tit-account{ width: 100%; padding: 0 .75rem; color: #bbb; line-height: 1.2rem; font-size: .75rem; margin-top: .5rem;}
-
-
-
-
-
 
 /*幸运兑*/
 .mall-list h5{ font-size: .5rem; line-height: .8rem;}

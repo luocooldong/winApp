@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
@@ -10,13 +9,9 @@
 		<link rel="stylesheet" href="css/reset.css" />
 		<script type="text/javascript" src="js/count.js"></script>
 		<link rel="stylesheet" href="css/mescroll.min.css" />
-		<link rel="stylesheet" href="css/style.css" />
-
+		<link rel="stylesheet" href="css/style.css"/>
 		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
-
-
 	</head>
-
 	<body class="nav-page top-page color-page ">
 		<header id="header" class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">我的淘淘</h1>
@@ -44,21 +39,10 @@
 					<h3 v-if="wallet.id">TTI余额：{{wallet.alcoValue}}</h3>
 					<h3 v-if="!wallet.id">TTI余额：<span>登陆查看</span></h3>
 				</div>
-				
-				<div class="money-box"  style=" margin: 0 auto 1rem auto;" v-if="!tempWallet">  
-					<!--无钱包状态-->
+				<div class="money-box"  style=" margin: 0 auto 1rem auto;" v-if="!tempWallet">
 					<h2>钱包审核中请您耐心等待</h2>
-					<!-- <h3>审核中请耐心等待</h3> -->
-			
-				
 				</div>
 				<ul class="my-list">
-					<!-- 	<li onclick="openWin('yb-history.html')">
-				<a>
-					<img src="img/wdyb.png"/>
-					<p>我的元宝</p>
-				</a>
-			</li> -->
 					<li onclick="openWin('wine-history.html')">
 						<a>
 							<img src="img/my_cash_icon.png" />
@@ -77,15 +61,6 @@
 							<p>我的原力</p>
 						</a>
 					</li>
-
-
-				<!-- 	<li onclick="openWin('vip-center.html')">
-						<a>
-							<img src="img/dj.png" />
-							<p>我的等级</p>
-						</a>
-					</li> -->
-
 				</ul>
 				<div class="line"></div>
 				<h1 class="line-tit"><a href="javascript:void(0);" onclick="openWin('sh-order-1.html')">TTI交易订单<span class="mui-icon mui-icon-arrowright"></span><span>查看更多订单</span></a>
@@ -128,47 +103,14 @@
 					</li>
 				</ul>
 				<div class="line"></div>
-				<!-- 	<h1 class="line-tit"><a >幸运兑<span class="mui-icon mui-icon-arrowright"></span><span>查看我参与的</span></a> </h1>
-		<ul class="my-list">
-			<li>
-				<a >
-					<img src="img/luck_doing.png"/>
-					<p>进行中</p>
-				</a>
-			</li>
-			<li>
-				<a >
-					<img src="img/luck_not_winning.png"/>
-					<p>未中奖</p>
-				</a>
-			</li>	
-			<li>
-				<a >
-					<img src="img/luck_winning.png"/>
-					<p>已中奖</p>
-				</a>
-			</li>
-		</ul> -->
-				<div class="line"></div>
-				<!-- 	<h1 class="line-tit" onclick="openWin('jd.html')"><a>酿酒基地<span class="mui-icon mui-icon-arrowright"></span></a> </h1>
-		<h1 class="line-tit" onclick="openWin('childPage-1.html')"><a>加速酿酒<span class="mui-icon mui-icon-arrowright"></span></a> </h1>
-	 -->
 				<h1 class="line-tit" onclick="openWin('order2.html')"><a>多用户商城订单<span class="mui-icon mui-icon-arrowright"></span></a>
 				</h1>
 				<h1 class="line-tit" onclick="openWin('answer.html')"><a>帮助中心<span class="mui-icon mui-icon-arrowright"></span><span>世界问答</span></a>
 				</h1>
 				<h1 class="line-tit" onclick="openWin('aboutUs.html')"><a>联系我们<span class="mui-icon mui-icon-arrowright"></span></a>
 				</h1>
-				<!-- <h1 class="line-tit"><a>设置<span class="mui-icon mui-icon-arrowright"></span></a> </h1> -->
 				<h1 class="line-tit"><a>版本号<span>1.5.2</span> </a></h1>
-
-
-
-
-
-
 			</div>
-
 		</div>
 		<ul class=" down-nav">
 			<li>
@@ -183,7 +125,6 @@
 			<li class="current">
 				<a href="javascript:void(0);" onclick="openWin('mine.html')"><img src="img/icon/nav4-2.png" />我的淘淘</a>
 			</li>
-
 		</ul>
 		<script src="js/config.js"></script>
 		<script src="js/vue.js"></script>
@@ -192,12 +133,9 @@
 		<script src="js/source/mine.js"></script>
 		<script>
 			document.addEventListener('plusready', function() {
-				//关闭非当前webview
-
 				var all = plus.webview.all();
 				var current = plus.webview.currentWebview();
 				for (var i = 0, len = all.length; i < len; i++) {
-
 					if (all[i] != current) {
 						all[i].close(this, false, 2000, false);
 					}
@@ -205,5 +143,4 @@
 			})
 		</script>
 	</body>
-
 </html>

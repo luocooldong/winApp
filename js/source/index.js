@@ -326,9 +326,7 @@ var index = new Vue({
 									       'Content-Type': 'application/x-www-form-urlencoded'
 									     }
 									   }).then(function(res) { 
-													
-										plus.runtime.openURL(res.data.hrefApk);	
-									 
+										  plus.runtime.openURL(res.data.hrefApk);	
 									   }); 
 								} else {
 									
@@ -339,12 +337,7 @@ var index = new Vue({
 						_this.alcoVluePool()
 					}
 				})
-				
 			}); 
-			
-			
-			
-		
 		},
 		dealPool: function() {
 			var _this = this
@@ -362,7 +355,7 @@ var index = new Vue({
 					'Content-Type': 'application/x-www-form-urlencoded'
 				}
 			}).then(function(res) {
-			
+			  debugger
 				if(!res.data.success||res.data.msg=="请更新至最新版本。"){
 					   var btnArray = ['否', '是'];
 												mui.confirm('您当前使用的不是最新版本,更新后可正常收取,立刻前往更新？', '系统提示', btnArray, function(e) {
@@ -378,9 +371,7 @@ var index = new Vue({
 														       'Content-Type': 'application/x-www-form-urlencoded'
 														     }
 														   }).then(function(res) { 
-																		
-															plus.runtime.openURL(res.data.hrefApk);	
-														 
+															  plus.runtime.openURL(res.data.hrefApk);	
 														   }); 
 													} else {
 														

@@ -12,8 +12,6 @@
 		<script type="text/javascript" src="js/count.js"></script>
 		<link rel="stylesheet" href="css/style.css" />
 		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
-
-
 	</head>
 
 	<body class=" top-page  ">
@@ -23,7 +21,6 @@
 	<!-- 	<button class="mui-btn  mui-btn-link mui-pull-right gray-word">交易规则</button> -->
 	</header>
 	<div id="sjSell">
-	<div class="line"></div>
 	<div class="account-wrap">
 
 	<div class="my-account" v-if="wallet.id">
@@ -49,15 +46,10 @@
 	</div>
 	<a  class="radius-btn payment-btn" @click="submitSell()">提交</a>
 	</div>
-	<p class="tit-account">说明：出让账户必须是有效实名注册用户，否则将无法送出；出让的限额由账户”可用TTI“确定，出让信息提交后，会确定是否超限；服务费2~5%；限可用TTI50%的数量。</p>
-		
-		
-		
-				<script src="js/config.js"></script>
-			<script src="js/vue.js"></script>
-			<script src="js/axios.js"></script>
-			<script src="js/source/sj-sell.js"></script>
-
+	<p class="tit-account">说明：出让账户必须是有效实名注册用户，否则将无法送出；出让的限额由账户”可用TTI“确定，出让信息提交后，会确定是否超限；服务费0%；限可用TTI50%的数量。</p>
+    <script src="js/config.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/axios.js"></script>
+    <script src="js/source/sj-sell.js"></script>
 	</body>
-
 </html>

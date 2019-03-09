@@ -1,234 +1,252 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>确认订单</title>
+    <script src="../js/mui.min.js"></script>
+    <link href="../css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <script type="text/javascript" src="../js/count.js"></script>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link href="../css/mui.picker.css" rel="stylesheet" />
+    <link href="../css/mui.poppicker.css" rel="stylesheet" />
+    <script type="text/javascript" src="../js/jquery-2.1.4.js"></script>
+  </head>
 
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>确认订单</title>
-		<script src="../js/mui.min.js"></script>
-		<link href="../css/mui.min.css" rel="stylesheet" />
-		<link rel="stylesheet" href="../css/reset.css" />
-		<script type="text/javascript" src="../js/count.js"></script>
-		<link rel="stylesheet" href="../css/style.css" />
-		<link href="../css/mui.picker.css" rel="stylesheet" />
-		<link href="../css/mui.poppicker.css" rel="stylesheet" />
-		<script type="text/javascript" src="../js/jquery-2.1.4.js"></script>
+  <body class="p-page top-page cofirm-page">
+    <header id="header" class="mui-bar mui-bar-nav">
+      <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+      <h1 class="mui-title">确认订单</h1>
+    </header>
+    <div id="confirmOrder">
+      <a href="javascript:void(0);" class="add-address" @click="addAddress()">
+        <img src="../img/add_put_forward.png" />
+        新增收货地址
+      </a>
+      <div
+        class="address"
+        v-if="address[0]"
+        style=" margin-bottom: 10px;"
+        @click="editAddress()"
+      >
+        <h1>收货人：{{ address[0].name }}</h1>
+        <span>电话：{{ address[0].phone }}</span>
+        <p>地址：{{ address[0].address }} {{ address[0].stree }}</p>
+      </div>
 
+      <div class="info-tit">
+        <h1>{{ good.isSys == 1 ? '星球商城' : '星球商家' }}</h1>
+      </div>
+      <ul class="mall-list order-list">
+        <li>
+          <a>
+            <img :src="photoSrc+good.img" />
+            <h1>{{ good.name }}</h1>
+            <h4>{{ good.category }}</h4>
+            <h4>数量：{{ count }}</h4>
+            <h5>
+              售价：<span v-if="good.payType==1">￥{{ good.price }}</span
+              ><span v-if="good.payType!=1">{{ good.price }} TTI</span>
+            </h5>
+          </a>
+        </li>
+      </ul>
 
-	</head>
+      <div id="info-btn" class="info-item">
+        <em>TTI</em>
+        <p>
+          购买赠送<i>{{ good.magicAdd * count }} TTI</i>
+        </p>
+      </div>
+      <div class="cofirm-btn">
+        <div class="total">
+          合计：<span v-if="good.payType==1">￥{{ good.price * count }}</span
+          ><span v-if="good.payType!=1">{{ good.price * count }}TTI</span>
+        </div>
+        <a href="javascript:void(0);" id="createId">提交订单</a>
+      </div>
+    </div>
 
-	<body class="p-page top-page cofirm-page">
-		<header id="header" class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">确认订单</h1>
-		</header>
-		<div id="confirmOrder">
-			
-			 <a href="javascript:void(0);" class="add-address" @click="addAddress()">
-				<img src="../img/add_put_forward.png" />
-				新增收货地址
-			</a>
-			<div class="address" v-if="address[0]" style=" margin-bottom: 10px;" @click="editAddress()">
-				<h1>收货人：{{address[0].name}}</h1>
-				<span>电话：{{address[0].phone}}</span>
-				<p>地址：{{address[0].address}} {{address[0].stree}}</p>
-			</div>
+    <script src="../js/axios.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../js/mescroll.min.js"></script>
+    <script src="../js/mui.picker.js"></script>
+    <script src="../js/mui.poppicker.js"></script>
 
-			<div class="info-tit">
-				<h1>{{good.isSys==1?'星球商城':'星球商家'}}</h1>
-			</div>
-			<ul class="mall-list order-list">
-				<li>
-					<a>
-							<img :src="photoSrc+good.img" />
-						<h1>{{good.name}}</h1>
-						<h4>{{good.category}}</h4>
-						<h4>数量：{{count}}</h4>
-						<h5>售价：<span v-if="good.payType==1">￥{{good.price}}</span><span v-if="good.payType!=1">{{good.price}} TTI</span></h5>
-					</a>
-				</li>
+    <script>
+      mui.init({
+        beforeback: function() {
+          //获得父页面的webview
+          var list = plus.webview.currentWebview().opener()
+          //触发父页面的自定义事件(refresh),从而进行刷新
+          mui.fire(list, 'refresh')
+          //返回true,继续页面关闭逻辑
+          return true
+        },
+      })
+      window.addEventListener('refresh', function(e) {
+        //执行刷新
+        confirmOrder.sys_userInfo = JSON.parse(
+          localStorage.getItem('sys_userInfo'),
+        )
+        confirmOrder.good = JSON.parse(localStorage.getItem('good'))
+        confirmOrder.getAddress()
+      })
 
+      document.addEventListener('plusready', function() {
+        document.getElementById('createId').addEventListener('tap', function() {
+          //plus.nativeUI.showWaiting()
+          confirmOrder.submitOrder()
+        })
+      })
 
-			</ul>
+      var confirmOrder = new Vue({
+        el: '#confirmOrder',
+        data: {
+          photoSrc: '',
+          count: 0,
+          good: Object,
+          sys_userInfo: Object,
+          address: [],
+          account: { m: 0, t: 0, c: 0 },
+        },
+        mounted: function() {
+          this.photoSrc = photo_src
+          this.count = localStorage.getItem('orderCount')
+          this.sys_userInfo = JSON.parse(localStorage.getItem('sys_userInfo'))
 
-			<div id="info-btn" class="info-item">
-				<em>TTI</em>
-				<p>购买赠送<i>{{good.magicAdd*count}}  TTI</i></p>
-			</div>
-			<div class="cofirm-btn">
-				<div class="total">
-					合计：<span v-if="good.payType==1">￥{{good.price*count}}</span><span v-if="good.payType!=1">{{good.price*count}}TTI</span>
-				</div>
-				<a href="javascript:void(0);" id="createId">提交订单</a>
-			</div> 
-		</div>
+          this.good = JSON.parse(localStorage.getItem('good'))
 
-<script src="../js/axios.js"></script>
-		<script src="../js/config.js"></script>
-		<script src="../js/vue.js"></script>
-		
-		<script src="../js/mescroll.min.js"></script>
-		<script src="../js/mui.picker.js"></script>
-		<script src="../js/mui.poppicker.js"></script>
+          this.getAddress()
+        },
+        methods: {
+          getAddress: function() {
+            var _this = this
+            var param = { id: _this.sys_userInfo.id }
+            sendPost('/property/getAddressByUser', param).then(function(res) {
+              _this.address = res.data.data
+            })
+          },
+          addAddress: function() {
+            openWin('add-address.html')
+          },
+          editAddress: function() {
+            localStorage.setItem('address', JSON.stringify(this.address[0]))
+            openWin('add-address.html')
+          },
+          submitOrder: function() {
+            if (this.address.length <= 0) {
+              mui.toast('请选择收货地址')
+              return false
+            }
+            var params = {
+              'sellerId.id': localStorage.sellerId,
+              count: this.count,
+              'user.id': this.sys_userInfo.id,
+              'mallId.id': this.good.id,
+              addressId: this.address[0].id,
+            }
+            var _this = this
 
-		<script>
-			mui.init({
-				beforeback: function() {
-					//获得父页面的webview
-					var list = plus.webview.currentWebview().opener();
-					//触发父页面的自定义事件(refresh),从而进行刷新
-					mui.fire(list, 'refresh');
-					//返回true,继续页面关闭逻辑
-					return true;
-				}
-			});
-			window.addEventListener('refresh', function(e) { //执行刷新
-				confirmOrder.sys_userInfo = JSON.parse(localStorage.getItem("sys_userInfo"))
-				confirmOrder.good = JSON.parse(localStorage.getItem('good'))
-				confirmOrder.getAddress()
-			});
+            sendPost('/property/addOrder', params).then(function(res) {
+              plus.nativeUI.closeWaiting()
 
+              mui.toast(res.data.msg)
+              if (res.data.success) {
+                if (_this.good.payType != 1) {
+                  openWin('../index.html')
+                }
 
-			document.addEventListener('plusready', function() {
-				document.getElementById('createId').addEventListener('tap', function() {
-					//plus.nativeUI.showWaiting()
-					confirmOrder.submitOrder()
-				});
-				
-			});
-			
-			var confirmOrder = new Vue({
-				el: '#confirmOrder',
-				data: {
-					photoSrc: '',
-					count:0,
-					good:Object,
-					sys_userInfo:Object,
-					address:[],
-					account:{'m':0,'t':0,'c':0}
-				},
-				mounted: function() {
-					this.photoSrc = photo_src
-					this.count = localStorage.getItem('orderCount') 
-					this.sys_userInfo = JSON.parse(localStorage.getItem("sys_userInfo"))
-				
-			
-				 	this.good = JSON.parse(localStorage.getItem('good'))
-			
-			
-				 	this.getAddress()
-
-			
-				},
-				methods: {
-					getAddress:function(){
-					
-						var _this = this
-							var param ={'id':_this.sys_userInfo.id}
-							sendPost('/property/getAddressByUser',param).then(function(res){
-							
-								_this.address = res.data.data
-							})	
-					},
-					addAddress:function(){
-						openWin('add-address.html')
-					},
-					editAddress:function(){
-						localStorage.setItem('address',JSON.stringify(this.address[0])) 
-						openWin('add-address.html')
-					},
-					submitOrder:function(){
-						if(this.address.length<=0){
-							mui.toast("请选择收货地址")
-							return false;
-						}
-						var params = {'sellerId.id':localStorage.sellerId,'count':this.count,'user.id':this.sys_userInfo.id,'mallId.id':this.good.id,'addressId':this.address[0].id}
-						var _this = this
-						
-						sendPost('/property/addOrder',params).then(function(res){
-							plus.nativeUI.closeWaiting()
-						
-								mui.toast(res.data.msg)
-								if(res.data.success){
-								
-									if(_this.good.payType!=1){
-										openWin("../index.html")
-									}
-									
-									if(_this.good.payType==1){
-										_this.toPay(res.data.orderNum)
-									}
-								}
-								
-			
-							
-						})
-					
-			
-					},
-					toPay:function(orderNum){
-						  var btnArray = ['稍后支付', '立即支付'];
-						  var _this = this
-			                mui.confirm('下单成功，立即支付？', '系统提示', btnArray, function(e) {
-			                    if (e.index == 1) {
-			
-								var params = {
-									"id": _this.sys_userInfo.id
-								}
-								sendPost('/trail/getSellerInfo', params).then(function(res) {
-									
-									var _getParam = function(obj, param) {
-										return obj[param] || '';
-									};
-									var picker = new mui.PopPicker();
-									picker.setData([{
-										text: '余额('+Number(res.data.money.value).toFixed(2)+')',
-										value: 0
-									}, {
-										text: '支付宝',
-										value: 1
-									}]);
-									//plus.nativeUI.showWaiting()
-									picker.show(function(items) {
-										if(items[0].value==0){
-											//检查余额是否足够
-											if(Number(res.data.money.value)>(Number(_this.good.price)*Number(_this.count))){
-												var param = {'count':_this.count,'payType':0,'orderNum':orderNum,'user.id':_this.sys_userInfo.id,'mallId.id':_this.good.id}
-												sendPost('/property/payOrder',param).then(function(res){
-													mui.toast(res.data.msg)
-													//plus.nativeUI.closeWaiting()
-													if(res.data.success){
-														openWin("../index.html",true,"slide-in-left",400)
-													}
-												
-												})
-											}else{
-												mui.toast('余额不足')
-											}
-										}else{
-											//支付宝支付
-											var param = {'count':_this.count,'payType':1,'orderNum':orderNum,'user.id':_this.sys_userInfo.id,'mallId.id':_this.good.id}
-											sendPost('/property/payOrder',param).then(function(res){
-												mui.toast(res.data.msg)
-											//	plus.nativeUI.closeWaiting()
-												if(res.data.success){
-													openWin("../index.html")
-												}
-											
-											})
-										}
-									});
-								})
-									
-			                     
-			                    } else {
-			                        openWin("../index.html")
-			                    }
-			                })
-					}
-				},
-			});
-		</script>
-	</body>
-
+                if (_this.good.payType == 1) {
+                  _this.toPay(res.data.orderNum)
+                }
+              }
+            })
+          },
+          toPay: function(orderNum) {
+            var btnArray = ['稍后支付', '立即支付']
+            var _this = this
+            mui.confirm('下单成功，立即支付？', '系统提示', btnArray, function(
+              e,
+            ) {
+              if (e.index == 1) {
+                var params = {
+                  id: _this.sys_userInfo.id,
+                }
+                sendPost('/trail/getSellerInfo', params).then(function(res) {
+                  var _getParam = function(obj, param) {
+                    return obj[param] || ''
+                  }
+                  var picker = new mui.PopPicker()
+                  picker.setData([
+                    {
+                      text:
+                        '余额(' + Number(res.data.money.value).toFixed(2) + ')',
+                      value: 0,
+                    },
+                    {
+                      text: '支付宝',
+                      value: 1,
+                    },
+                  ])
+                  //plus.nativeUI.showWaiting()
+                  picker.show(function(items) {
+                    if (items[0].value == 0) {
+                      //检查余额是否足够
+                      if (
+                        Number(res.data.money.value) >
+                        Number(_this.good.price) * Number(_this.count)
+                      ) {
+                        var param = {
+                          count: _this.count,
+                          payType: 0,
+                          orderNum: orderNum,
+                          'user.id': _this.sys_userInfo.id,
+                          'mallId.id': _this.good.id,
+                        }
+                        sendPost('/property/payOrder', param).then(function(
+                          res,
+                        ) {
+                          mui.toast(res.data.msg)
+                          //plus.nativeUI.closeWaiting()
+                          if (res.data.success) {
+                            openWin('../index.html', true, 'slide-in-left', 400)
+                          }
+                        })
+                      } else {
+                        mui.toast('余额不足')
+                      }
+                    } else {
+                      //支付宝支付
+                      var param = {
+                        count: _this.count,
+                        payType: 1,
+                        orderNum: orderNum,
+                        'user.id': _this.sys_userInfo.id,
+                        'mallId.id': _this.good.id,
+                      }
+                      sendPost('/property/payOrder', param).then(function(res) {
+                        mui.toast(res.data.msg)
+                        //	plus.nativeUI.closeWaiting()
+                        if (res.data.success) {
+                          openWin('../index.html')
+                        }
+                      })
+                    }
+                  })
+                })
+              } else {
+                openWin('../index.html')
+              }
+            })
+          },
+        },
+      })
+    </script>
+  </body>
 </html>

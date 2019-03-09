@@ -16,7 +16,6 @@ var hz = new Vue({
 	},
 	watch:{
 		'childIndex':function(){
-			//console.log(this.areas[this.childIndex])
 		}
 	},
 	mounted: function() {
@@ -29,7 +28,6 @@ var hz = new Vue({
 			axios({
 				url: base_url + '/agency/resAgency',
 				method: 'POST',
-				// 请求体重发送的数据
 				params: {
 					"areaCode":_this.areaIdSelected,
 					"name":_this.name,
@@ -38,10 +36,8 @@ var hz = new Vue({
 					"tjPhone":_this.tjphone,
 					"gh":_this.gh,
 					"type.type":_this.type
-					
 				},
 				timeout: 50000,
-				// 设置请求头
 				headers: {
 					'Content-Type': 'application/x-www-form-urlencoded'
 				}
@@ -59,7 +55,6 @@ var hz = new Vue({
 				this.closeWin()
 				this.areaNameSelected = this.areas[this.childIndex].name+'>'+i.name
 				this.areaIdSelected = i.id
-				
 			}
 		},
 		closeWin:function(){
@@ -79,7 +74,6 @@ var hz = new Vue({
 				method: 'POST',
 				// 请求体重发送的数据
 				params: {
-
 				},
 				timeout: 50000,
 				// 设置请求头
@@ -93,6 +87,5 @@ var hz = new Vue({
 				}
 			})
 		}
-
 	},
 });
